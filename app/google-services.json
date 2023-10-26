@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "44899330823",
+    "project_id": "calitour",
+    "storage_bucket": "calitour.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:44899330823:android:285817c462f54a1e9b33a2",
+        "android_client_info": {
+          "package_name": "com.example.calitour"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQxI6BJeTUnG17crBekEuKhrgG3HXNZi4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
