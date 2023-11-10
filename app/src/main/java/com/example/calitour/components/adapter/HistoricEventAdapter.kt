@@ -1,4 +1,4 @@
-package com.example.calitour.adapter
+package com.example.calitour.components.adapter
 
 
 import android.view.LayoutInflater
@@ -6,13 +6,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.calitour.R
 import com.example.calitour.components.views.HistoricEventView
-import com.example.calitour.model.HistoricEvent
+import com.example.calitour.model.entity.Event
 
 class HistoricEventAdapter : Adapter<HistoricEventView>() {
-    val events =ArrayList<HistoricEvent>()
+    val events =ArrayList<Event>()
+
 
     init {
-
+        events
+        //TODO(make coroutine to get information)
     }
 
 
@@ -31,6 +33,7 @@ class HistoricEventAdapter : Adapter<HistoricEventView>() {
         val data = events[position]
         holder.eventTitle.text = data.name
         holder.eventSummary.text = data.description
+
     }
 
 

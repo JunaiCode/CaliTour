@@ -1,9 +1,9 @@
-package com.example.calitour.model
+package com.example.calitour.model.entity
 
 import java.util.Date
 import java.util.UUID
 
-data class HistoricEvent (
+data class Event (
     var id : UUID,
     var category: String,
     var date: Date,

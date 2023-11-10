@@ -35,7 +35,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
-                    android:id="@+id/imageView4"
+                    android:id="@+id/entityImg"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:src="@tools:sample/avatars" />
@@ -73,55 +73,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
                 android:fontFamily="@font/poppins"
                 android:text="Encontré mi nuevo amor por la salsa, no paré de bailar oís..."
                 android:textColor="#1E1E1E"
-                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/cardView"
                 app:layout_constraintTop_toBottomOf="@+id/star3" />
 
-            <TextView
-                android:id="@+id/firstCommentUsername"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/poppins"
-                android:text="PuntaTalon:"
-                android:textColor="#000000"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/selfComment"
-                app:layout_constraintTop_toBottomOf="@+id/selfComment" />
-
-
-            <TextView
-                android:id="@+id/firstComment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:fontFamily="@font/poppins"
-                android:text="El evento estuvo espectacular 😮‍💨!!"
-                android:textColor="#000000"
-                android:textSize="15sp"
-                app:layout_constraintStart_toEndOf="@+id/firstCommentUsername"
-                app:layout_constraintTop_toTopOf="@+id/firstCommentUsername" />
-
-            <TextView
-                android:id="@+id/moreCommentsButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="15dp"
-                android:fontFamily="@font/poppins"
-                android:text="Ver los demás comentarios"
-                android:textColor="#000000"
-                android:textSize="15sp"
-                android:textStyle="italic"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/firstCommentUsername"
-                app:layout_constraintTop_toBottomOf="@+id/firstComment" />
 
             <ImageView
                 android:id="@+id/star1"
