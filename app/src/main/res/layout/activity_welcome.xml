@@ -7,19 +7,17 @@
     tools:context=".activities.WelcomeActivity">
 
     <ImageView
-        android:id="@+id/fondoRegistoUnoIMG"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/fondoBienvenido"
+        android:background="@drawable/fondobienvenido"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/fondoRegistoUnoIMG"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/shadowBienvenido"
+        android:background="@drawable/shadowbienvenido"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -34,7 +32,7 @@
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="21dp"
-        app:fontFamily="@font/Shrikhand_Regular.ttf"
+        app:fontFamily="@font/shrikhandregular"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -73,7 +71,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardViewSpinner">
 
         <Button
-            android:id="@+id/buttonIniciarSesion"
+            android:id="@+id/loginBtn"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:background="@android:color/transparent"

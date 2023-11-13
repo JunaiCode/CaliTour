@@ -10,7 +10,7 @@
         android:id="@+id/fondoRegistoUnoIMG"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/fondoRegistroUno"
+        android:background="@drawable/fondoregistro"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -46,7 +46,7 @@
             app:layout_constraintTop_toBottomOf="@+id/titleRegistroUno">
 
             <Button
-                android:id="@+id/usuarioRegistrobutton"
+                android:id="@+id/userRegBtn"
                 android:layout_width="125dp"
                 android:layout_height="48dp"
                 android:background="@android:color/transparent"
@@ -67,7 +67,7 @@
             app:layout_constraintTop_toBottomOf="@+id/cardViewButtonUsuario">
 
             <Button
-                android:id="@+id/entidadRegistrobutton"
+                android:id="@+id/entityRegBtn"
                 android:layout_width="125dp"
                 android:layout_height="48dp"
                 android:background="@android:color/transparent"

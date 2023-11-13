@@ -17,15 +17,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout6"
-        app:srcCompat="@drawable/LogoSVG" />
+        app:srcCompat="@drawable/logo" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <Button
-            android:id="@+id/buttonIniciarSesion"
+            android:id="@+id/loginBtn"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_marginStart="138dp"
@@ -56,6 +55,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/emailTI"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="E-mail..." />
@@ -79,11 +79,39 @@
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout7">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordTI"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Contraseña..." />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginEnd="37dp"
+            android:layout_marginBottom="52dp"
+            android:text="No tengo cuenta."
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/noAccTV"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/noAccTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="100dp"
+            android:layout_marginBottom="52dp"
+            android:clickable="true"
+            android:contextClickable="false"
+            android:text="Registrarme"
+            android:textColor="#FFA623"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/textView5" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
