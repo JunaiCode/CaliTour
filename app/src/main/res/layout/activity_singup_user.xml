@@ -16,14 +16,14 @@
         android:layout_marginEnd="298dp"
         android:text="Nombre"
         android:textColor="#5023B3"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
+        app:layout_constraintBottom_toTopOf="@+id/nameTIR"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
+        android:id="@+id/nameTIR"
         android:layout_width="300dp"
         android:layout_height="48dp"
         android:layout_marginStart="15dp"
@@ -41,7 +41,6 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/nameTIR"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fontFamily="@font/poppins"
@@ -56,16 +55,16 @@
         android:layout_marginStart="56dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="298dp"
-        android:text="Contraseña"
+        android:text="Email"
         android:textColor="#5023B3"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout2"
+        app:layout_constraintBottom_toTopOf="@+id/emailTIR"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/nameTIR" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout2"
+        android:id="@+id/emailTIR"
         android:layout_width="300dp"
         android:layout_height="48dp"
         android:layout_marginStart="15dp"
@@ -83,7 +82,6 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/passwordTIR"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins"
@@ -99,12 +97,12 @@
         android:layout_marginStart="56dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="225dp"
-        android:text="Confirm Password"
+        android:text="Password"
         android:textColor="#5023B3"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout4"
+        app:layout_constraintBottom_toTopOf="@+id/passwordTIR"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
+        app:layout_constraintTop_toBottomOf="@+id/emailTIR" />
 
     <TextView
         android:id="@+id/textView4"
@@ -113,16 +111,16 @@
         android:layout_marginStart="56dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="298dp"
-        android:text="E-mail"
+        android:text="Confirm Password"
         android:textColor="#5023B3"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout3"
+        app:layout_constraintBottom_toTopOf="@+id/confirmPass"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout4" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordTIR" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout3"
+        android:id="@+id/confirmPass"
         android:layout_width="300dp"
         android:layout_height="48dp"
         android:layout_marginStart="15dp"
@@ -138,11 +136,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
+        app:layout_constraintTop_toBottomOf="@+id/emailTIR"
         app:layout_constraintVertical_bias="1.0">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/emailTIR"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fontFamily="@font/poppins"
@@ -167,7 +164,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout9" />
+        app:layout_constraintTop_toBottomOf="@+id/dateTIR" />
 
     <TextView
         android:id="@+id/textView6"
@@ -178,14 +175,14 @@
         android:layout_marginEnd="298dp"
         android:text="Fecha de nacimiento"
         android:textColor="#5023B3"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout9"
+        app:layout_constraintBottom_toTopOf="@+id/dateTIR"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.013"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout3" />
+        app:layout_constraintTop_toBottomOf="@+id/confirmPass" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout9"
+        android:id="@+id/dateTIR"
         android:layout_width="140dp"
         android:layout_height="48dp"
         android:layout_marginStart="1dp"
@@ -203,7 +200,6 @@
         app:layout_constraintVertical_bias="1.0">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/dateTIR"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="dd/mm/yyyy" />
@@ -217,14 +213,14 @@
         android:layout_marginEnd="129dp"
         android:text="Celular"
         android:textColor="#5023B3"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout5"
+        app:layout_constraintBottom_toTopOf="@+id/phoneTIR"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.415"
         app:layout_constraintStart_toEndOf="@+id/textView6"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout3" />
+        app:layout_constraintTop_toBottomOf="@+id/confirmPass" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout5"
+        android:id="@+id/phoneTIR"
         android:layout_width="140dp"
         android:layout_height="48dp"
         android:layout_marginStart="10dp"
@@ -238,18 +234,17 @@
         app:layout_constraintBottom_toTopOf="@+id/registerBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/textInputLayout9"
+        app:layout_constraintStart_toEndOf="@+id/dateTIR"
         app:layout_constraintTop_toBottomOf="@+id/textView7"
         app:layout_constraintVertical_bias="1.0">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/phoneTIR"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout4"
+        android:id="@+id/passwordTIR"
         android:layout_width="300dp"
         android:layout_height="48dp"
         android:layout_marginStart="15dp"
@@ -265,7 +260,6 @@
         app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/confirmPassTIR"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:password="true" />

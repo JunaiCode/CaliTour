@@ -23,7 +23,6 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.noAccTV.setOnClickListener {
-            println("Se hizo clic en el TextView")
             startActivity(Intent(this, SingupUserActivity::class.java))
         }
 
