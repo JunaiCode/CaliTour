@@ -20,6 +20,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
         <activity
             android:name=".activities.WelcomeActivity"
             android:exported="false" />
@@ -40,6 +45,7 @@
             android:exported="true">
 
         </activity>
+
     </application>
 
 </manifest>
