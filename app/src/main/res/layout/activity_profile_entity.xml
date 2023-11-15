@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ProfileEntityActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -125,6 +126,7 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
@@ -135,27 +137,46 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view">
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/liveEvents"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_weight="1"
-                android:src="@drawable/live" />
+                android:background="#00FFFFFF"
+                android:scaleType="fitCenter"
+                android:src="@drawable/live_gray"
+                 />
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/shop"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_weight="1"
-                android:src="@drawable/shop" />
+                android:background="#00FFFFFF"
+                android:scaleType="fitCenter"
+                android:src="@drawable/shop_gray" />
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/endendEvents"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_weight="1"
-                android:src="@drawable/clock" />
+                android:background="#00FFFFFF"
+                android:scaleType="fitCenter"
+                android:src="@drawable/clock_gray" />
         </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fragmentContainer"
+            android:layout_width="409dp"
+            android:layout_height="495dp"
+            android:layout_marginTop="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

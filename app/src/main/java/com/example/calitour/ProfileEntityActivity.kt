@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
 import com.example.calitour.databinding.ActivityProfileEntityBinding
 
+
 class ProfileEntityActivity : AppCompatActivity() {
 
     private val binding by lazy{
@@ -15,8 +16,28 @@ class ProfileEntityActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        binding.liveEvents.setOnClickListener{
+                binding.liveEvents.setImageResource(R.drawable.live)
+                binding.shop.setImageResource(R.drawable.shop_gray)
+                binding.endendEvents.setImageResource(R.drawable.clock_gray)
+        }
 
-        binding.bottomNavigationView.menu[2].setCheckable(true)
+        binding.shop.setOnClickListener{
+            binding.shop.setImageResource(R.drawable.shop)
+            binding.liveEvents.setImageResource(R.drawable.live_gray)
+            binding.endendEvents.setImageResource(R.drawable.clock_gray)
+        }
+
+        binding.endendEvents.setOnClickListener{
+            binding.endendEvents.setImageResource(R.drawable.clock)
+            binding.liveEvents.setImageResource(R.drawable.live_gray)
+            binding.shop.setImageResource(R.drawable.shop_gray)
+        }
+
+        binding.liveEvents.performClick()
+
+
+        binding.bottomNavigationView.menu[2].isChecked = true
 
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
