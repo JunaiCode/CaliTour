@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.calitour.R
-import com.example.calitour.components.views.HistoricEventView
+import com.example.calitour.components.viewHolders.HistoricEventView
 import com.example.calitour.model.entity.Event
 
 class HistoricEventAdapter : Adapter<HistoricEventView>() {
