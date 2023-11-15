@@ -85,7 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins"
-            android:password="true"
+            android:password="false"
             android:textColor="#8F8F8F"
             android:textSize="12sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -113,14 +113,14 @@
         android:layout_marginEnd="298dp"
         android:text="Confirm Password"
         android:textColor="#5023B3"
-        app:layout_constraintBottom_toTopOf="@+id/confirmPass"
+        app:layout_constraintBottom_toTopOf="@+id/confirmPassTIR"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordTIR" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/confirmPass"
+        android:id="@+id/confirmPassTIR"
         android:layout_width="300dp"
         android:layout_height="48dp"
         android:layout_marginStart="15dp"
@@ -143,6 +143,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fontFamily="@font/poppins"
+            android:password="true"
             android:textColor="#8F8F8F"
             android:textSize="12sp" />
 
@@ -179,7 +180,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.013"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confirmPass" />
+        app:layout_constraintTop_toBottomOf="@+id/confirmPassTIR" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/dateTIR"
@@ -217,7 +218,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.415"
         app:layout_constraintStart_toEndOf="@+id/textView6"
-        app:layout_constraintTop_toBottomOf="@+id/confirmPass" />
+        app:layout_constraintTop_toBottomOf="@+id/confirmPassTIR" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/phoneTIR"
