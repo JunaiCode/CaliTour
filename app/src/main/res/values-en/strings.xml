@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CaliTour</string>
+    <string name="sign_in">Sign In</string>
+    <string name="dont_have_account">Don\'t have an account</string>
+    <string name="register_me">Register</string>
+    <string name="name">Name</string>
+    <string name="email">E-mail</string>
+    <string name="password">Password</string>
+    <string name="phone">Phone number</string>
+    <string name="birthday">Birthday</string>
+    <string name="select_image">Select an image</string>
+</resources>
