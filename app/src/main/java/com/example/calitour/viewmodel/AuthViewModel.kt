@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.calitour.model.entity.AuthState
 import com.example.calitour.model.entity.ErrorMessage
 import com.example.calitour.model.entity.User
+import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
@@ -44,7 +45,7 @@ class AuthViewModel : ViewModel(){
                 Log.e(">>>", "Registrado")
                 Firebase.auth.currentUser
             }catch (e: FirebaseAuthInvalidCredentialsException) {
-                withContext(Dispatchers.Main){errorLV.value = ErrorMessage("El correo está mal formado")}
+                withContext(Dispatchers.Main){errorLV.value = ErrorMessage(e.message!!)}
                 Log.e(">>>", e.message!!)
             } catch (e: FirebaseAuthUserCollisionException) {
                 withContext(Dispatchers.Main){errorLV.value = ErrorMessage("El correo está repetido")}
@@ -69,6 +70,9 @@ class AuthViewModel : ViewModel(){
                 Log.e(">>>", "Loggeado")
             } catch (e: FirebaseAuthException) {
                 withContext(Dispatchers.Main){errorLV.value = ErrorMessage("Error de autenticación")}
+                Log.e(">>>", "Error de autenticación")
+            } catch (e: FirebaseException){
+                withContext(Dispatchers.Main){errorLV.value = ErrorMessage("Verifique sus credenciales")}
                 Log.e(">>>", "Error de autenticación")
             }
         }
