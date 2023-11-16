@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import com.example.calitour.R
-import com.example.calitour.auth.AuthManager
 import com.example.calitour.databinding.ActivityLoginBinding
 import com.example.calitour.databinding.ActivityProfileBinding
 import com.example.calitour.databinding.ActivitySingupUserBinding
@@ -22,7 +21,7 @@ import com.google.gson.Gson
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding;
-    private val manager : AuthManager = AuthManager()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -38,8 +37,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun login(view: View?) {
 
-        var user = manager.loginManager(binding.emailTI.text.toString(),binding.passwordTI.text.toString())
-
+        var user = User("","","","","",0)
         if (user != null){
             saveUser(user)
             startActivity(Intent(this, ProfileActivity::class.java))

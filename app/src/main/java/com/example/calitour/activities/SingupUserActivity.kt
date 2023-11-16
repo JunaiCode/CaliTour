@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
-import com.example.calitour.auth.AuthManager
 import com.example.calitour.databinding.ActivitySingupUserBinding
 import com.example.calitour.model.entity.User
 import com.google.firebase.auth.FirebaseAuth
@@ -19,7 +18,6 @@ import com.google.firebase.ktx.Firebase
 class SingupUserActivity : AppCompatActivity() {
 
     private lateinit var binding:ActivitySingupUserBinding;
-    private val  manager: AuthManager = AuthManager()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,7 +72,7 @@ class SingupUserActivity : AppCompatActivity() {
                 val firebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser;
                 val userId : String = firebaseUser!!.uid
 
-                val user = User(userId,birthday,email,name,phoneNumber,"${0}")
+                val user = User(userId,birthday,email,name,phoneNumber,0)
 
 
 

@@ -9,5 +9,5 @@ data class User (
     var email: String,
     var name : String,
     var phoneNumber: String,
-    var points : String
+    var points : Int
 )

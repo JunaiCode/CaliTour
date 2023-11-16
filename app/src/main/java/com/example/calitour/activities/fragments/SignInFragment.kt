@@ -26,6 +26,9 @@ class SignInFragment: Fragment() {
                 commit()
 
         }
+
+
+
         return binding.root
     }
 
