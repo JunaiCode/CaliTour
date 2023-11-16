@@ -2,4 +2,6 @@
 <resources>
     <string name="app_name">CaliTour</string>
     <string name="contact_us">Contáctanos</string>
+    <string name="event">Evento</string>
+    <string name="product_sale">Producto en venta</string>
 </resources>
