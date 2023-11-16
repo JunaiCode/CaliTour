@@ -15,12 +15,12 @@ import com.bumptech.glide.Glide
 import com.example.calitour.activities.HomeActivity
 import com.example.calitour.databinding.SignUpFragmentBinding
 import com.example.calitour.model.entity.User
-import com.example.calitour.viewmodel.AuthViewmodel
+import com.example.calitour.viewmodel.AuthViewModel
 
 class SignUpFragment: Fragment() {
 
     private var _binding: SignUpFragmentBinding? = null
-    private val vm: AuthViewmodel by activityViewModels()
+    private val vm: AuthViewModel by activityViewModels()
     private val binding get() = _binding!!
 
     val launcher = registerForActivityResult(
@@ -44,7 +44,7 @@ class SignUpFragment: Fragment() {
             var newUser = User(
                 "",
                 _binding!!.birthdayIT.editText?.text.toString(),
-                _binding!!.emailIT.editText?.text.toString(),
+                _binding!!.emailInput.editText?.text.toString(),
                 _binding!!.nameInput.editText?.text.toString(),
                 _binding!!.phoneIT.editText?.text.toString(),
                 0

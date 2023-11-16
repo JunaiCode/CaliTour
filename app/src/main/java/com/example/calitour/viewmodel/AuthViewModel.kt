@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
-class AuthViewmodel : ViewModel(){
+class AuthViewModel : ViewModel(){
 
     val authStateLV = MutableLiveData<AuthState>()
     val errorLV = MutableLiveData<ErrorMessage>()

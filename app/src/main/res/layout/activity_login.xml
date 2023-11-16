@@ -37,10 +37,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout8" />
+             />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout7"
             android:layout_width="300dp"
             android:layout_height="48dp"
             android:layout_marginTop="281dp"
@@ -55,14 +54,12 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/emailTI"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="E-mail..." />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout8"
             android:layout_width="300dp"
             android:layout_height="48dp"
             android:layout_marginStart="55dp"
@@ -76,10 +73,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout7">
+           >
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/passwordTI"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Contraseña..." />
