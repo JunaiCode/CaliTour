@@ -18,6 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import java.lang.IllegalArgumentException
 
 class AuthViewModel : ViewModel(){
 
@@ -44,13 +45,16 @@ class AuthViewModel : ViewModel(){
                 Firebase.auth.currentUser
             }catch (e: FirebaseAuthInvalidCredentialsException) {
                 withContext(Dispatchers.Main){errorLV.value = ErrorMessage("El correo está mal formado")}
-                Log.e(">>>", "Mal formado")
+                Log.e(">>>", e.message!!)
             } catch (e: FirebaseAuthUserCollisionException) {
                 withContext(Dispatchers.Main){errorLV.value = ErrorMessage("El correo está repetido")}
                 Log.e(">>>", "Repetido")
             } catch (e: FirebaseAuthWeakPasswordException) {
                 withContext(Dispatchers.Main){errorLV.value = ErrorMessage("La clave es muy debil")}
                 Log.e(">>>", "Clave muy corta")
+            }catch (e: IllegalArgumentException){
+                withContext(Dispatchers.Main){errorLV.value = ErrorMessage("Llene los campos")}
+                Log.e(">>>", "Campos")
             }
         }
     }
