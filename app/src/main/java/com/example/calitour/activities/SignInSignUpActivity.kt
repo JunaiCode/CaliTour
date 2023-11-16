@@ -8,7 +8,7 @@ import com.example.calitour.activities.fragments.SignInFragment
 import com.example.calitour.activities.fragments.SignUpFragment
 import com.example.calitour.databinding.ActivitySignInsignUpBinding
 
-class SignInSignUp : AppCompatActivity() {
+class SignInSignUpActivity : AppCompatActivity() {
 
     private val binding:ActivitySignInsignUpBinding by lazy {
         ActivitySignInsignUpBinding.inflate(layoutInflater)
