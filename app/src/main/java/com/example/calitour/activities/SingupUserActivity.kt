@@ -1,6 +1,7 @@
 package com.example.calitour.activities
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -72,7 +73,7 @@ class SingupUserActivity : AppCompatActivity() {
                 val firebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser;
                 val userId : String = firebaseUser!!.uid
 
-                val user = User(userId,birthday,email,name,phoneNumber,0)
+                val user = User(userId,birthday,email,name,phoneNumber,0, Uri.EMPTY)
 
 
 

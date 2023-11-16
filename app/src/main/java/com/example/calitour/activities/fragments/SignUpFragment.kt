@@ -1,6 +1,7 @@
 package com.example.calitour.activities.fragments
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +22,7 @@ class SignUpFragment: Fragment() {
 
     private var _binding: SignUpFragmentBinding? = null
     private val vm: AuthViewModel by activityViewModels()
+    private var uri: Uri = Uri.parse("")
     private val binding get() = _binding!!
 
     val launcher = registerForActivityResult(
@@ -47,7 +49,8 @@ class SignUpFragment: Fragment() {
                 _binding!!.emailInput.editText?.text.toString(),
                 _binding!!.nameInput.editText?.text.toString(),
                 _binding!!.phoneIT.editText?.text.toString(),
-                0
+                0,
+                uri
             )
             vm.signup(newUser, _binding!!.passwordInput.editText?.text.toString())
         }
@@ -64,10 +67,8 @@ class SignUpFragment: Fragment() {
     }
 
     fun onGalleryResult(result: ActivityResult){
-        val uri = result.data?.data
+        uri = result.data?.data!!
         Glide.with(this).load(uri).into(binding.profileImg)
-        uri?.let{
-        }
     }
 
 

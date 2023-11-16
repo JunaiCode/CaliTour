@@ -1,6 +1,7 @@
 package com.example.calitour.activities
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -37,7 +38,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun login(view: View?) {
 
-        var user = User("","","","","",0)
+        var user = User("","","","","",0, Uri.EMPTY)
         if (user != null){
             saveUser(user)
             startActivity(Intent(this, ProfileActivity::class.java))

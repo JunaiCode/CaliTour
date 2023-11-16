@@ -1,5 +1,6 @@
 package com.example.calitour.viewmodel
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,11 +16,13 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.lang.IllegalArgumentException
+import java.util.UUID
 
 class AuthViewModel : ViewModel(){
 
@@ -40,7 +43,10 @@ class AuthViewModel : ViewModel(){
                 Firebase.firestore.collection("users")
                     .document(newUser["id"]!!.toString())
                     .set(newUser).await()
+                if(user.photoUri != Uri.parse("")){
+                    uploadImage(user.photoUri,newUser["id"]!!.toString())
 
+                }
                 withContext(Dispatchers.Main){ authStateLV.value = AuthState(result.user?.uid, true)}
                 Log.e(">>>", "Registrado")
                 Firebase.auth.currentUser
@@ -77,5 +83,26 @@ class AuthViewModel : ViewModel(){
             }
         }
 
+    }
+
+    fun uploadImage(uri: Uri, id:String){
+        viewModelScope.launch (Dispatchers.IO) {
+
+            try {
+                val uuid = UUID.randomUUID().toString()
+                Firebase.storage.reference
+                    .child("profileImages")
+                    .child(uuid)
+                    .putFile(uri).await()
+
+                Firebase.firestore.collection("users")
+                    .document(id)
+                    .update("photoID", uuid )
+                    .await()
+            }catch (ex:Exception){
+                Log.e("<<<<<", ex.message.toString())
+            }
+
+        }
     }
 }
