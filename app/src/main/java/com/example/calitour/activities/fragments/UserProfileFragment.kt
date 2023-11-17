@@ -27,15 +27,16 @@ class UserProfileFragment: Fragment() {
 
         viewModel._user.observe(viewLifecycleOwner){
             Glide.with(this@UserProfileFragment)
-                .load("https://firebasestorage.googleapis.com/v0/b/calitour.appspot.com/o/profileImages%2Fbde9a612-0bc6-4cb2-8396-fd37d899050d?alt=media&token=7207e3a5-8514-4831-87a7-58e100b28efb")
+                .load(createPath(it.photoUri))
                 .into(binding.userIV)
-
-
-
         }
 
         viewModel.getUser()
         return binding.root
+    }
+
+    fun createPath(id : String) : String {
+        return "https://firebasestorage.googleapis.com/v0/b/calitour.appspot.com/o/profileImages%2F${id}?alt=media&token=7207e3a5-8514-4831-87a7-58e100b28efb"
     }
 
     companion object{
