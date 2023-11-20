@@ -23,7 +23,7 @@
         android:id="@+id/imageView7"
         android:layout_width="411dp"
         android:layout_height="131dp"
-        android:contentDescription="background"
+        android:contentDescription="@string/event_header"
         app:layout_constraintBottom_toTopOf="@+id/fragmentContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,12 +31,11 @@
         app:srcCompat="@drawable/backgrounevento" />
 
     <TextView
-        android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:fontFamily="@font/shrikhandregular"
-        android:text="¡Contanos ve!"
+        android:text="@string/event_header"
         android:textColor="#FFFFFF"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
