@@ -1,6 +1,7 @@
 package com.example.calitour.activities
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,7 +11,7 @@ import com.example.calitour.R
 import com.example.calitour.databinding.ActivityLoginBinding
 import com.example.calitour.databinding.ActivityProfileBinding
 import com.example.calitour.databinding.ActivitySingupUserBinding
-import com.example.calitour.models.User
+import com.example.calitour.model.entity.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -21,6 +22,7 @@ import com.google.gson.Gson
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -35,24 +37,19 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun login(view: View?) {
-        var email = binding.emailTI.text.toString();
-        var password = binding.passwordTI.text.toString();
-        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
-            .addOnSuccessListener {
-                val firebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser;
-                FirebaseFirestore.getInstance().collection("users").document(firebaseUser!!.uid).get()
-                    .addOnSuccessListener {
-                        document->
-                        var user = document.toObject(User::class.java);
-                        saveUser(user);
-                        startActivity(Intent(this, ProfileActivity::class.java))
-                    }
-            }.addOnFailureListener{
-                showLoginFailure()
-            };
 
-
+        var user = User("","","","","",0, Uri.EMPTY)
+        if (user != null){
+            saveUser(user)
+            startActivity(Intent(this, ProfileActivity::class.java))
+            finish()
+        }else{
+            showLoginFailure()
+        }
     }
+
+
+
     private fun showLoginFailure() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Error")
