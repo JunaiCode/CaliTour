@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
+import com.example.calitour.activities.MainActivity
 import com.example.calitour.databinding.ActivityProfileEntityBinding
 
 

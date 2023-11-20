@@ -1,19 +1,16 @@
-package com.example.calitour
+package com.example.calitour.activities
 
-import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import com.example.calitour.R
 import com.example.calitour.databinding.ActivityMainBinding
-
 
 class MainActivity : AppCompatActivity() {
 
-    private val binding by lazy{
-        ActivityMainBinding.inflate(layoutInflater)
-    }
-
+    private lateinit var binding: ActivityMainBinding;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
     }
 }
