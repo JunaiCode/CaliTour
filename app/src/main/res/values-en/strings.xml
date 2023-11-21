@@ -15,4 +15,5 @@
     <string name="phone">Phone number</string>
     <string name="birthday">Birthday</string>
     <string name="select_image">Select an image</string>
+    <string name="event_header">Tell Us!</string>
 </resources>

@@ -12,4 +12,5 @@
     <string name="phone">Celular</string>
     <string name="birthday">Fecha de nacimiento</string>
     <string name="select_image">Selecciona una imagen</string>
+    <string name="event_header">¡Contanos ve!</string>
 </resources>
