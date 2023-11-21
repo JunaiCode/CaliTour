@@ -11,4 +11,21 @@
     <string name="birthday">Birthday</string>
     <string name="select_image">Select an image</string>
     <string name="event_header">Tell Us!</string>
+    <string name="name_of_your_event">Name of the event</string>
+    <string name="description_of_your_event">Description of the event...</string>
+    <string name="date_hour_event">Select date and time</string>
+    <string name="location_event">Add the location</string>
+    <string name="price_event_product">Indicate the price</string>
+    <string name="dropdown_categories">dropDownMenuCategories</string>
+    <string-array name="categories">
+        <item>Salsa</item>
+        <item>Hiphop</item>
+        <item>Electronic</item>
+        <item>Pacific</item>
+        <item>Reggaeton</item>
+    </string-array>
+    <string name="btn_create_event">Create Event</string>
+    <string name="name_of_your_product">Name of the product</string>
+    <string name="description_of_your_product">Description of the product... </string>
+    <string name="btn_create_product">Create Product</string>
 </resources>
