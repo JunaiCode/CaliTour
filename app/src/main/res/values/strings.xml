@@ -13,4 +13,21 @@
     <string name="birthday">Fecha de nacimiento</string>
     <string name="select_image">Selecciona una imagen</string>
     <string name="event_header">¡Contanos ve!</string>
+    <string name="name_of_your_event">Nombre del evento</string>
+    <string name="description_of_your_event">Descripcion del evento... </string>
+    <string name="date_hour_event">Selecciona fecha y hora</string>
+    <string name="location_event">Añade la ubicacion</string>
+    <string name="price_event_product">Indica el precio</string>
+    <string name="dropdown_categories">dropDownMenuCategories</string>
+    <string-array name="categories">
+        <item>Salsa</item>
+        <item>Hiphop</item>
+        <item>Electronica</item>
+        <item>Pacifico</item>
+        <item>Reggaeton</item>
+    </string-array>
+    <string name="btn_create_event">Crear Evento</string>
+    <string name="name_of_your_product">Nombre del producto</string>
+    <string name="description_of_your_product">Descripcion del producto... </string>
+    <string name="btn_create_product">Crear Producto</string>
 </resources>
