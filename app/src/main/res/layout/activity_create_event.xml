@@ -8,7 +8,7 @@
     tools:context=".activities.CreateEventActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/fragmentContainer"
+        android:id="@+id/fragmentContainerCreate"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="130dp"

@@ -82,7 +82,6 @@
             android:layout_marginTop="20dp"
             android:background="#ffffff"
             android:ems="10"
-            android:hint="@string/price_event"
             android:inputType="date"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.454"
@@ -121,7 +120,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/name_of_your_event"
-                android:src="@tools:sample/avatars" />
+                />
         </androidx.cardview.widget.CardView>
 
         <Button

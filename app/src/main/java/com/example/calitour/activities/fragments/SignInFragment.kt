@@ -28,7 +28,7 @@ class SignInFragment: Fragment() {
             activity?.
                 supportFragmentManager?.
                 beginTransaction()?.
-                add(R.id.fragmentContainer, SignUpFragment())?.
+                add(R.id.fragmentContainerCreate, SignUpFragment())?.
                 addToBackStack(null)?.
                 commit()
         }

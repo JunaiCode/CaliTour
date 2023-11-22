@@ -12,7 +12,6 @@ import com.example.calitour.databinding.CreateEventFragmentBinding
 
 class CreateEventFragment: Fragment() {
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -20,13 +19,13 @@ class CreateEventFragment: Fragment() {
     ): View? {
         val appContext = requireContext()
         val binding: CreateEventFragmentBinding = CreateEventFragmentBinding.inflate(inflater,container,false)
-        val adapter = ArrayAdapter.createFromResource(
+        /*val adapter = ArrayAdapter.createFromResource(
             appContext,
             R.array.categories,
             R.layout.create_event_fragment
         )
         adapter.setDropDownViewResource(R.layout.create_event_fragment);
-        binding.categories.adapter = adapter;
+        binding.categories.adapter = adapter;*/
         return binding.root
     }
 
