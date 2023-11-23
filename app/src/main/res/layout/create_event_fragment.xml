@@ -75,14 +75,14 @@
             app:layout_constraintTop_toBottomOf="@+id/editTextText3" />
 
         <EditText
-            android:autofillHints="price"
             android:id="@+id/editTextDate2"
             android:layout_width="356dp"
             android:layout_height="48dp"
             android:layout_marginTop="20dp"
+            android:autofillHints="price"
             android:background="#ffffff"
             android:ems="10"
-            android:hint="string/price_event"
+            android:hint="@string/price_event_product"
             android:inputType="date"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.454"
