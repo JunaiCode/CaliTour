@@ -1,12 +1,11 @@
-package com.example.calitour.activities
+package com.example.calitour
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.calitour.R
 
-class WelcomeActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_welcome)
+        setContentView(R.layout.activity_main)
     }
 }
