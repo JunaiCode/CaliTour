@@ -51,13 +51,13 @@ class ProfileEntityActivity : AppCompatActivity() {
         val product = dialog.findViewById<Button>(R.id.productPopUpBttn)
 
         event.setOnClickListener {
-            val intent = Intent(this, CreateEventActivity::class.java).putExtra("fragment", "EVENT")
+            val intent = Intent(this, CreateEventProductActivity::class.java).putExtra("fragment", "EVENT")
             dialog.dismiss()
             startActivity(intent)
         }
 
         product.setOnClickListener {
-            val intent = Intent(this, CreateEventActivity::class.java).putExtra("fragment", "PRODUCT")
+            val intent = Intent(this, CreateEventProductActivity::class.java).putExtra("fragment", "PRODUCT")
             dialog.dismiss()
             startActivity(intent)
         }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".activities.CreateEventActivity">
+    tools:context=".activities.CreateEventProductActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fragmentContainerCreate"
@@ -24,7 +24,7 @@
         android:layout_width="411dp"
         android:layout_height="131dp"
         android:contentDescription="@string/event_header"
-        app:layout_constraintBottom_toTopOf="@+id/fragmentContainer"
+        app:layout_constraintBottom_toTopOf="@+id/fragmentContainerCreate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
