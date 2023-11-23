@@ -7,11 +7,12 @@ import com.example.calitour.R
 import com.example.calitour.activities.fragments.CreateEventFragment
 import com.example.calitour.activities.fragments.CreateProductFragment
 import com.example.calitour.databinding.ActivityCreateEventBinding
+import com.example.calitour.viewmodel.EntityViewModel
 
 class CreateEventProductActivity : AppCompatActivity() {
 
-    private val createEventFragment = CreateEventFragment()
-    private val createProductFragment = CreateProductFragment()
+    private val createEventFragment = CreateEventFragment.newInstance()
+    private val createProductFragment = CreateProductFragment.newInstance()
 
     private val binding: ActivityCreateEventBinding by lazy {
         ActivityCreateEventBinding.inflate(layoutInflater)
