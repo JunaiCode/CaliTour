@@ -9,7 +9,6 @@ data class User (
     var email: String,
     var name : String,
     var phoneNumber: String,
-    var points : Long,
+    var points : Int,
     var photoUri: Uri
 )
-

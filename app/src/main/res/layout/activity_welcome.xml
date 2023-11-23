@@ -7,11 +7,9 @@
     tools:context=".activities.WelcomeActivity">
 
     <ImageView
-        android:id="@+id/imageView3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/fondobienvenido"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -20,7 +18,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/shadowbienvenido"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -30,29 +27,57 @@
         android:id="@+id/textoBienvenida"
         android:layout_width="277dp"
         android:layout_height="wrap_content"
-        android:text="@string/welcome_message"
+        android:layout_marginTop="239dp"
+        android:text="Vení a la sucursal del cielo y date un borondo, ve!"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:textSize="24sp"
+        android:textSize="21dp"
         app:fontFamily="@font/shrikhandregular"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/start_welcome"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
-        android:backgroundTint="@color/blue"
-        android:fontFamily="@font/poppins_semibold"
-        android:text="@string/start"
-        android:textSize="16sp"
-        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="5dp"
+        app:cardUseCompatPadding="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textoBienvenida" />
+        app:layout_constraintTop_toBottomOf="@+id/textoBienvenida">
+
+        <Spinner
+            android:id="@+id/idiomaSpinner"
+            android:layout_width="127.87dp"
+            android:layout_height="48dp"
+
+
+            android:addStatesFromChildren="false"
+            android:spinnerMode="dropdown" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewButtonEmpezar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="131dp"
+        app:cardBackgroundColor="#00A0E4"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardViewSpinner">
+
+        <Button
+            android:id="@+id/loginBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:background="@android:color/transparent"
+            android:text="Empezar"
+            android:textSize="14sp" />
+    </androidx.cardview.widget.CardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

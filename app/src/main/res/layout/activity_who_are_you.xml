@@ -19,47 +19,60 @@
         android:id="@+id/opcionesRegistroLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/fondoRegistoUnoIMG"
+        android:layout_marginTop="290dp"
         app:layout_constraintEnd_toEndOf="@+id/fondoRegistoUnoIMG"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/fondoRegistoUnoIMG">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/titleRegistroUno"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins"
-            android:text="@string/are_you"
+            android:text="¿Sos...?"
             android:textSize="18dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/im_user"
-            android:layout_width="130dp"
-            android:layout_height="48dp"
-            android:backgroundTint="#00A0E4"
-            android:fontFamily="@font/poppins_semibold"
-            android:text="@string/user"
-            android:textSize="14sp"
-            android:textStyle="bold"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewButtonUsuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:cardBackgroundColor="#00A0E4"
+            app:cardCornerRadius="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleRegistroUno" />
+            app:layout_constraintTop_toBottomOf="@+id/titleRegistroUno">
 
-        <Button
-            android:id="@+id/im_entity"
-            android:layout_width="130dp"
-            android:layout_height="48dp"
-            android:backgroundTint="@color/purple"
-            android:fontFamily="@font/poppins_semibold"
-            android:text="@string/entity"
-            android:textSize="14sp"
-            android:textStyle="bold"
+            <Button
+                android:id="@+id/userRegBtn"
+                android:layout_width="125dp"
+                android:layout_height="48dp"
+                android:background="@android:color/transparent"
+                android:text="Usuario"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewButtonEntidad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:cardBackgroundColor="#5023B3"
+            app:cardCornerRadius="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/im_user" />
+            app:layout_constraintTop_toBottomOf="@+id/cardViewButtonUsuario">
+
+            <Button
+                android:id="@+id/entityRegBtn"
+                android:layout_width="125dp"
+                android:layout_height="48dp"
+                android:background="@android:color/transparent"
+                android:text="Entidad" />
+        </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
