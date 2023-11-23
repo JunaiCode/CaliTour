@@ -14,9 +14,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:cardCornerRadius="10dp"
         app:cardBackgroundColor="#FFFFFF"
-        app:cardElevation="0dp"
-        app:cardStrokeColor="#1E1E1E"
-        app:cardStrokeWidth="10dp">
+        app:cardElevation="0dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -43,7 +41,7 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/nameTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Jams poéticos"
@@ -56,7 +54,7 @@
                 app:layout_constraintVertical_bias="0.156" />
 
             <TextView
-                android:id="@+id/textView7"
+                android:id="@+id/priceTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Gratis"
@@ -65,11 +63,11 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.23"
                 app:layout_constraintStart_toEndOf="@+id/cardView5"
-                app:layout_constraintTop_toBottomOf="@+id/textView8"
+                app:layout_constraintTop_toBottomOf="@+id/timeTV"
                 app:layout_constraintVertical_bias="0.47" />
 
             <TextView
-                android:id="@+id/textView8"
+                android:id="@+id/timeTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="3:00 pm"
@@ -79,11 +77,11 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.152"
                 app:layout_constraintStart_toEndOf="@+id/cardView5"
-                app:layout_constraintTop_toBottomOf="@+id/textView6"
+                app:layout_constraintTop_toBottomOf="@+id/nameTV"
                 app:layout_constraintVertical_bias="0.125" />
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/placeTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="9 km"
@@ -91,8 +89,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.421"
-                app:layout_constraintStart_toEndOf="@+id/textView7"
-                app:layout_constraintTop_toBottomOf="@+id/textView6"
+                app:layout_constraintStart_toEndOf="@+id/priceTV"
+                app:layout_constraintTop_toBottomOf="@+id/nameTV"
                 app:layout_constraintVertical_bias="0.718" />
 
             <ImageView
@@ -100,10 +98,10 @@
                 android:layout_width="8dp"
                 android:layout_height="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/textView10"
+                app:layout_constraintEnd_toStartOf="@+id/placeTV"
                 app:layout_constraintHorizontal_bias="0.87"
-                app:layout_constraintStart_toEndOf="@+id/textView7"
-                app:layout_constraintTop_toBottomOf="@+id/textView6"
+                app:layout_constraintStart_toEndOf="@+id/priceTV"
+                app:layout_constraintTop_toBottomOf="@+id/nameTV"
                 app:layout_constraintVertical_bias="0.714"
                 app:srcCompat="@drawable/pin" />
 
@@ -112,10 +110,10 @@
                 android:layout_width="8dp"
                 android:layout_height="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/textView7"
+                app:layout_constraintEnd_toStartOf="@+id/priceTV"
                 app:layout_constraintHorizontal_bias="0.87"
                 app:layout_constraintStart_toEndOf="@+id/cardView5"
-                app:layout_constraintTop_toBottomOf="@+id/textView8"
+                app:layout_constraintTop_toBottomOf="@+id/timeTV"
                 app:srcCompat="@drawable/coin" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

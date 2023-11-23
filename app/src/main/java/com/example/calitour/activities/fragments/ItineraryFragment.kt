@@ -1,36 +1,51 @@
 package com.example.calitour.activities.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.calitour.R
+import com.example.calitour.components.adapter.ItineraryEventAdapter
+import com.example.calitour.databinding.ItineraryFragmentBinding
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class ItineraryFragment: Fragment() {
-
-    lateinit var adapter: EventAdapter
-    private val menuEntityEventsVM: MenuEntityEventsViewModel by viewModels()
-
-
-    private val binding by lazy{
-        ActivityMenuEntityEventsBinding.inflate(layoutInflater)
+    lateinit var adapter: ItineraryEventAdapter
+    private val itineraryFull = ItineraryFullFragment()
+    private val itineraryEmpty = ItineraryEmptyFragment()
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.itinerary_fragment, container, false)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(binding.root)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        adapter = EventAdapter()
-        binding.entityEventsList.layoutManager = LinearLayoutManager(this)
-        binding.entityEventsList.setHasFixedSize(true)
-        binding.entityEventsList.adapter = adapter
+        // Obtener la fecha actual y actualizar el TextView
+        val currentDate = Calendar.getInstance().time
+        val dateFormat = SimpleDateFormat("EEEE, MMM dd / yyyy", Locale.getDefault())
+        val formattedDate = dateFormat.format(currentDate)
+        val binding = ItineraryFragmentBinding.bind(view)
+        binding.pageDateTV.text = formattedDate
 
-        menuEntityEventsVM.getAllEvents()
-        menuEntityEventsVM.events.observe(this, { events ->
-            adapter.updateData(events)
-        })
+        adapter = ItineraryEventAdapter()
+        if (adapter.itemCount == 0) {
+            Log.d("ItineraryFragment", "No hay eventos")
+            showFragment(itineraryEmpty)
+        } else {
+            Log.d("ItineraryFragment", "Hay eventos")
+            showFragment(itineraryFull)
+        }
     }
+    fun showFragment(fragment: Fragment){
+        childFragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragment).commit()
+    }
+
 }
