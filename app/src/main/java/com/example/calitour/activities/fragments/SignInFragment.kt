@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.example.calitour.R
 import com.example.calitour.activities.HomeActivity
+import com.example.calitour.activities.SignInSignUpActivity
 import com.example.calitour.databinding.SignInFragmentBinding
 import com.example.calitour.viewmodel.AuthViewModel
 
@@ -25,12 +25,7 @@ class SignInFragment: Fragment() {
 
         val binding:SignInFragmentBinding = SignInFragmentBinding.inflate(inflater, container, false)
         binding.noAccTV.setOnClickListener{
-            activity?.
-                supportFragmentManager?.
-                beginTransaction()?.
-                add(R.id.fragmentContainer, SignUpFragment())?.
-                addToBackStack(null)?.
-                commit()
+            (activity as SignInSignUpActivity).showFragmentReplace(WhoAreYouFragment.newInstance())
         }
         binding.loginBtn.setOnClickListener {
             vm.signin(
