@@ -1,14 +1,13 @@
-package com.example.calitour.activities
+package com.example.calitour
 
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
-import com.example.calitour.R
+import com.example.calitour.activities.MainActivity
 import com.example.calitour.databinding.ActivityProfileEntityBinding
 
 
@@ -47,22 +46,6 @@ class ProfileEntityActivity : AppCompatActivity() {
             binding.bottomNavigationView.menu[2].isChecked = false
         }
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        val event = dialog.findViewById<Button>(R.id.eventPopUpBttn)
-        val product = dialog.findViewById<Button>(R.id.productPopUpBttn)
-
-        event.setOnClickListener {
-            val intent = Intent(this, CreateEventProductActivity::class.java).putExtra("fragment", "EVENT")
-            dialog.dismiss()
-            startActivity(intent)
-        }
-
-        product.setOnClickListener {
-            val intent = Intent(this, CreateEventProductActivity::class.java).putExtra("fragment", "PRODUCT")
-            dialog.dismiss()
-            startActivity(intent)
-        }
-
-
         dialog.show()
         binding.bottomNavigationView.menu[1].isChecked = true
 

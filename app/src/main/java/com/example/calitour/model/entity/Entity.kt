@@ -1,12 +1,12 @@
 package com.example.calitour.model.entity
 
-import android.net.Uri
+import java.util.UUID
 
 data class Entity (
-    var description : String,
-    var email : String,
-    var id :  String,
-    var name : String,
-    var password : String,
-    var profilePic : Uri
+    val description : String,
+    val email : String,
+    val id :  UUID,
+    val name : String,
+    val password : String,
+    val profilePic : String
 )

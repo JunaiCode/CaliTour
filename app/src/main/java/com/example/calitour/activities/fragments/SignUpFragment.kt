@@ -1,6 +1,5 @@
 package com.example.calitour.activities.fragments
 
-import android.app.Activity.RESULT_CANCELED
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -26,18 +25,16 @@ class SignUpFragment: Fragment() {
     private var uri: Uri = Uri.parse("")
     private val binding get() = _binding!!
 
+    val launcher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult(),
+        ::onGalleryResult
+    )
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = SignUpFragmentBinding.inflate(inflater, container, false)
-
-        val launcher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult(),
-            ::onGalleryResult
-        )
-
         _binding!!.profileImg.setOnClickListener{
             val intent = Intent(Intent.ACTION_GET_CONTENT)
             intent.type = "image/*"
@@ -46,7 +43,7 @@ class SignUpFragment: Fragment() {
         }
 
         _binding!!.registerBttn.setOnClickListener {
-            val newUser = User(
+            var newUser = User(
                 "",
                 _binding!!.birthdayIT.editText?.text.toString(),
                 _binding!!.emailInput.editText?.text.toString(),
@@ -55,7 +52,7 @@ class SignUpFragment: Fragment() {
                 0,
                 uri
             )
-            vm.signUpUser(newUser, _binding!!.passwordInput.editText?.text.toString())
+            vm.signup(newUser, _binding!!.passwordInput.editText?.text.toString())
         }
 
         vm.authStateLV.observe(viewLifecycleOwner){ state ->
@@ -70,11 +67,8 @@ class SignUpFragment: Fragment() {
     }
 
     fun onGalleryResult(result: ActivityResult){
-
-        if(result.resultCode != RESULT_CANCELED){
-            uri = result.data?.data!!
-            Glide.with(this).load(uri).into(binding.profileImg)
-        }
+        uri = result.data?.data!!
+        Glide.with(this).load(uri).into(binding.profileImg)
     }
 
 
@@ -99,8 +93,8 @@ class SignUpFragment: Fragment() {
     }
 
     companion object{
-        fun newInstance(): SignUpFragment {
-            return SignUpFragment()
+        fun newInstance(): SignInFragment {
+            return SignInFragment()
         }
     }
 }
