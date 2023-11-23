@@ -8,20 +8,29 @@ import com.example.calitour.activities.fragments.CreateEventFragment
 import com.example.calitour.activities.fragments.CreateProductFragment
 import com.example.calitour.databinding.ActivityCreateEventBinding
 
-class CreateEventActivity : AppCompatActivity() {
+class CreateEventProductActivity : AppCompatActivity() {
 
-    private val createEventFragment = CreateEventFragment.newInstance()
-    private val createProductFragment = CreateProductFragment.newInstance()
+    private val createEventFragment = CreateEventFragment()
+    private val createProductFragment = CreateProductFragment()
 
     private val binding: ActivityCreateEventBinding by lazy {
         ActivityCreateEventBinding.inflate(layoutInflater)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        when(intent?.extras?.getString("fragment")){
+            "EVENT" ->{
+                showFragment(createEventFragment)
+            }
+            "PRODUCT" -> {
+                showFragment(createProductFragment)
+            }
+        }
         setContentView(binding.root)
     }
 
     fun showFragment(fragment: Fragment){
-        supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer,fragment).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.fragmentContainerCreate,fragment).commit()
     }
 }

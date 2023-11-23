@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">CaliTour</string>
+    <string name="contact_us">Contáctanos</string>
+    <string name="event">Evento</string>
+    <string name="product_sale">Producto en venta</string>
     <string name="sign_in">Iniciar sesión</string>
     <string name="dont_have_account">No tengo cuenta</string>
     <string name="register_me">Registrarme</string>
@@ -11,7 +14,7 @@
     <string name="select_image">Selecciona una imagen</string>
     <string name="event_header">¡Contanos ve!</string>
     <string name="name_of_your_event">Nombre del evento</string>
-    <string name="description_of_your_event">Descripcion del evento... </string>
+    <string name="description_of_your_event">Descripcion del evento… </string>
     <string name="date_hour_event">Selecciona fecha y hora</string>
     <string name="location_event">Añade la ubicacion</string>
     <string name="price_event_product">Indica el precio</string>
@@ -25,6 +28,12 @@
     </string-array>
     <string name="btn_create_event">Crear Evento</string>
     <string name="name_of_your_product">Nombre del producto</string>
-    <string name="description_of_your_product">Descripcion del producto... </string>
-    <string name="btn_create_product">Crear Producto</string>
+    <string name="description_of_your_product">Descripcion del producto… </string>
+    <string name="btn_create_product">Crear producto</string>
+    <string name="are_you">¿Sos…?</string>
+    <string name="user">Usuario</string>
+    <string name="entity">Entidad</string>
+    <string name="welcome_message">Vení a la sucursal del cielo y date un borondo, ve!</string>
+    <string name="start">Comenzar</string>
+    <string name="description">Descripción</string>
 </resources>
