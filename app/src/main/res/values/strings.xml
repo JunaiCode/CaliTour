@@ -20,6 +20,7 @@
     <string name="price_event_product">Indica el precio</string>
     <string name="dropdown_categories">dropDownMenuCategories</string>
     <string-array name="categories">
+        <item>Categoría</item>
         <item>Salsa</item>
         <item>Hiphop</item>
         <item>Electronica</item>
