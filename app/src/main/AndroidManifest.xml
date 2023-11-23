@@ -39,12 +39,6 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity
-            android:name=".activities.WelcomeActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.WhoAreYouActivity"
-            android:exported="false" />
-        <activity
             android:name=".activities.HomeActivity"
             android:exported="true">
         </activity>
