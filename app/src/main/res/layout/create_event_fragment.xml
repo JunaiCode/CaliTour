@@ -9,11 +9,14 @@
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
         android:layout_height="550dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:background="#673AB7"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/eventImg">
 
         <EditText
             android:id="@+id/editTextText"
@@ -21,7 +24,7 @@
             android:layout_width="210dp"
             android:layout_height="48dp"
             android:layout_marginStart="25dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="25dp"
             android:autofillHints="name"
             android:background="#FFFFFF"
@@ -47,11 +50,11 @@
             app:layout_constraintTop_toBottomOf="@+id/editTextText" />
 
         <EditText
-            android:autofillHints="description"
             android:id="@+id/editTextTextMultiLine2"
             android:layout_width="356dp"
             android:layout_height="78dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="14dp"
+            android:autofillHints="description"
             android:background="#FFFFFF"
             android:ems="10"
             android:gravity="start|top"
@@ -65,7 +68,7 @@
             android:id="@+id/editTextDate"
             android:layout_width="356dp"
             android:layout_height="48dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="14dp"
             android:autofillHints="location"
             android:background="#ffffff"
             android:ems="10"
@@ -80,7 +83,7 @@
             android:id="@+id/editTextDate2"
             android:layout_width="356dp"
             android:layout_height="48dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="14dp"
             android:autofillHints="price"
             android:background="#ffffff"
             android:ems="10"
@@ -95,7 +98,7 @@
             android:id="@+id/editTextText3"
             android:layout_width="356dp"
             android:layout_height="48dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="14dp"
             android:autofillHints="date"
             android:background="#ffffff"
             android:ems="10"
@@ -111,13 +114,13 @@
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="30dp"
             app:cardCornerRadius="70dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/imageView4"
+                android:id="@+id/badgeImg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/name_of_your_event" />
@@ -127,19 +130,18 @@
             android:id="@+id/btnCreateEvent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginTop="14dp"
             android:backgroundTint="#FFC107"
             android:text="@string/btn_create_event"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextDate2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/eventImg"
         android:layout_width="272dp"
         android:layout_height="182dp"
         android:contentDescription="@string/event_header"
