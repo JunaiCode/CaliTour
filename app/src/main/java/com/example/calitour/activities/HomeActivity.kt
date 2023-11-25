@@ -31,7 +31,7 @@ class HomeActivity : AppCompatActivity() {
 
     fun showFragment(fragment: Fragment){
 
-        supportFragmentManager.beginTransaction().add(R.id.fragmentContainer, fragment).commit()
+        supportFragmentManager.beginTransaction().add(R.id.fragmentContainerHome, fragment).commit()
 
     }
 }

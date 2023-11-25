@@ -7,7 +7,7 @@
     tools:context=".activities.HomeActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/fragmentContainer"
+        android:id="@+id/fragmentContainerHome"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toTopOf="@+id/cardView2"

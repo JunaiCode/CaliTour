@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">CaliTour</string>
+
+    <string name="contact_us">Contact us</string>
+    <string name="event">Event</string>
+    <string name="product_sale">Product on sale</string>
+
     <string name="sign_in">Sign In</string>
     <string name="dont_have_account">Don\'t have an account</string>
     <string name="register_me">Register</string>
@@ -12,12 +17,13 @@
     <string name="select_image">Select an image</string>
     <string name="event_header">Tell Us!</string>
     <string name="name_of_your_event">Name of the event</string>
-    <string name="description_of_your_event">Description of the event...</string>
+    <string name="description_of_your_event">Description of the event…</string>
     <string name="date_hour_event">Select date and time</string>
     <string name="location_event">Add the location</string>
     <string name="price_event_product">Indicate the price</string>
     <string name="dropdown_categories">dropDownMenuCategories</string>
     <string-array name="categories">
+        <item>Category</item>
         <item>Salsa</item>
         <item>Hiphop</item>
         <item>Electronic</item>
@@ -26,6 +32,12 @@
     </string-array>
     <string name="btn_create_event">Create Event</string>
     <string name="name_of_your_product">Name of the product</string>
-    <string name="description_of_your_product">Description of the product... </string>
+    <string name="description_of_your_product">Description of the product… </string>
     <string name="btn_create_product">Create Product</string>
+    <string name="are_you">Are you an…</string>
+    <string name="user">User</string>
+    <string name="entity">Entity</string>
+    <string name="welcome_message">Come to the branch of heaven and have a blast!</string>
+    <string name="start">Start</string>
+    <string name="description">Description</string>
 </resources>
