@@ -36,6 +36,7 @@ class HomeActivity : AppCompatActivity() {
                 R.id.itinerary_user -> {
                     Log.d("HomeActivity", "Selected Itinerary")
                     showFragment(itinerary)
+                    itinerary.updateDate(System.currentTimeMillis())
                 }
                 R.id.profile_user -> {
                     Log.d("HomeActivity", "Selected Profile")
