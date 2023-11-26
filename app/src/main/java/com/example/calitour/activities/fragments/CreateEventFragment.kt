@@ -8,17 +8,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.TextView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.calitour.R
 import com.example.calitour.components.adapter.CategoriesAdapterSpinner
 import com.example.calitour.databinding.CreateEventFragmentBinding
-import com.example.calitour.databinding.CreateProductFragmentBinding
+import com.example.calitour.model.entity.Badge
+import com.example.calitour.model.entity.Event
+import com.example.calitour.model.entity.Price
+import com.example.calitour.model.entity.Trivia
 import com.example.calitour.viewmodel.CreateEventProductViewModel
+import java.util.UUID
 
 
 class CreateEventFragment: Fragment() {
@@ -73,7 +77,25 @@ class CreateEventFragment: Fragment() {
         }
 
         binding.btnCreateEvent.setOnClickListener(){
-            viewModel.createEvent()
+            val newEvent = Event(
+                UUID.randomUUID(),
+                binding.categories.selectedItem.toString(),
+                binding.dateEvent.text.toString(),
+                binding.descriptionEvent.text.toString(),
+                UUID.randomUUID(),
+                binding.nameEvent.text.toString(),
+                binding.locationEvent.text.toString(),
+                0,
+                0.0,
+                "available",
+                eventUri.toString(),
+                ArrayList<Price>(),
+                ArrayList<Badge>(),
+                ArrayList<Trivia>()
+            )
+            newEvent.prices.add(Price("Entrada General",binding.priceEvent.text.toString().toDouble(),UUID.randomUUID(),"General"))
+            newEvent.badges.add(Badge(UUID.randomUUID(),badgeUri.toString(),"Badge"))
+            viewModel.createEvent(newEvent)
         }
 
         return binding.root
