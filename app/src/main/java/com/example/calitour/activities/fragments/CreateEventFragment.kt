@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.calitour.R
+import com.example.calitour.activities.ProfileEntityActivity
 import com.example.calitour.components.adapter.CategoriesAdapterSpinner
 import com.example.calitour.databinding.CreateEventFragmentBinding
 import com.example.calitour.model.entity.Badge
@@ -22,6 +23,8 @@ import com.example.calitour.model.entity.Event
 import com.example.calitour.model.entity.Price
 import com.example.calitour.model.entity.Trivia
 import com.example.calitour.viewmodel.CreateEventProductViewModel
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import java.util.UUID
 
 
@@ -29,7 +32,7 @@ class CreateEventFragment: Fragment() {
     private lateinit var binding: CreateEventFragmentBinding
     private var badgeUri: Uri = Uri.parse("")
     private var eventUri: Uri = Uri.parse("")
-    val viewModel: CreateEventProductViewModel by viewModels()
+    private val vm: CreateEventProductViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -82,20 +85,22 @@ class CreateEventFragment: Fragment() {
                 binding.categories.selectedItem.toString(),
                 binding.dateEvent.text.toString(),
                 binding.descriptionEvent.text.toString(),
-                UUID.randomUUID(),
+                Firebase.auth.currentUser?.uid.toString(),
                 binding.nameEvent.text.toString(),
                 binding.locationEvent.text.toString(),
                 0,
                 0.0,
                 "available",
-                eventUri.toString(),
+                eventUri,
                 ArrayList<Price>(),
                 ArrayList<Badge>(),
                 ArrayList<Trivia>()
             )
             newEvent.prices.add(Price("Entrada General",binding.priceEvent.text.toString().toDouble(),UUID.randomUUID(),"General"))
-            newEvent.badges.add(Badge(UUID.randomUUID(),badgeUri.toString(),"Badge"))
-            viewModel.createEvent(newEvent)
+            newEvent.badges.add(Badge(UUID.randomUUID(),badgeUri,"Badge"))
+            vm.createEvent(newEvent)
+            vm.uploadImages(newEvent)
+            startActivity(Intent(requireContext(), ProfileEntityActivity::class.java))
         }
 
         return binding.root
