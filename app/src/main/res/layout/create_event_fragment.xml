@@ -9,25 +9,30 @@
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
         android:layout_height="550dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:background="#673AB7"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/eventImg">
+
         <EditText
-            android:autofillHints="name"
-            android:id="@+id/editTextText"
+            android:id="@+id/nameEvent"
             style="@style/Widget.AppCompat.EditText"
             android:layout_width="210dp"
             android:layout_height="48dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginEnd="30dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="25dp"
+            android:autofillHints="name"
             android:background="#FFFFFF"
             android:ems="10"
             android:hint="@string/name_of_your_event"
             android:inputType="text"
-            android:textColor="#FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cardView3"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Spinner
@@ -36,20 +41,20 @@
             android:layout_height="48dp"
             android:layout_marginStart="25dp"
             android:layout_marginTop="14dp"
-            android:layout_marginEnd="30dp"
+            android:layout_marginEnd="25dp"
             android:background="#FFFFFF"
             android:dropDownWidth="match_parent"
             android:spinnerMode="dropdown"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/cardView3"
-            app:layout_constraintTop_toBottomOf="@+id/editTextText" />
+            app:layout_constraintTop_toBottomOf="@+id/nameEvent" />
 
         <EditText
-            android:autofillHints="description"
-            android:id="@+id/editTextTextMultiLine2"
+            android:id="@+id/descriptionEvent"
             android:layout_width="356dp"
             android:layout_height="78dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="14dp"
+            android:autofillHints="description"
             android:background="#FFFFFF"
             android:ems="10"
             android:gravity="start|top"
@@ -60,87 +65,83 @@
             app:layout_constraintTop_toBottomOf="@+id/cardView3" />
 
         <EditText
-            android:autofillHints="location"
-            android:id="@+id/editTextDate"
+            android:id="@+id/locationEvent"
             android:layout_width="356dp"
             android:layout_height="48dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="14dp"
+            android:autofillHints="location"
             android:background="#ffffff"
             android:ems="10"
             android:hint="@string/location_event"
-            android:inputType="date"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.509"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextText3" />
-
-        <EditText
-            android:id="@+id/editTextDate2"
-            android:layout_width="356dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="20dp"
-            android:autofillHints="price"
-            android:background="#ffffff"
-            android:ems="10"
-            android:hint="@string/price_event_product"
-            android:inputType="date"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.454"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
-
-        <EditText
-            android:autofillHints="date"
-            android:id="@+id/editTextText3"
-            android:layout_width="356dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="20dp"
-            android:background="#ffffff"
-            android:ems="10"
-            android:hint="@string/date_hour_event"
             android:inputType="text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.509"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine2" />
+            app:layout_constraintTop_toBottomOf="@+id/dateEvent" />
+
+        <EditText
+            android:id="@+id/priceEvent"
+            android:layout_width="356dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="14dp"
+            android:autofillHints="price"
+            android:background="#ffffff"
+            android:ems="10"
+            android:hint="@string/price_event_product"
+            android:inputType="number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.454"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/locationEvent" />
+
+        <EditText
+            android:id="@+id/dateEvent"
+            android:layout_width="356dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="14dp"
+            android:autofillHints="date"
+            android:background="#ffffff"
+            android:ems="10"
+            android:hint="@string/date_hour_event"
+            android:inputType="datetime"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.509"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/descriptionEvent" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView3"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginTop="30dp"
             app:cardCornerRadius="70dp"
-            app:layout_constraintEnd_toStartOf="@+id/editTextText"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/imageView4"
+                android:id="@+id/badgeImg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:contentDescription="@string/name_of_your_event"
-                />
+                android:contentDescription="@string/name_of_your_event" />
         </androidx.cardview.widget.CardView>
 
         <Button
             android:id="@+id/btnCreateEvent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginTop="14dp"
             android:backgroundTint="#FFC107"
             android:text="@string/btn_create_event"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextDate2" />
+            app:layout_constraintTop_toBottomOf="@+id/priceEvent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/eventImg"
         android:layout_width="272dp"
         android:layout_height="182dp"
         android:contentDescription="@string/event_header"
