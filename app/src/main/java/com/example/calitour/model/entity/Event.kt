@@ -8,7 +8,7 @@ data class Event(
     var category: String,
     var date: String,
     var description: String,
-    var entityId: UUID,
+    var entityId: String,
     var name: String,
     var place: String,
     var reaction: Int,

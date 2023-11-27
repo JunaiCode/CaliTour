@@ -20,14 +20,14 @@ import java.util.UUID
 class CreateEventProductViewModel: ViewModel() {
 
     fun createEvent(e: Event) {
-        val eventDto = EventDocumentDTO(e.id.toString(),e.category,e.date,e.description,e.entityId.toString(),e.name,e.place,e.reaction,e.score,e.state,"")
+        val eventDto = EventDocumentDTO(e.id.toString(),e.category,e.date,e.description,e.entityId,e.name,e.place,e.reaction,e.score,e.state,"")
         val priceDTO = PriceDTO(e.prices[0].description,e.prices[0].fee,e.prices[0].id.toString(),e.prices[0].name)
         val badgeDTO = BadgeDTO(e.badges[0].id.toString(),"",e.badges[0].name)
         viewModelScope.launch(Dispatchers.IO){
-            Firebase.firestore.collection("events").document(eventDto.id.toString()).set(eventDto)
-            Firebase.firestore.collection("events").document(eventDto.id.toString()).collection("prices").document(
+            Firebase.firestore.collection("events").document(eventDto.id).set(eventDto)
+            Firebase.firestore.collection("events").document(eventDto.id).collection("prices").document(
                 priceDTO.id).set(priceDTO)
-            Firebase.firestore.collection("events").document(eventDto.id.toString()).collection("badges").document(
+            Firebase.firestore.collection("events").document(eventDto.id).collection("badges").document(
                 badgeDTO.id).set(badgeDTO)
         }
     }
@@ -43,7 +43,7 @@ class CreateEventProductViewModel: ViewModel() {
                 val badgeImg = UUID.randomUUID().toString()
                 Firebase.storage.reference
                     .child("badges")
-                    .child(e.entityId.toString())
+                    .child(e.entityId)
                     .child(e.id.toString())
                     .child(badgeImg)
                     .putFile(e.badges[0].img).await()
@@ -58,7 +58,7 @@ class CreateEventProductViewModel: ViewModel() {
                 val eventImg = UUID.randomUUID().toString()
                 Firebase.storage.reference
                     .child("eventImages")
-                    .child(e.entityId.toString())
+                    .child(e.entityId)
                     .child(e.id.toString())
                     .child(eventImg)
                     .putFile(e.img).await()
