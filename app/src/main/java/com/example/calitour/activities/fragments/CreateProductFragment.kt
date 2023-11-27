@@ -7,11 +7,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
+import com.example.calitour.activities.ProfileEntityActivity
 import com.example.calitour.databinding.CreateProductFragmentBinding
 import com.example.calitour.model.entity.EntityProduct
 import com.example.calitour.viewmodel.EntityViewModel
@@ -23,17 +25,27 @@ class CreateProductFragment: Fragment() {
     private val vm: EntityViewModel by activityViewModels()
     private var uri: Uri = Uri.parse("")
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = CreateProductFragmentBinding.inflate(inflater,container,false)
 
         val launcher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult(),
             ::onGalleryResult
         )
+
+        vm.completedProduct.observe(viewLifecycleOwner){state ->
+            if(state){
+                Toast.makeText(requireContext(), "Producto creado exitosamente", Toast.LENGTH_SHORT).show()
+            }else {
+                Toast.makeText(requireContext(), "Ocurrió un error", Toast.LENGTH_SHORT).show()
+
+            }
+        }
 
         binding.productImage.setOnClickListener{
             val intent = Intent(Intent.ACTION_GET_CONTENT)
@@ -55,6 +67,7 @@ class CreateProductFragment: Fragment() {
                 val entityID = Firebase.auth.currentUser?.uid.toString()
 
                 vm.createProduct(newProduct, entityID)
+                startActivity(Intent(requireContext(), ProfileEntityActivity::class.java))
             }
         }
         return binding.root

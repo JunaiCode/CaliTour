@@ -2,6 +2,7 @@ package com.example.calitour.viewmodel
 
 import android.net.Uri
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.calitour.model.entity.EntityProduct
@@ -11,9 +12,12 @@ import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import java.util.UUID
 
 class EntityViewModel:ViewModel() {
+
+    var completedProduct = MutableLiveData<Boolean>()
 
     fun createProduct(product: EntityProduct, entityId: String){
 
@@ -38,7 +42,10 @@ class EntityViewModel:ViewModel() {
 
             if(product.imageUri != Uri.parse("")){
                 uploadImage(product.imageUri,entityId, productId)
+            }
 
+            withContext(Dispatchers.Main) {
+                completedProduct.value = true
             }
 
         }

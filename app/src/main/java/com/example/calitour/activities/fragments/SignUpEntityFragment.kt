@@ -13,7 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
-import com.example.calitour.activities.MainActivity
+import com.example.calitour.activities.ProfileEntityActivity
 import com.example.calitour.databinding.SignUpEntityFragmentBinding
 import com.example.calitour.model.entity.Entity
 import com.example.calitour.viewmodel.AuthViewModel
@@ -28,7 +28,7 @@ class SignUpEntityFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding= SignUpEntityFragmentBinding.inflate(inflater, container, false)
 
         val launcher = registerForActivityResult(
@@ -58,7 +58,7 @@ class SignUpEntityFragment: Fragment() {
 
         vm.authStateLV.observe(viewLifecycleOwner){ state ->
             if(state.isAuth){
-                startActivity(Intent(requireContext(), MainActivity::class.java))
+                startActivity(Intent(requireContext(), ProfileEntityActivity::class.java))
             }
         }
         vm.errorLV.observe(viewLifecycleOwner){error->

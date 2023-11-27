@@ -96,7 +96,7 @@
                             android:fontFamily="@font/poppins"
                             android:gravity="top"
                             android:hint="@string/description_of_your_product"
-                            android:inputType="text|textPassword"
+                            android:inputType="text"
                             android:textSize="14sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
