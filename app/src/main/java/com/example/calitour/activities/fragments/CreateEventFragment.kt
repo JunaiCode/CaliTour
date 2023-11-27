@@ -29,7 +29,7 @@ class CreateEventFragment: Fragment() {
     private lateinit var binding: CreateEventFragmentBinding
     private var badgeUri: Uri = Uri.parse("")
     private var eventUri: Uri = Uri.parse("")
-    val viewModel: CreateEventProductViewModel by viewModels()
+    private val viewModel: CreateEventProductViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -88,14 +88,15 @@ class CreateEventFragment: Fragment() {
                 0,
                 0.0,
                 "available",
-                eventUri.toString(),
+                eventUri,
                 ArrayList<Price>(),
                 ArrayList<Badge>(),
                 ArrayList<Trivia>()
             )
             newEvent.prices.add(Price("Entrada General",binding.priceEvent.text.toString().toDouble(),UUID.randomUUID(),"General"))
-            newEvent.badges.add(Badge(UUID.randomUUID(),badgeUri.toString(),"Badge"))
+            newEvent.badges.add(Badge(UUID.randomUUID(),badgeUri,"Badge"))
             viewModel.createEvent(newEvent)
+            viewModel.uploadImages(newEvent)
         }
 
         return binding.root

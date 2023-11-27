@@ -1,6 +1,6 @@
 package com.example.calitour.model.DTO
 
-import java.util.UUID
+
 
 data class EventDocumentDTO(
     var id: String,
