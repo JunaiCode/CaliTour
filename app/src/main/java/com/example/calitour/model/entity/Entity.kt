@@ -10,3 +10,15 @@ data class Entity (
     var password : String,
     var profilePic : Uri
 )
+
+data class EntityFirestore (
+    var description: String,
+    var email: String,
+    var id: String,
+    var name: String,
+    var photoID: String
+){
+    constructor():this("","","","","") {
+        // No-argument constructor required for deserialization
+    }
+}
