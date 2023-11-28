@@ -6,10 +6,13 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.widget.Button
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
+import com.bumptech.glide.Glide
 import com.example.calitour.R
 import com.example.calitour.databinding.ActivityProfileEntityBinding
+import com.example.calitour.viewmodel.EntityViewModel
 
 
 class ProfileEntityActivity : AppCompatActivity() {
@@ -17,11 +20,22 @@ class ProfileEntityActivity : AppCompatActivity() {
     private val binding by lazy{
         ActivityProfileEntityBinding.inflate(layoutInflater)
     }
+    private val vm: EntityViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-       setProfileNavigation()
+        vm.loadProfile()
+
+        vm.profile.observe(this){profile ->
+            binding.entityName.text = profile.name
+            binding.descriptionEntityTV.text = profile.description
+            if(profile.photoID!=""){
+                Glide.with(this).load(profile.photoID).into(binding.entityIV)
+            }
+        }
+
+        setProfileNavigation()
 
         binding.bottomNavigationView.menu[2].isChecked = true
 
