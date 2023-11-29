@@ -1,26 +1,32 @@
 package com.example.calitour.viewmodel
 
-import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.calitour.model.DTO.BadgeDTO
 import com.example.calitour.model.DTO.EventDocumentDTO
 import com.example.calitour.model.DTO.PriceDTO
-import com.example.calitour.model.entity.EntityProduct
 import com.example.calitour.model.entity.Event
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
 import java.util.UUID
 
 class CreateEventProductViewModel: ViewModel() {
 
+    //Formato en el que se debe ingresar la fecha y hora para que lo coja como timeStamp
+    val dateFormat = SimpleDateFormat("dd-M-yyyy hh:mm:ss")
+
     fun createEvent(e: Event) {
-        val eventDto = EventDocumentDTO(e.id.toString(),e.category,e.date,e.description,e.entityId,e.name,e.place,e.reaction,e.score,e.state,"")
+        val eventDto = EventDocumentDTO(e.category,Timestamp(Date(e.date)),e.description,
+            e.entityId,e.id.toString(),"",e.name,e.place,e.reaction,e.score,e.state)
         val priceDTO = PriceDTO(e.prices[0].description,e.prices[0].fee,e.prices[0].id.toString(),e.prices[0].name)
         val badgeDTO = BadgeDTO(e.badges[0].id.toString(),"",e.badges[0].name)
         viewModelScope.launch(Dispatchers.IO){
@@ -32,8 +38,9 @@ class CreateEventProductViewModel: ViewModel() {
         }
     }
 
-    fun createProduct(product:EntityProduct){
-
+     fun dateToMilliseconds(date:String,dateFormat: SimpleDateFormat):Long{
+        val mDate = dateFormat.parse(date)
+        return mDate.time
     }
 
     fun uploadImages(e: Event){

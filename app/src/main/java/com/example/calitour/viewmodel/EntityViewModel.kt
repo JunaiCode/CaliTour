@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.calitour.model.entity.EntityProduct
+import com.example.calitour.model.repository.EventRepository
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -18,6 +19,7 @@ import java.util.UUID
 class EntityViewModel:ViewModel() {
 
     var completedProduct = MutableLiveData<Boolean>()
+    var eventRepo = EventRepository()
 
     fun createProduct(product: EntityProduct, entityId: String){
 
@@ -48,6 +50,33 @@ class EntityViewModel:ViewModel() {
                 completedProduct.value = true
             }
 
+        }
+    }
+
+    fun getAllEvents(){
+        viewModelScope.launch (Dispatchers.IO){
+            val events = eventRepo.getAllEvents()
+        }
+    }
+
+    fun getEventsById(id:String){
+        viewModelScope.launch (Dispatchers.IO){
+            val events = eventRepo.getEventByEntityId(id)
+            Log.e("Eventos de esta entidad: ",events.toString())
+        }
+    }
+
+    fun getEventsUnavailablesByEntityId(id:String){
+        viewModelScope.launch (Dispatchers.IO){
+            val events = eventRepo.getEventsUnavailablesByEntityId(id)
+            Log.e("Eventos inactivos de esta entidad: ",events.toString())
+        }
+    }
+
+    fun getEventsAvailablesByEntityId(id:String){
+        viewModelScope.launch (Dispatchers.IO){
+            val events = eventRepo.getEventsAvailablesByEntityId(id)
+            Log.e("Eventos activos de esta entidad: ",events.toString())
         }
     }
 
