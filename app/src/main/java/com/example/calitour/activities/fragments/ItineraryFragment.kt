@@ -7,9 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.example.calitour.R
 import com.example.calitour.components.adapter.ItineraryEventAdapter
 import com.example.calitour.databinding.ItineraryFragmentBinding
+import com.example.calitour.viewmodel.ItineraryViewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -22,6 +24,8 @@ class ItineraryFragment : Fragment() {
 
     private var currentDate: Date = Calendar.getInstance().time
     private lateinit var binding: ItineraryFragmentBinding
+
+    private val viewModel: ItineraryViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,6 +44,7 @@ class ItineraryFragment : Fragment() {
         adapter = ItineraryEventAdapter()
         if (adapter.itemCount == 0) {
             Log.d("ItineraryFragment", "No hay eventos")
+            //viewModel.searchEventsItineraryDay("hola")
             showFragment(itineraryEmpty)
         } else {
             Log.d("ItineraryFragment", "Hay eventos")
@@ -59,6 +64,10 @@ class ItineraryFragment : Fragment() {
         binding.calendarCardView.setOnClickListener {
             openDatePicker()
         }
+
+        //viewModel.currentDate.observe(viewLifecycleOwner, { date ->
+        //    viewModel.searchEventsItineraryDay("hola")
+        //})
     }
 
     private fun updateDateTextView() {
@@ -66,6 +75,8 @@ class ItineraryFragment : Fragment() {
             val dateFormat = SimpleDateFormat("EEE, MMM dd / yyyy", Locale.getDefault())
             val formattedDate = dateFormat.format(currentDate)
             binding.pageDateTV.text = formattedDate
+            Log.d("currentDate", currentDate.toString())
+            viewModel.setCurrentDate(currentDate)
         }
     }
 
@@ -101,6 +112,5 @@ class ItineraryFragment : Fragment() {
     fun updateDate(updatedDateMillis: Long) {
         currentDate = Date(updatedDateMillis)
         updateDateTextView()
-        Log.d("currentDate", currentDate.toString())
     }
 }

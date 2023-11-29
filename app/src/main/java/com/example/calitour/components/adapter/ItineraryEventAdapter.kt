@@ -3,14 +3,14 @@ package com.example.calitour.components.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.calitour.R
 import com.example.calitour.components.views.ItineraryEventView
 import com.example.calitour.model.entity.Event
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class ItineraryEventAdapter : RecyclerView.Adapter<ItineraryEventView>() {
+class ItineraryEventAdapter : Adapter<ItineraryEventView>() {
     val events = ArrayList<Event>()
 
     fun updateData(newItems: List<Event>) {

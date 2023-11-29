@@ -49,9 +49,16 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
-    fun showFragment(fragment: Fragment){
+    /*fun showFragment(fragment: Fragment){
         supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragment).commit()
+    }*/
+    fun showFragment(fragment: Fragment){
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, fragment)
+            .addToBackStack(null)  // Agrega el fragmento al back stack
+            .commit()
     }
+
 
 
 }
