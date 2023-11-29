@@ -5,10 +5,10 @@ import java.util.UUID
 
 data class Event(
     var id: UUID,
-    var category: String,
-    var date: String,
-    var description: String,
     var entityId: String,
+    var category: String,
+    var date: Long,
+    var description: String,
     var name: String,
     var place: String,
     var reaction: Int,

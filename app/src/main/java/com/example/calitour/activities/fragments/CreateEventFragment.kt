@@ -2,15 +2,16 @@ package com.example.calitour.activities.fragments
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.TextView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
@@ -26,6 +27,7 @@ import com.example.calitour.viewmodel.CreateEventProductViewModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import java.util.UUID
+import com.google.firebase.Timestamp
 
 
 class CreateEventFragment: Fragment() {
@@ -33,6 +35,7 @@ class CreateEventFragment: Fragment() {
     private var badgeUri: Uri = Uri.parse("")
     private var eventUri: Uri = Uri.parse("")
     private val vm: CreateEventProductViewModel by viewModels()
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -82,10 +85,10 @@ class CreateEventFragment: Fragment() {
         binding.btnCreateEvent.setOnClickListener(){
             val newEvent = Event(
                 UUID.randomUUID(),
-                binding.categories.selectedItem.toString(),
-                binding.dateEvent.text.toString(),
-                binding.descriptionEvent.text.toString(),
                 Firebase.auth.currentUser?.uid.toString(),
+                binding.categories.selectedItem.toString(),
+                vm.dateToMilliseconds(binding.dateEvent.text.toString(),vm.dateFormat),
+                binding.descriptionEvent.text.toString(),
                 binding.nameEvent.text.toString(),
                 binding.locationEvent.text.toString(),
                 0,
@@ -115,6 +118,7 @@ class CreateEventFragment: Fragment() {
         eventUri = result.data?.data!!
         Glide.with(this).load(eventUri).into(binding.eventImg)
     }
+
     companion object{
         fun newInstance():CreateEventFragment{
             return CreateEventFragment()
