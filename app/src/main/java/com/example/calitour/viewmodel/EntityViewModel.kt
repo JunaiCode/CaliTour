@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.calitour.model.entity.EntityFirestore
 import com.example.calitour.model.entity.EntityProduct
+import com.example.calitour.model.entity.EntityProductFirestore
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -21,6 +22,7 @@ class EntityViewModel:ViewModel() {
 
     var completedProduct = MutableLiveData<Boolean>()
     var profile =MutableLiveData<EntityFirestore>()
+    var products = MutableLiveData<List<EntityProductFirestore>>()
 
     fun createProduct(product: EntityProduct, entityId: String){
 
@@ -50,6 +52,38 @@ class EntityViewModel:ViewModel() {
             withContext(Dispatchers.Main) {
                 completedProduct.value = true
             }
+
+        }
+    }
+
+    fun loadProducts(){
+        viewModelScope.launch(Dispatchers.IO) {
+            val entityId = Firebase.auth.currentUser?.uid.toString()
+            val snapshot = Firebase.firestore.collection("entities")
+                .document(entityId)
+                .collection("products")
+                .get().await()
+
+            val productsFirestore = snapshot.toObjects(EntityProductFirestore::class.java)
+
+            for (product in productsFirestore) {
+                if (product.image!=""){
+                    val imageUrl = Firebase.storage.reference
+                        .child("productImages")
+                        .child(product.image)
+                        .downloadUrl
+                        .await()
+                        .toString()
+
+                    product.image=imageUrl
+                }
+            }
+
+            withContext(Dispatchers.Main){
+                products.value=productsFirestore
+            }
+
+
 
         }
     }

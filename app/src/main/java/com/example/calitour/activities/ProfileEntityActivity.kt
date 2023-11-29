@@ -9,8 +9,10 @@ import android.widget.Button
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.calitour.R
+import com.example.calitour.activities.fragments.ProductListFragment
 import com.example.calitour.databinding.ActivityProfileEntityBinding
 import com.example.calitour.viewmodel.EntityViewModel
 
@@ -54,6 +56,11 @@ class ProfileEntityActivity : AppCompatActivity() {
 
     }
 
+    fun showFragmentAdd(fragment: Fragment){
+        supportFragmentManager.beginTransaction().add(R.id.fragmentContainerEntity, fragment).addToBackStack(null).commit()
+
+    }
+
     fun showPopUp() {
         val dialog = Dialog(this)
         dialog.setContentView(R.layout.entity_popup_create)
@@ -94,6 +101,8 @@ class ProfileEntityActivity : AppCompatActivity() {
             binding.shop.setImageResource(R.drawable.shop)
             binding.liveEvents.setImageResource(R.drawable.live_gray)
             binding.endendEvents.setImageResource(R.drawable.clock_gray)
+            showFragmentAdd(ProductListFragment())
+
         }
 
         binding.endendEvents.setOnClickListener{
