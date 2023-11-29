@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import com.example.calitour.R
 import com.example.calitour.activities.fragments.SignInFragment
 import com.example.calitour.activities.fragments.SignUpFragment
+import com.example.calitour.activities.fragments.WelcomeFragment
 import com.example.calitour.databinding.ActivitySignInsignUpBinding
 
 class SignInSignUpActivity : AppCompatActivity() {
@@ -14,17 +15,21 @@ class SignInSignUpActivity : AppCompatActivity() {
         ActivitySignInsignUpBinding.inflate(layoutInflater)
     }
 
-    private val signin = SignInFragment()
-    private val signup = SignUpFragment()
+    private val welcome = WelcomeFragment.newInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        showFragment(signin)
+        showFragmentReplace(welcome)
         setContentView(binding.root)
     }
 
-    fun showFragment(fragment: Fragment){
+    fun showFragmentReplace(fragment: Fragment){
 
-        supportFragmentManager.beginTransaction().add(R.id.fragmentContainer, fragment).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer, fragment).commit()
+
+    }
+
+    fun showFragmentAdd(fragment: Fragment){
+        supportFragmentManager.beginTransaction().add(R.id.fragmentContainer, fragment).addToBackStack(null).commit()
 
     }
 }

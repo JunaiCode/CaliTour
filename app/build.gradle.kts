@@ -9,13 +9,13 @@ android {
     namespace = "com.example.calitour"
     compileSdk = 33
 
+
     defaultConfig {
         applicationId = "com.example.calitour"
         minSdk = 24
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -41,6 +41,8 @@ android {
         enable = true
 
     }
+
+
 }
 
 dependencies {

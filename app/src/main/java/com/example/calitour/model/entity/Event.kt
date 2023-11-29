@@ -1,17 +1,21 @@
 package com.example.calitour.model.entity
 
-import java.util.Date
+import android.net.Uri
 import java.util.UUID
 
-data class Event (
-    var id : UUID,
+data class Event(
+    var id: UUID,
+    var entityId: String,
     var category: String,
-    var date: Date,
+    var date: Long,
     var description: String,
-    var entityId : UUID,
-    var name : String,
+    var name: String,
     var place: String,
     var reaction: Int,
-    var score : Float,
-    var state : String
+    var score: Double,
+    var state: String,
+    var img: Uri,
+    var prices: ArrayList<Price>,
+    var badges: ArrayList<Badge>,
+    var trivias: ArrayList<Trivia>
 )

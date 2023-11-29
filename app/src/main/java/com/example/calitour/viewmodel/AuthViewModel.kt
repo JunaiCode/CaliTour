@@ -6,8 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.calitour.model.entity.AuthState
+import com.example.calitour.model.entity.Entity
 import com.example.calitour.model.entity.ErrorMessage
 import com.example.calitour.model.entity.User
+import com.example.calitour.model.entity.UserType
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -28,14 +30,18 @@ class AuthViewModel : ViewModel(){
 
     val authStateLV = MutableLiveData<AuthState>()
     val errorLV = MutableLiveData<ErrorMessage>()
-    fun signup(user :User, pass: String) {
+
+    fun signUpUser(user :User, pass: String) {
+
         viewModelScope.launch(Dispatchers.IO) {
+
             try {
                 val result = Firebase.auth.createUserWithEmailAndPassword(user.email, pass).await()
+
                 val newUser = hashMapOf(
                     "name" to user.name,
                     "email" to user.email,
-                    "id" to Firebase.auth.currentUser?.uid,
+                    "id" to result.user?.uid.toString(),
                     "birthday" to user.birthday,
                     "phoneNumber" to user.phoneNumber,
                     "points" to user.points
@@ -44,12 +50,108 @@ class AuthViewModel : ViewModel(){
                     .document(newUser["id"]!!.toString())
                     .set(newUser).await()
                 if(user.photoUri != Uri.parse("")){
-                    uploadImage(user.photoUri,newUser["id"]!!.toString())
+                    uploadImage(user.photoUri,newUser["id"]!!.toString(), UserType.USER)
 
                 }
-                withContext(Dispatchers.Main){ authStateLV.value = AuthState(result.user?.uid, true)}
+                registerUserType(Firebase.auth.currentUser?.uid.toString(), "user")
+
+                val roleResult = Firebase.firestore.collection("role-users")
+                    .document(result.user?.uid.toString())
+                    .get()
+                    .await()
+                val role = roleResult?.data?.get("role").toString()
+                withContext(Dispatchers.Main){ authStateLV.value = AuthState(result.user?.uid, role, true)}
                 Log.e(">>>", "Registrado")
-                Firebase.auth.currentUser
+                Log.e(">>>", result.user?.uid.toString())
+            }catch (e: FirebaseAuthInvalidCredentialsException) {
+                withContext(Dispatchers.Main){errorLV.value = ErrorMessage(e.message!!)}
+                Log.e(">>>", e.message!!)
+            } catch (e: FirebaseAuthUserCollisionException) {
+                withContext(Dispatchers.Main){errorLV.value = ErrorMessage("El correo está repetido")}
+                Log.e(">>>", "Repetido")
+            } catch (e: FirebaseAuthWeakPasswordException) {
+                withContext(Dispatchers.Main){errorLV.value = ErrorMessage("La clave es muy debil")}
+                Log.e(">>>", "Clave muy corta")
+            }catch (e: IllegalArgumentException){
+                withContext(Dispatchers.Main){errorLV.value = ErrorMessage("Llene los campos")}
+                Log.e(">>>", "Campos")
+            }
+
+        }
+    }
+
+    fun signUpEntity(entity: Entity, pass:String){
+        viewModelScope.launch (Dispatchers.IO) {
+            try {
+                val result = Firebase.auth.createUserWithEmailAndPassword(entity.email, pass).await()
+                val newEntity = hashMapOf(
+                    "name" to entity.name,
+                    "id" to result.user?.uid.toString(),
+                    "description" to entity.description,
+                    "email" to entity.email,
+                    "photoID" to ""
+                )
+                Log.e(">>>", newEntity.toString())
+                Firebase.firestore.collection("entities")
+                    .document(newEntity["id"]!!.toString())
+                    .set(newEntity).await()
+                if(entity.profilePic != Uri.parse("")){
+                    uploadImage(entity.profilePic,newEntity["id"]!!.toString(), UserType.ENTITY)
+
+                }
+                registerUserType(Firebase.auth.currentUser?.uid.toString(), "entity")
+                val roleResult = Firebase.firestore.collection("role-users")
+                    .document(result.user?.uid.toString())
+                    .get()
+                    .await()
+                val role = roleResult?.data?.get("role").toString()
+                withContext(Dispatchers.Main){ authStateLV.value = AuthState(result.user?.uid, role, true)}
+                Log.e(">>>", "Registrado")
+                Log.e(">>>", result.user?.uid.toString())
+            }catch (e: FirebaseAuthInvalidCredentialsException) {
+                withContext(Dispatchers.Main){errorLV.value = ErrorMessage(e.message!!)}
+                Log.e(">>>", e.message!!)
+            } catch (e: FirebaseAuthUserCollisionException) {
+                withContext(Dispatchers.Main){errorLV.value = ErrorMessage("El correo está repetido")}
+                Log.e(">>>", "Repetido")
+            } catch (e: FirebaseAuthWeakPasswordException) {
+                withContext(Dispatchers.Main){errorLV.value = ErrorMessage("La clave es muy debil")}
+                Log.e(">>>", "Clave muy corta")
+            }catch (e: IllegalArgumentException){
+                withContext(Dispatchers.Main){errorLV.value = ErrorMessage("Llene los campos")}
+                Log.e(">>>", "Campos")
+            }
+
+
+
+        }
+
+    }
+
+    fun registerUserType(id: String, type: String){
+        viewModelScope.launch(Dispatchers.IO){
+            val userType = hashMapOf(
+                "id" to id,
+                "role" to type
+            )
+            Firebase.firestore.collection(("role-users"))
+                .document(id)
+                .set(userType).await()
+        }
+    }
+
+    fun firebaseSignUp(email: String, pass:String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val result = Firebase.auth.createUserWithEmailAndPassword(email, pass).await()
+                val roleResult = Firebase.firestore.collection("role-users")
+                    .document(result.user?.uid.toString())
+                    .get()
+                    .await()
+                val role = roleResult?.data?.get("role").toString()
+                withContext(Dispatchers.Main){ authStateLV.value = AuthState(result.user?.uid, role, true)}
+                Log.e(">>>", "Registrado")
+                Log.e(">>>", result.user?.uid.toString())
             }catch (e: FirebaseAuthInvalidCredentialsException) {
                 withContext(Dispatchers.Main){errorLV.value = ErrorMessage(e.message!!)}
                 Log.e(">>>", e.message!!)
@@ -66,13 +168,18 @@ class AuthViewModel : ViewModel(){
         }
     }
 
-
-
     fun signin(email: String, pass: String) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val result = Firebase.auth.signInWithEmailAndPassword(email, pass).await()
-                withContext(Dispatchers.Main){authStateLV.value = AuthState(result.user?.uid, true)}
+                val roleResult = Firebase.firestore.collection("role-users")
+                    .document(Firebase.auth.currentUser?.uid.toString())
+                    .get()
+                    .await()
+                val role = roleResult?.data?.get("role").toString()
+                withContext(Dispatchers.Main){
+                    authStateLV.value = AuthState(result.user?.uid,role, true)
+                }
                 Log.e(">>>", "Loggeado")
             } catch (e: FirebaseAuthException) {
                 withContext(Dispatchers.Main){errorLV.value = ErrorMessage("Error de autenticación")}
@@ -85,9 +192,8 @@ class AuthViewModel : ViewModel(){
 
     }
 
-    fun uploadImage(uri: Uri, id:String){
+    fun uploadImage(uri: Uri, id:String, type: UserType){
         viewModelScope.launch (Dispatchers.IO) {
-
             try {
                 val uuid = UUID.randomUUID().toString()
                 Firebase.storage.reference
@@ -95,10 +201,22 @@ class AuthViewModel : ViewModel(){
                     .child(uuid)
                     .putFile(uri).await()
 
-                Firebase.firestore.collection("users")
-                    .document(id)
-                    .update("photoID", uuid )
-                    .await()
+                when(type){
+                    UserType.USER -> {
+                        Firebase.firestore.collection("users")
+                            .document(id)
+                            .update("photoID", uuid )
+                            .await()
+                    }
+                    UserType.ENTITY -> {
+                        Firebase.firestore.collection("entities")
+                            .document(id)
+                            .update("photoID", uuid )
+                            .await()
+                    }
+                }
+
+
             }catch (ex:Exception){
                 Log.e("<<<<<", ex.message.toString())
             }
