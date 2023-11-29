@@ -54,7 +54,7 @@ class HomeActivity : AppCompatActivity() {
     }*/
     fun showFragment(fragment: Fragment){
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainer, fragment)
+            .replace(R.id.fragmentContainerHome, fragment)
             .addToBackStack(null)  // Agrega el fragmento al back stack
             .commit()
     }

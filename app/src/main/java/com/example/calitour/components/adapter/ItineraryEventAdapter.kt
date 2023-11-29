@@ -1,19 +1,18 @@
 package com.example.calitour.components.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.calitour.R
 import com.example.calitour.components.views.ItineraryEventView
-import com.example.calitour.model.entity.Event
-import java.text.SimpleDateFormat
-import java.util.Locale
+import com.example.calitour.model.entity.ItineraryEvent
 
 class ItineraryEventAdapter : Adapter<ItineraryEventView>() {
-    val events = ArrayList<Event>()
+    val events = ArrayList<ItineraryEvent>()
 
-    fun updateData(newItems: List<Event>) {
+    fun updateData(newItems: List<ItineraryEvent>) {
         events.clear()
         events.addAll(newItems)
         notifyDataSetChanged()
@@ -33,10 +32,14 @@ class ItineraryEventAdapter : Adapter<ItineraryEventView>() {
     override fun onBindViewHolder(holder: ItineraryEventView, position: Int) {
         val data = events[position]
         holder.nameEvent.text = data.name
-        val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
-        val timeHour = timeFormat.format(data.date)
-        holder.timeEvent.text = timeHour
-        holder.priceEvent.text = "$0.00"   //falta acceder al precio
+        holder.timeEvent.text = data.eventTime
+        holder.priceEvent.text = "$ ${data.price}"
         holder.placeEvent.text = data.place
+    }
+
+    fun addEvent(event:ItineraryEvent){
+        events.add(event)
+        notifyDataSetChanged()
+        Log.d("ACTUALIZA EL ADAPTER", "ACTUALIZA EL ADAPTER")
     }
 }
