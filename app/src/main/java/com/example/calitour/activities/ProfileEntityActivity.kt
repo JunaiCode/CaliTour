@@ -9,7 +9,9 @@ import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
+import androidx.fragment.app.Fragment
 import com.example.calitour.R
+import com.example.calitour.activities.fragments.ActiveEventFragment
 import com.example.calitour.databinding.ActivityProfileEntityBinding
 import com.example.calitour.viewmodel.EntityViewModel
 import com.google.firebase.auth.ktx.auth
@@ -78,7 +80,7 @@ class ProfileEntityActivity : AppCompatActivity() {
             binding.liveEvents.setImageResource(R.drawable.live)
             binding.shop.setImageResource(R.drawable.shop_gray)
             binding.endendEvents.setImageResource(R.drawable.clock_gray)
-            vm.getEventsAvailablesByEntityId(Firebase.auth.currentUser?.uid.toString())
+            showFragment(ActiveEventFragment.newInstance())
         }
 
         binding.shop.setOnClickListener{
@@ -96,4 +98,9 @@ class ProfileEntityActivity : AppCompatActivity() {
 
         binding.liveEvents.performClick()
     }
+
+    fun showFragment(fragment: Fragment){
+        supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer,fragment).commit()
+    }
 }
+
