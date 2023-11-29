@@ -22,7 +22,7 @@
                 android:layout_height="275dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:background="@drawable/user_event_img"
+                android:background="@drawable/entity_event_img"
                 android:contentDescription="Imagen de Fondo"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -30,9 +30,9 @@
 
             <RelativeLayout
                 android:id="@+id/cuadradoRojo"
-                android:layout_width="205dp"
+                android:layout_width="200dp"
                 android:layout_height="match_parent"
-                android:background="#805023B3"
+                android:background="#80F7343B"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -48,9 +48,9 @@
                         android:layout_marginStart="15dp"
                         android:layout_marginTop="15dp"
                         android:layout_marginEnd="15dp"
-                        android:text="Cali es cultura popular Live Sessions"
+                        android:text="Jams poéticos"
                         android:textColor="#FFFFFF"
-                        android:textSize="20dp"
+                        android:textSize="22dp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -162,10 +162,10 @@
                     android:layout_height="match_parent">
 
                     <Button
-                        android:id="@+id/eventCardBtn"
-                        android:layout_width="40dp"
+                        android:id="@+id/meInteresaEventCardBtn"
+                        android:layout_width="150dp"
                         android:layout_height="30dp"
-                        android:background="@drawable/linesIcon"
+                        android:background="@drawable/meInteresaIcon"
                         android:textColor="#000000"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
