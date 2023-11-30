@@ -80,7 +80,11 @@ class ProfileEntityActivity : AppCompatActivity() {
             binding.liveEvents.setImageResource(R.drawable.live)
             binding.shop.setImageResource(R.drawable.shop_gray)
             binding.endendEvents.setImageResource(R.drawable.clock_gray)
-            showFragment(ActiveEventFragment.newInstance())
+            val fragment = ActiveEventFragment.newInstance()
+            val args =  Bundle()
+            args.putSerializable("list",vm.getAllEvents())
+            fragment.arguments = args;
+            showFragment(fragment)
         }
 
         binding.shop.setOnClickListener{
