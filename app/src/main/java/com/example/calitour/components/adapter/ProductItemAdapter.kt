@@ -29,13 +29,9 @@ class ProductItemAdapter: Adapter<ProductItemView>() {
             .into(holder.image)
     }
 
-    fun addItem(item: EntityProductFirestore) {
-        products.add(item)
-        notifyDataSetChanged()
-
-    }
 
     fun addAll(item: List<EntityProductFirestore>){
+        products.clear()
         products.addAll(item)
         notifyDataSetChanged()
 
