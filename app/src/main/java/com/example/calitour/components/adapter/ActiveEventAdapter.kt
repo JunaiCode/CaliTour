@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.calitour.R
 import com.example.calitour.components.views.ActiveEventViewHolder
 import com.example.calitour.model.DTO.EventDocumentDTO
-import com.google.firebase.Timestamp
 
 class ActiveEventAdapter: Adapter<ActiveEventViewHolder>() {
     private var activeEvents : ArrayList<EventDocumentDTO> = arrayListOf()
@@ -37,5 +36,7 @@ class ActiveEventAdapter: Adapter<ActiveEventViewHolder>() {
 
     fun setList(list:ArrayList<EventDocumentDTO>){
         activeEvents = list
+        //Notificar RV
+        notifyDataSetChanged()
     }
 }

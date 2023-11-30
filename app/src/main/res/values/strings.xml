@@ -37,6 +37,12 @@
     <string name="welcome_message">Vení a la sucursal del cielo y date un borondo, ve!</string>
     <string name="start">Comenzar</string>
     <string name="description">Descripción</string>
+<<<<<<< HEAD
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+=======
+    <string name="itineraryEmptyTV">Aún no tenés un plan pa hoy, parchate en uno de los eventos y mételo a tu itinerario</string>
+    <string name="itineraryFullTitleTV">Yo te guio manit@</string>
+
+>>>>>>> c8e2881292632e351c77d8bf117cfdd0cc626de8
 </resources>

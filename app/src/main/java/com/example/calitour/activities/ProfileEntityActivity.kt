@@ -12,6 +12,7 @@ import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import com.example.calitour.R
 import com.example.calitour.activities.fragments.ActiveEventFragment
+import com.example.calitour.activities.fragments.InactiveEventFragment
 import com.example.calitour.databinding.ActivityProfileEntityBinding
 import com.example.calitour.viewmodel.EntityViewModel
 import com.google.firebase.auth.ktx.auth
@@ -44,7 +45,6 @@ class ProfileEntityActivity : AppCompatActivity() {
             }
             false
         }
-
     }
 
     fun showPopUp() {
@@ -81,9 +81,6 @@ class ProfileEntityActivity : AppCompatActivity() {
             binding.shop.setImageResource(R.drawable.shop_gray)
             binding.endendEvents.setImageResource(R.drawable.clock_gray)
             val fragment = ActiveEventFragment.newInstance()
-            val args =  Bundle()
-            args.putSerializable("list",vm.getAllEvents())
-            fragment.arguments = args;
             showFragment(fragment)
         }
 
@@ -97,7 +94,8 @@ class ProfileEntityActivity : AppCompatActivity() {
             binding.endendEvents.setImageResource(R.drawable.clock)
             binding.liveEvents.setImageResource(R.drawable.live_gray)
             binding.shop.setImageResource(R.drawable.shop_gray)
-            vm.getEventsUnavailablesByEntityId(Firebase.auth.currentUser?.uid.toString())
+            val fragment = InactiveEventFragment.newInstance()
+            showFragment(fragment)
         }
 
         binding.liveEvents.performClick()
