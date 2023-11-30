@@ -16,10 +16,13 @@ import com.example.calitour.R
 import com.example.calitour.components.adapter.ItineraryEventAdapter
 import com.example.calitour.databinding.ItineraryFragmentBinding
 import com.example.calitour.model.DTO.EventDocumentDTO
+import com.example.calitour.model.DTO.UserDTO
 import com.example.calitour.model.entity.ItineraryDay
 import com.example.calitour.model.entity.ItineraryEvent
+import com.example.calitour.model.entity.User
 import com.example.calitour.viewmodel.ItineraryViewModel
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
@@ -33,13 +36,13 @@ import java.util.Locale
 
 class ItineraryFragment : Fragment() {
     lateinit var adapter: ItineraryEventAdapter
-    private val itineraryFull = ItineraryFullFragment()
+    private var itineraryFull = ItineraryFullFragment()
     private val itineraryEmpty = ItineraryEmptyFragment()
 
     private var currentDate: Date = Calendar.getInstance().time
     private lateinit var binding: ItineraryFragmentBinding
 
-    private val viewModel: ItineraryViewModel by viewModels()
+    //private val viewModel: ItineraryViewModel by viewModels()
 
 
 
@@ -92,7 +95,8 @@ class ItineraryFragment : Fragment() {
             binding.pageDateTV.text = formattedDate
             Log.d("currentDate", currentDate.toString())
            // viewModel.setCurrentDate(currentDate)
-            searchEventsItineraryDay(currentDate.toString())
+            var userId = Firebase.auth.currentUser!!.uid
+            searchEventsItineraryDay(userId,currentDate.toString())
         }
     }
 
@@ -114,8 +118,13 @@ class ItineraryFragment : Fragment() {
         if (fragment is ItineraryFullFragment) {
             fragment.setAdapter(adapter)
         }
-        childFragmentManager.beginTransaction().replace(R.id.fragmentEventsItineraryContainer, fragment).commit()
+
+        val transaction = childFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragmentEventsItineraryContainer, fragment)
+        transaction.addToBackStack(null)
+        transaction.commitAllowingStateLoss()
     }
+
 
     fun showFragment(fragment: Fragment) {
         childFragmentManager.beginTransaction().replace(R.id.fragmentEventsItineraryContainer, fragment).commit()
@@ -139,29 +148,60 @@ class ItineraryFragment : Fragment() {
     }
 
 
-    fun searchEventsItineraryDay(day: String) {
-        Log.d(">>>", "SE MODIFICO LA FECHA")
-        Log.d(">>>", day)
+    fun searchEventsItineraryDay(userId:String, day: String) {
 
-        Firebase.firestore.collection("users")
-            .document("BGlarOVaQGXPgMG72rQMZ1oOLhx1")
-            .collection("itinerary")
-            .document("cHu0EhWU6omgBC81PtbN")
+        adapter= ItineraryEventAdapter()
+        val userItineraryRef = Firebase.firestore.collection("users").document(userId).collection("itinerary")
+        var dayString = convertToFormattedDate(day)
+
+        /*Log.d(">>>", "SE MODIFICO LA FECHA")
+        Log.d(">>>", day)
+        //ejemplo del formato Fri Dec 01 10:52:18 GMT-05:00 2023
+        var dayString = convertToFormattedDate(day)
+        Log.d(">>>", dayString)
+        getDocumentIdForDate("BGlarOVaQGXPgMG72rQMZ1oOLhx1",dayString)
+        val dateString = "25 de octubre de 2023, 00:00:00 UTC-5"*/
+        Log.i("dayString", dayString)
+        Log.i("userId", userId)
+
+        userItineraryRef
+            .whereEqualTo("dayString", dayString) // Ajusta el nombre del campo según tu estructura
             .get()
-            .addOnSuccessListener { documentSnapshot ->
-                documentSnapshot?.let {
-                    val jsonData = Gson().toJson(it.data)
-                    Log.e(">>>", "Dia Actual:${day}")
-                    Log.e(">>>", it.id)
-                    Log.e(">>>", jsonData)
-                    val itineraryDay = Gson().fromJson(jsonData, ItineraryDay::class.java)
-                    Log.e(">>>", "Itinerary ID: ${itineraryDay.id}")
-                    Log.e(">>>", "Day Seconds: ${itineraryDay.day.seconds}")
-                    Log.e(">>>", "Events: ${itineraryDay.events}")
-                    loadEventDetails(itineraryDay.events)
-                    val formattedDate = itineraryDay.getFormattedDate()
-                    Log.e(">>>", "Formatted Date: $formattedDate")
+            .addOnSuccessListener { querySnapshot ->if (querySnapshot.isEmpty) {
+                // Manejar el caso cuando no se encuentra ningún documento
+                Log.d("searchEventsItineraryDay", "No se encontraron documentos para la fecha: $dayString")
+                Log.d("ItineraryViewModel", "No hay eventos")
+                showFragment(itineraryEmpty)
+                // Aquí puedes manejar lo que quieras hacer en este caso
+            } else {
+                for (document in querySnapshot) {
+                    // Aquí obtienes el ID del documento que coincide con la fecha
+                    val documentId = document.id
+                    Log.i("documentId", documentId)
+                    userItineraryRef
+                        .document(documentId)
+                        .get()
+                        .addOnSuccessListener { documentSnapshot ->
+                            documentSnapshot?.let {
+                                val jsonData = Gson().toJson(it.data)
+                                Log.e(">>>", "Dia Actual:${day}")
+                                Log.e(">>>", it.id)
+                                Log.e(">>>", jsonData)
+                                val itineraryDay = Gson().fromJson(jsonData, ItineraryDay::class.java)
+                                Log.e(">>>", "Itinerary ID: ${itineraryDay.id}")
+                                Log.e(">>>", "Day Seconds: ${itineraryDay.day.seconds}")
+                                Log.e(">>>", "Day Seconds: ${itineraryDay.dayString}")
+                                Log.e(">>>", "Events: ${itineraryDay.events}")
+                                loadEventDetails(itineraryDay.events)
+                                val formattedDate = itineraryDay.getFormattedDate()
+                                Log.e(">>>", "Formatted Date: $formattedDate")
+                            }
+                        }
                 }
+            }
+            }
+            .addOnFailureListener { e ->
+                Log.d("Documento NO encontrado con ID:", e.toString())
             }
     }
 
@@ -223,17 +263,14 @@ class ItineraryFragment : Fragment() {
                                     Log.e("Objeto:", itineraryEvent.toString())
                                     if (itineraryEvent != null) {
                                         adapter.addEvent(itineraryEvent)
-
                                     }
                                     if (adapter.itemCount == 0) {
                                         Log.d("ItineraryViewModel", "No hay eventos")
-                                        //viewModel.searchEventsItineraryDay("hola")
-                                        showFragment(itineraryEmpty)
                                     } else {
                                         Log.d("ItineraryViewModel", "Hay eventos")
-                                        showFragmentWithAdapter(itineraryFull,adapter)
+                                        itineraryFull = ItineraryFullFragment()
+                                        showFragmentWithAdapter(itineraryFull, adapter)
                                     }
-
                                 }
                             }
                             .addOnFailureListener { e ->
@@ -252,9 +289,24 @@ class ItineraryFragment : Fragment() {
                 }
         }
     }
+
     fun convertTimestampToFormattedTime(timestamp: Timestamp): String {
         val date = Date(timestamp.seconds * 1000) // Convertir segundos a milisegundos
         val sdf = SimpleDateFormat("hh:mm a", Locale.getDefault())
         return sdf.format(date)
+    }
+
+    fun convertToFormattedDate(inputDate: String): String {
+        // Formato del input
+        val inputFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss 'GMT'Z yyyy", Locale.ENGLISH)
+
+        // Parsear la cadena de fecha al objeto Date
+        val date = inputFormat.parse(inputDate) ?: return ""
+
+        // Formato del output
+        val outputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+
+        // Convertir la fecha al formato deseado
+        return outputFormat.format(date)
     }
 }

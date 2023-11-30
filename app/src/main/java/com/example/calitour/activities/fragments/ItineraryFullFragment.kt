@@ -1,6 +1,7 @@
 package com.example.calitour.activities.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,9 +18,6 @@ class ItineraryFullFragment : Fragment() {
     fun setAdapter(adapter: ItineraryEventAdapter) {
         this.adapter = adapter
         // Actualizar el RecyclerView con el nuevo adaptador
-        if (::recyclerView.isInitialized) {
-            recyclerView.adapter = adapter
-        }
     }
 
     override fun onCreateView(
@@ -31,6 +29,11 @@ class ItineraryFullFragment : Fragment() {
         recyclerView = view.findViewById(R.id.itineraryEventsRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())  // Ajusta el LayoutManager según tus necesidades
         // Puedes configurar otras propiedades del RecyclerView aquí si es necesario
+        if (::recyclerView.isInitialized) {
+            recyclerView.adapter = adapter
+        }
+
+        Log.d("ADAPTER", adapter.events.toString())
         return view
     }
 }

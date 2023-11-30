@@ -7,6 +7,7 @@ import java.util.Locale
 data class ItineraryDay(
     val id: String,
     val day: Day,
+    val dayString: String,
     val events: ArrayList<String>
 ) {
     data class Day(

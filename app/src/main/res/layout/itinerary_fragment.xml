@@ -78,13 +78,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fragmentEventsItineraryContainer"
         android:layout_width="0dp"
-        android:layout_height="611dp"
+        android:layout_height="555dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.78">
+        app:layout_constraintVertical_bias="0.64">
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
