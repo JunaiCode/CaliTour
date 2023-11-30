@@ -2,7 +2,6 @@ package com.example.calitour.model.services
 
 import com.example.calitour.model.repository.EntityRepository
 import com.example.calitour.model.repository.EventRepository
-import com.example.calitour.model.repository.ItineraryRepository
 import com.example.calitour.model.repository.UserRepository
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

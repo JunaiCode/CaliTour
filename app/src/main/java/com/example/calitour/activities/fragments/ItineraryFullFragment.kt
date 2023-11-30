@@ -17,7 +17,6 @@ class ItineraryFullFragment : Fragment() {
 
     fun setAdapter(adapter: ItineraryEventAdapter) {
         this.adapter = adapter
-        // Actualizar el RecyclerView con el nuevo adaptador
     }
 
     override fun onCreateView(
@@ -27,13 +26,10 @@ class ItineraryFullFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.itinerary_full_fragment, container, false)
         recyclerView = view.findViewById(R.id.itineraryEventsRecyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())  // Ajusta el LayoutManager según tus necesidades
-        // Puedes configurar otras propiedades del RecyclerView aquí si es necesario
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
         if (::recyclerView.isInitialized) {
             recyclerView.adapter = adapter
         }
-
-        Log.d("ADAPTER", adapter.events.toString())
         return view
     }
 }

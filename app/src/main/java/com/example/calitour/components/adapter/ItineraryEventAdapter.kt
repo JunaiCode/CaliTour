@@ -1,6 +1,5 @@
 package com.example.calitour.components.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,6 +39,5 @@ class ItineraryEventAdapter : Adapter<ItineraryEventView>() {
     fun addEvent(event:ItineraryEvent){
         events.add(event)
         notifyDataSetChanged()
-        Log.d("ACTUALIZA EL ADAPTER", "ACTUALIZA EL ADAPTER")
     }
 }
