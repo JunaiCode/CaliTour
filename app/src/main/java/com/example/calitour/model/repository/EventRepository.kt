@@ -1,14 +1,10 @@
 package com.example.calitour.model.repository
 
-import android.util.Log
 import com.example.calitour.model.DTO.EventDocumentDTO
-import com.example.calitour.model.entity.Event
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
-import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Path
+
 
 class EventRepository {
     suspend fun getAllEvents():ArrayList<EventDocumentDTO>{

@@ -6,14 +6,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.calitour.model.entity.EntityFirestore
 import com.example.calitour.model.DTO.EventDocumentDTO
 import com.example.calitour.model.entity.EntityProduct
 import com.example.calitour.model.repository.EventRepository
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
@@ -24,6 +25,7 @@ class EntityViewModel:ViewModel() {
     var completedProduct = MutableLiveData<Boolean>()
     var eventsQuery = MutableLiveData<ArrayList<EventDocumentDTO>>()
     var eventRepo = EventRepository()
+    var profile =MutableLiveData<EntityFirestore>()
 
     fun createProduct(product: EntityProduct, entityId: String){
 
@@ -57,7 +59,7 @@ class EntityViewModel:ViewModel() {
         }
     }
 
-     fun getAllEvents():LiveData<ArrayList<EventDocumentDTO>>{
+     fun getAllEvents(): LiveData<ArrayList<EventDocumentDTO>> {
         eventsQuery.value = arrayListOf()
         viewModelScope.launch (Dispatchers.IO){
             eventsQuery.postValue(eventRepo.getAllEvents())
@@ -87,6 +89,33 @@ class EntityViewModel:ViewModel() {
             eventsQuery.postValue(eventRepo.getEventsAvailablesByEntityId(id))
         }
         return eventsQuery
+    }
+
+     fun loadProfile(){
+        viewModelScope.launch (Dispatchers.IO) {
+            val entityId = Firebase.auth.currentUser?.uid.toString()
+            var userFirestore: EntityFirestore? = null
+            val snapshot = Firebase.firestore.collection("entities")
+                .document(entityId)
+                .get().await()
+
+            if (snapshot != null) {
+                userFirestore = snapshot.toObject(EntityFirestore::class.java)
+                if (userFirestore?.photoID != "") {
+                    val imageUrl = Firebase.storage.reference.child("profileImages")
+                        .child(userFirestore!!.photoID)
+                        .downloadUrl.await().toString()
+                    userFirestore.photoID= imageUrl
+                }
+            }
+
+            withContext(Dispatchers.Main) {
+                profile.value = userFirestore!!
+            }
+        }
+
+
+
     }
 
     fun uploadImage(uri: Uri, entityId:String, productId:String){
