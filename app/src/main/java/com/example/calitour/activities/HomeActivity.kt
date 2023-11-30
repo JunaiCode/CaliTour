@@ -35,8 +35,9 @@ class HomeActivity : AppCompatActivity() {
     }
 
     fun showFragment(fragment: Fragment){
-
-        supportFragmentManager.beginTransaction().add(R.id.fragmentContainerHome, fragment).commit()
-
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragmentContainerHome, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 }
