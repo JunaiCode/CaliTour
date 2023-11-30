@@ -25,4 +25,5 @@ data class EntityFirestore (
     constructor():this("","","","","", "", "", "") {
         // No-argument constructor required for deserialization
     }
+
 }

@@ -4,9 +4,12 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageButton
+import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
@@ -27,15 +30,19 @@ class ProfileEntityActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
         vm.loadProfile()
 
         vm.profile.observe(this){profile ->
             binding.entityName.text = profile.name
             binding.descriptionEntityTV.text = profile.description
+            setSocialMedia(binding.facebook, profile.facebook)
+            setSocialMedia(binding.twitter, profile.x)
+            setSocialMedia(binding.instagram, profile.instagram)
+
             if(profile.photoID!=""){
                 Glide.with(this).load(profile.photoID).into(binding.entityIV)
             }
+
         }
 
         setProfileNavigation()
@@ -65,6 +72,30 @@ class ProfileEntityActivity : AppCompatActivity() {
             intent = Intent(this, EditProfileActivity::class.java).putExtras(bundle)
             startActivity(intent)
 
+        }
+
+    }
+
+    override fun onResume() {
+        vm.loadProfile()
+
+        vm.profile.observe(this){profile ->
+            binding.entityName.text = profile.name
+            binding.descriptionEntityTV.text = profile.description
+            if(profile.photoID!=""){
+                Glide.with(this).load(profile.photoID).into(binding.entityIV)
+            }
+        }
+        super.onResume()
+    }
+
+    fun setSocialMedia(button: ImageView, url:String){
+        if(url!=""){
+            button.setOnClickListener{
+                val i = Intent(Intent.ACTION_VIEW)
+                i.data = Uri.parse(url)
+                startActivity(i)
+            }
         }
 
     }

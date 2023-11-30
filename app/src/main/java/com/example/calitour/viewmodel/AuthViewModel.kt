@@ -143,33 +143,7 @@ class AuthViewModel : ViewModel(){
         }
     }
 
-    fun firebaseSignUp(email: String, pass:String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val result = Firebase.auth.createUserWithEmailAndPassword(email, pass).await()
-                val roleResult = Firebase.firestore.collection("role-users")
-                    .document(result.user?.uid.toString())
-                    .get()
-                    .await()
-                val role = roleResult?.data?.get("role").toString()
-                withContext(Dispatchers.Main){ authStateLV.value = AuthState(result.user?.uid, role, true)}
-                Log.e(">>>", "Registrado")
-                Log.e(">>>", result.user?.uid.toString())
-            }catch (e: FirebaseAuthInvalidCredentialsException) {
-                withContext(Dispatchers.Main){errorLV.value = ErrorMessage(e.message!!)}
-                Log.e(">>>", e.message!!)
-            } catch (e: FirebaseAuthUserCollisionException) {
-                withContext(Dispatchers.Main){errorLV.value = ErrorMessage("El correo está repetido")}
-                Log.e(">>>", "Repetido")
-            } catch (e: FirebaseAuthWeakPasswordException) {
-                withContext(Dispatchers.Main){errorLV.value = ErrorMessage("La clave es muy debil")}
-                Log.e(">>>", "Clave muy corta")
-            }catch (e: IllegalArgumentException){
-                withContext(Dispatchers.Main){errorLV.value = ErrorMessage("Llene los campos")}
-                Log.e(">>>", "Campos")
-            }
-        }
-    }
+
 
     fun signin(email: String, pass: String) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -194,6 +168,18 @@ class AuthViewModel : ViewModel(){
         }
 
     }
+
+    fun updateImage(uri: Uri, imageId: String){
+
+        viewModelScope.launch (Dispatchers.IO) {
+            Firebase.storage.reference
+                .child("profileImages")
+                .child(imageId)
+                .putFile(uri).await()
+        }
+
+    }
+
 
     fun uploadImage(uri: Uri, id:String, type: UserType){
         viewModelScope.launch (Dispatchers.IO) {
