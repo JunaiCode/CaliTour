@@ -5,7 +5,9 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.calitour.model.DTO.EventDocumentDTO
 import com.example.calitour.model.entity.EntityProduct
+import com.example.calitour.model.repository.EventRepository
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -18,6 +20,7 @@ import java.util.UUID
 class EntityViewModel:ViewModel() {
 
     var completedProduct = MutableLiveData<Boolean>()
+    var eventRepo = EventRepository()
 
     fun createProduct(product: EntityProduct, entityId: String){
 
@@ -49,6 +52,38 @@ class EntityViewModel:ViewModel() {
             }
 
         }
+    }
+
+    fun getAllEvents():ArrayList<EventDocumentDTO>{
+        var query = ArrayList<EventDocumentDTO>()
+        viewModelScope.launch (Dispatchers.IO){
+            query = eventRepo.getAllEvents()
+        }
+        return query
+    }
+
+    fun getEventsById(id:String): ArrayList<EventDocumentDTO>{
+        var query = ArrayList<EventDocumentDTO>()
+        viewModelScope.launch (Dispatchers.IO){
+             query = eventRepo.getEventByEntityId(id)
+        }
+        return query
+    }
+
+    fun getEventsUnavailablesByEntityId(id:String):ArrayList<EventDocumentDTO>{
+        var query = ArrayList<EventDocumentDTO>()
+        viewModelScope.launch (Dispatchers.IO){
+            query = eventRepo.getEventsUnavailablesByEntityId(id)
+        }
+        return query
+    }
+
+    fun getEventsAvailablesByEntityId(id:String):ArrayList<EventDocumentDTO>{
+        var query = ArrayList<EventDocumentDTO>()
+        viewModelScope.launch (Dispatchers.IO){
+            query = eventRepo.getEventsAvailablesByEntityId(id)
+        }
+        return query
     }
 
     fun uploadImage(uri: Uri, entityId:String, productId:String){

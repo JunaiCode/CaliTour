@@ -5,15 +5,22 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
+import androidx.fragment.app.Fragment
 import com.example.calitour.R
+import com.example.calitour.activities.fragments.ActiveEventFragment
 import com.example.calitour.databinding.ActivityProfileEntityBinding
+import com.example.calitour.viewmodel.EntityViewModel
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 
 class ProfileEntityActivity : AppCompatActivity() {
 
+    private val vm = EntityViewModel()
     private val binding by lazy{
         ActivityProfileEntityBinding.inflate(layoutInflater)
     }
@@ -68,12 +75,16 @@ class ProfileEntityActivity : AppCompatActivity() {
 
 
     }
-
     private fun setProfileNavigation(){
         binding.liveEvents.setOnClickListener{
             binding.liveEvents.setImageResource(R.drawable.live)
             binding.shop.setImageResource(R.drawable.shop_gray)
             binding.endendEvents.setImageResource(R.drawable.clock_gray)
+            val fragment = ActiveEventFragment.newInstance()
+            val args =  Bundle()
+            args.putSerializable("list",vm.getAllEvents())
+            fragment.arguments = args;
+            showFragment(fragment)
         }
 
         binding.shop.setOnClickListener{
@@ -86,8 +97,14 @@ class ProfileEntityActivity : AppCompatActivity() {
             binding.endendEvents.setImageResource(R.drawable.clock)
             binding.liveEvents.setImageResource(R.drawable.live_gray)
             binding.shop.setImageResource(R.drawable.shop_gray)
+            vm.getEventsUnavailablesByEntityId(Firebase.auth.currentUser?.uid.toString())
         }
 
         binding.liveEvents.performClick()
     }
+
+    fun showFragment(fragment: Fragment){
+        supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer,fragment).commit()
+    }
 }
+
