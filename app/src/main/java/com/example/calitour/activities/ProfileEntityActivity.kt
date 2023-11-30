@@ -44,7 +44,6 @@ class ProfileEntityActivity : AppCompatActivity() {
             }
             false
         }
-
     }
 
     fun showPopUp() {
@@ -81,9 +80,6 @@ class ProfileEntityActivity : AppCompatActivity() {
             binding.shop.setImageResource(R.drawable.shop_gray)
             binding.endendEvents.setImageResource(R.drawable.clock_gray)
             val fragment = ActiveEventFragment.newInstance()
-            val args =  Bundle()
-            args.putSerializable("list",vm.getAllEvents())
-            fragment.arguments = args;
             showFragment(fragment)
         }
 

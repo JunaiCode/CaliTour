@@ -37,5 +37,7 @@ class ActiveEventAdapter: Adapter<ActiveEventViewHolder>() {
 
     fun setList(list:ArrayList<EventDocumentDTO>){
         activeEvents = list
+        //Notificar RV
+        notifyDataSetChanged()
     }
 }

@@ -2,6 +2,7 @@ package com.example.calitour.viewmodel
 
 import android.net.Uri
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,6 +13,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
@@ -20,6 +22,7 @@ import java.util.UUID
 class EntityViewModel:ViewModel() {
 
     var completedProduct = MutableLiveData<Boolean>()
+    var eventsQuery = MutableLiveData<ArrayList<EventDocumentDTO>>()
     var eventRepo = EventRepository()
 
     fun createProduct(product: EntityProduct, entityId: String){
@@ -54,36 +57,36 @@ class EntityViewModel:ViewModel() {
         }
     }
 
-    fun getAllEvents():ArrayList<EventDocumentDTO>{
-        var query = ArrayList<EventDocumentDTO>()
+     fun getAllEvents():LiveData<ArrayList<EventDocumentDTO>>{
+        eventsQuery.value = arrayListOf()
         viewModelScope.launch (Dispatchers.IO){
-            query = eventRepo.getAllEvents()
+            eventsQuery.postValue(eventRepo.getAllEvents())
         }
-        return query
+        return eventsQuery
     }
 
-    fun getEventsById(id:String): ArrayList<EventDocumentDTO>{
-        var query = ArrayList<EventDocumentDTO>()
+    fun getEventsById(id:String): LiveData<ArrayList<EventDocumentDTO>>{
+        eventsQuery.value = arrayListOf()
         viewModelScope.launch (Dispatchers.IO){
-             query = eventRepo.getEventByEntityId(id)
+            eventsQuery.postValue(eventRepo.getEventByEntityId(id))
         }
-        return query
+        return eventsQuery
     }
 
-    fun getEventsUnavailablesByEntityId(id:String):ArrayList<EventDocumentDTO>{
-        var query = ArrayList<EventDocumentDTO>()
+    fun getEventsUnavailablesByEntityId(id:String):LiveData<ArrayList<EventDocumentDTO>>{
+        eventsQuery.value = arrayListOf()
         viewModelScope.launch (Dispatchers.IO){
-            query = eventRepo.getEventsUnavailablesByEntityId(id)
+            eventsQuery.postValue(eventRepo.getEventsUnavailablesByEntityId(id))
         }
-        return query
+        return eventsQuery
     }
 
-    fun getEventsAvailablesByEntityId(id:String):ArrayList<EventDocumentDTO>{
-        var query = ArrayList<EventDocumentDTO>()
+    fun getEventsAvailablesByEntityId(id:String):LiveData<ArrayList<EventDocumentDTO>>{
+        eventsQuery.value = arrayListOf()
         viewModelScope.launch (Dispatchers.IO){
-            query = eventRepo.getEventsAvailablesByEntityId(id)
+            eventsQuery.postValue(eventRepo.getEventsAvailablesByEntityId(id))
         }
-        return query
+        return eventsQuery
     }
 
     fun uploadImage(uri: Uri, entityId:String, productId:String){
