@@ -88,6 +88,9 @@ class ItineraryFragment : Fragment() {
     fun showFragmentWithAdapter(fragment: Fragment, adapter: ItineraryEventAdapter) {
         if (fragment is ItineraryFullFragment) {
             fragment.setAdapter(adapter)
+            val args = Bundle()
+            args.putLong("date", currentDate.time)
+            fragment.arguments = args
         }
 
         val transaction = childFragmentManager.beginTransaction()

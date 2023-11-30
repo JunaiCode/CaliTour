@@ -40,4 +40,6 @@
     <string name="welcome_message">Come to the branch of heaven and have a blast!</string>
     <string name="start">Start</string>
     <string name="description">Description</string>
+    <string name="itineraryEmptyTV">You still don\'t have a plan for today, join one of the events and add it to your itinerary</string>
+    <string name="itineraryFullTitleTV">I guide you</string>
 </resources>
