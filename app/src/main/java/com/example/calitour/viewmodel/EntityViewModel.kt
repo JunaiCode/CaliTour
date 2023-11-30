@@ -6,9 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.calitour.model.entity.EntityFirestore
+import com.example.calitour.model.DTO.EventDocumentDTO
 import com.example.calitour.model.entity.EntityProduct
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
+import com.example.calitour.model.repository.EventRepository
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.Dispatchers
@@ -20,6 +21,8 @@ import java.util.UUID
 class EntityViewModel:ViewModel() {
 
     var completedProduct = MutableLiveData<Boolean>()
+    var eventsQuery = MutableLiveData<ArrayList<EventDocumentDTO>>()
+    var eventRepo = EventRepository()
     var profile =MutableLiveData<EntityFirestore>()
 
     fun createProduct(product: EntityProduct, entityId: String){
@@ -52,6 +55,38 @@ class EntityViewModel:ViewModel() {
             }
 
         }
+    }
+
+     fun getAllEvents():LiveData<ArrayList<EventDocumentDTO>>{
+        eventsQuery.value = arrayListOf()
+        viewModelScope.launch (Dispatchers.IO){
+            eventsQuery.postValue(eventRepo.getAllEvents())
+        }
+        return eventsQuery
+    }
+
+    fun getEventsById(id:String): LiveData<ArrayList<EventDocumentDTO>>{
+        eventsQuery.value = arrayListOf()
+        viewModelScope.launch (Dispatchers.IO){
+            eventsQuery.postValue(eventRepo.getEventByEntityId(id))
+        }
+        return eventsQuery
+    }
+
+    fun getEventsUnavailablesByEntityId(id:String):LiveData<ArrayList<EventDocumentDTO>>{
+        eventsQuery.value = arrayListOf()
+        viewModelScope.launch (Dispatchers.IO){
+            eventsQuery.postValue(eventRepo.getEventsUnavailablesByEntityId(id))
+        }
+        return eventsQuery
+    }
+
+    fun getEventsAvailablesByEntityId(id:String):LiveData<ArrayList<EventDocumentDTO>>{
+        eventsQuery.value = arrayListOf()
+        viewModelScope.launch (Dispatchers.IO){
+            eventsQuery.postValue(eventRepo.getEventsAvailablesByEntityId(id))
+        }
+        return eventsQuery
     }
 
      fun loadProfile(){

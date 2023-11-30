@@ -8,6 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitServices {
 
+
     var entityService = Retrofit.Builder()
         .baseUrl("base")
         .addConverterFactory(GsonConverterFactory.create())
