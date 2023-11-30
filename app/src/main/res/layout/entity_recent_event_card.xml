@@ -42,7 +42,7 @@
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/activeEventTitle"
+                        android:id="@+id/inactiveEventTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
@@ -69,7 +69,7 @@
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/activeEventTitle" />
+                        app:layout_constraintTop_toBottomOf="@+id/inactiveEventTitle" />
 
                     <ImageView
                         android:id="@+id/priceIconImg"
@@ -82,7 +82,7 @@
                         app:srcCompat="@drawable/price_icon" />
 
                     <TextView
-                        android:id="@+id/activePriceEvent"
+                        android:id="@+id/inactivePriceEvent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
@@ -101,11 +101,11 @@
                         android:layout_marginStart="15dp"
                         android:layout_marginTop="15dp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/activePriceEvent"
+                        app:layout_constraintTop_toBottomOf="@+id/inactivePriceEvent"
                         app:srcCompat="@drawable/location_icon" />
 
                     <TextView
-                        android:id="@+id/locationActiveEvent"
+                        android:id="@+id/locationInactiveEvent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
@@ -115,7 +115,7 @@
                         android:textSize="18dp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toEndOf="@+id/locationIconImg"
-                        app:layout_constraintTop_toBottomOf="@+id/activePriceEvent" />
+                        app:layout_constraintTop_toBottomOf="@+id/inactivePriceEvent" />
 
                     <ImageView
                         android:id="@+id/calendarIconImg"
@@ -124,11 +124,11 @@
                         android:layout_marginStart="15dp"
                         android:layout_marginTop="15dp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/locationActiveEvent"
+                        app:layout_constraintTop_toBottomOf="@+id/locationInactiveEvent"
                         app:srcCompat="@drawable/calendar_icon" />
 
                     <TextView
-                        android:id="@+id/dateActiveEvent"
+                        android:id="@+id/dateInactiveEvent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
@@ -138,7 +138,7 @@
                         android:textSize="18dp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toEndOf="@+id/calendarIconImg"
-                        app:layout_constraintTop_toBottomOf="@+id/locationActiveEvent" />
+                        app:layout_constraintTop_toBottomOf="@+id/locationInactiveEvent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.fragment.app.FragmentContainerView
