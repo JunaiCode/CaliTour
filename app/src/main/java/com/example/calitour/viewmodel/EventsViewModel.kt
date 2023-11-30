@@ -17,9 +17,9 @@ class EventsViewModel:EntityViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             val collectionRef = Firebase.firestore.collection("events")
             collectionRef.get()
-                .addOnSuccessListener { QuerySnapshot ->
+                .addOnSuccessListener { querySnapshot ->
                     val events = mutableListOf<EventDocumentDTO>()
-                    for(document in QuerySnapshot.documents){
+                    for(document in querySnapshot.documents){
                         val event = document.toObject(EventDocumentDTO::class.java)
                         if(event!=null){
                             events.add(event)
