@@ -17,7 +17,7 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.util.UUID
 
-class EntityViewModel:ViewModel() {
+open class EntityViewModel:ViewModel() {
 
     var completedProduct = MutableLiveData<Boolean>()
     var eventRepo = EventRepository()

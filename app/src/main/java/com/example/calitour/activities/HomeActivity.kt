@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.calitour.R
+import com.example.calitour.activities.fragments.EventsFragment
 import com.example.calitour.activities.fragments.UserProfileFragment
 import com.example.calitour.databinding.ActivityHomeBinding
 
@@ -14,6 +15,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private val profile = UserProfileFragment()
+    private val events = EventsFragment()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -21,6 +23,9 @@ class HomeActivity : AppCompatActivity() {
             when(it.itemId){
                 R.id.profile_user -> {
                     showFragment(profile)
+                }
+                R.id.search_user -> {
+                    showFragment(events)
                 }
             }
             true
