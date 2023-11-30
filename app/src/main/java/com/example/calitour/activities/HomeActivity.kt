@@ -18,10 +18,10 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private val home = EmptyFragment()
-    private val search = EmptyFragment()
+    private val search = EventsFragment()
     private val itinerary = ItineraryFragment()
     private val profile = UserProfileFragment()
-    private val events = EventsFragment()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -43,9 +43,6 @@ class HomeActivity : AppCompatActivity() {
                 R.id.profile_user -> {
                     Log.d("HomeActivity", "Selected Profile")
                     showFragment(profile)
-                }
-                R.id.search_user -> {
-                    showFragment(events)
                 }
             }
             true
