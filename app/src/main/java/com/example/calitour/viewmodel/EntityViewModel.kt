@@ -2,14 +2,16 @@ package com.example.calitour.viewmodel
 
 import android.net.Uri
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.calitour.model.entity.EntityFirestore
 import com.example.calitour.model.DTO.EventDocumentDTO
 import com.example.calitour.model.entity.EntityProduct
-import com.google.firebase.firestore.ktx.firestore
 import com.example.calitour.model.repository.EventRepository
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.Dispatchers
@@ -57,7 +59,7 @@ class EntityViewModel:ViewModel() {
         }
     }
 
-     fun getAllEvents():LiveData<ArrayList<EventDocumentDTO>>{
+     fun getAllEvents(): LiveData<ArrayList<EventDocumentDTO>> {
         eventsQuery.value = arrayListOf()
         viewModelScope.launch (Dispatchers.IO){
             eventsQuery.postValue(eventRepo.getAllEvents())
