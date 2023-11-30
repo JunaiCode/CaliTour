@@ -10,20 +10,24 @@ import com.example.calitour.model.entity.User
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
 class UserViewModel : ViewModel() {
 
     val _user = MutableLiveData<UserDTO>()
 
-
     fun getUser(){
         viewModelScope.launch(Dispatchers.IO) {
+            var foundUser: UserDTO? = null
             val user = Firebase.firestore.collection("users")
                 .document(Firebase.auth.currentUser!!.uid.toString())
                 .get().addOnSuccessListener {
-                    val foundUser = UserDTO(it.get("id") as String
+                    foundUser = it.toObject(UserDTO::class.java)
+                    /*val foundUser = UserDTO(it.get("id") as String
                         ,it.get("birthday") as String
                         ,it.get("email") as String
                         ,it.get("name") as String
@@ -31,10 +35,13 @@ class UserViewModel : ViewModel() {
                         ,it.get("points") as Long
                         ,it.get("photoID") as String)
 
-                    _user.value = foundUser
+                    _user.value = foundUser*/
                 }.addOnFailureListener{
                     Log.e(">>>", it.message.toString())
-                }
+                }.await()
+            withContext(Dispatchers.Main){
+                _user.value=foundUser!!
+            }
 
         }
     }

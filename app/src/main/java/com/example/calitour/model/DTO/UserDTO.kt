@@ -10,4 +10,8 @@ data class UserDTO (
     var phoneNumber: String,
     var points : Long,
     var photoUri: String
-)
+){
+    constructor():this("","","","","", 0, "") {
+        // No-argument constructor required for deserialization
+    }
+}
