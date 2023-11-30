@@ -101,11 +101,6 @@ class ProfileEntityActivity : AppCompatActivity() {
 
     }
 
-    fun showFragmentAdd(fragment: Fragment){
-        supportFragmentManager.beginTransaction().add(R.id.fragmentContainerEntity, fragment).addToBackStack(null).commit()
-
-    }
-
     fun showPopUp() {
         val dialog = Dialog(this)
         dialog.setContentView(R.layout.entity_popup_create)
@@ -148,7 +143,8 @@ class ProfileEntityActivity : AppCompatActivity() {
             binding.shop.setImageResource(R.drawable.shop)
             binding.liveEvents.setImageResource(R.drawable.live_gray)
             binding.endendEvents.setImageResource(R.drawable.clock_gray)
-            showFragmentAdd(ProductListFragment())
+            val fragment = ProductListFragment()
+            showFragment(fragment)
 
         }
 
@@ -164,7 +160,7 @@ class ProfileEntityActivity : AppCompatActivity() {
     }
 
     fun showFragment(fragment: Fragment){
-        supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer,fragment).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.fragmentContainerEntity,fragment).commit()
     }
 }
 
