@@ -170,6 +170,18 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <ImageButton
+            android:id="@+id/editEntityProfileBtn"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="10dp"
+            android:background="#00FFFFFF"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="@+id/entityName"
+            app:layout_constraintStart_toEndOf="@+id/entityName"
+            app:layout_constraintTop_toTopOf="@+id/entityName"
+            app:srcCompat="@drawable/edit" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.cardview.widget.CardView

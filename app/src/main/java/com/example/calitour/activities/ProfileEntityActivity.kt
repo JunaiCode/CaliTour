@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -52,6 +53,18 @@ class ProfileEntityActivity : AppCompatActivity() {
                 }
             }
             false
+        }
+        binding.editEntityProfileBtn.setOnClickListener {
+
+            val bundle = Bundle()
+            bundle.putString("fragment", "entity_fragment")
+            bundle.putSerializable("profile", vm.profile.value)
+
+            Log.e("<<<", vm.profile.value.toString())
+
+            intent = Intent(this, EditProfileActivity::class.java).putExtras(bundle)
+            startActivity(intent)
+
         }
 
     }

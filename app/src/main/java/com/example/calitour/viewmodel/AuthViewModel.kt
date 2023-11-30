@@ -89,7 +89,10 @@ class AuthViewModel : ViewModel(){
                     "id" to result.user?.uid.toString(),
                     "description" to entity.description,
                     "email" to entity.email,
-                    "photoID" to ""
+                    "photoID" to "",
+                    "facebookUrl" to "",
+                    "XUrl" to "",
+                    "instagramUrl" to ""
                 )
                 Log.e(">>>", newEntity.toString())
                 Firebase.firestore.collection("entities")
