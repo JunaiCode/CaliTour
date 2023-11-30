@@ -8,7 +8,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +16,8 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.calitour.R
 import com.example.calitour.activities.fragments.ProductListFragment
+import com.example.calitour.activities.fragments.ActiveEventFragment
+import com.example.calitour.activities.fragments.InactiveEventFragment
 import com.example.calitour.databinding.ActivityProfileEntityBinding
 import com.example.calitour.viewmodel.EntityViewModel
 
@@ -139,6 +140,8 @@ class ProfileEntityActivity : AppCompatActivity() {
             binding.liveEvents.setImageResource(R.drawable.live)
             binding.shop.setImageResource(R.drawable.shop_gray)
             binding.endendEvents.setImageResource(R.drawable.clock_gray)
+            val fragment = ActiveEventFragment.newInstance()
+            showFragment(fragment)
         }
 
         binding.shop.setOnClickListener{
@@ -153,8 +156,15 @@ class ProfileEntityActivity : AppCompatActivity() {
             binding.endendEvents.setImageResource(R.drawable.clock)
             binding.liveEvents.setImageResource(R.drawable.live_gray)
             binding.shop.setImageResource(R.drawable.shop_gray)
+            val fragment = InactiveEventFragment.newInstance()
+            showFragment(fragment)
         }
 
         binding.liveEvents.performClick()
     }
+
+    fun showFragment(fragment: Fragment){
+        supportFragmentManager.beginTransaction().replace(R.id.fragmentContainer,fragment).commit()
+    }
 }
+
