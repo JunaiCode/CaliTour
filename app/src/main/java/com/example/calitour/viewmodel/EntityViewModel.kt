@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.calitour.model.DTO.EventDocumentDTO
 import com.example.calitour.model.entity.EntityProduct
 import com.example.calitour.model.repository.EventRepository
 import com.google.firebase.firestore.ktx.firestore
@@ -53,31 +54,36 @@ class EntityViewModel:ViewModel() {
         }
     }
 
-    fun getAllEvents(){
+    fun getAllEvents():ArrayList<EventDocumentDTO>{
+        var query = ArrayList<EventDocumentDTO>()
         viewModelScope.launch (Dispatchers.IO){
-            val events = eventRepo.getAllEvents()
+            query = eventRepo.getAllEvents()
         }
+        return query
     }
 
-    fun getEventsById(id:String){
+    fun getEventsById(id:String): ArrayList<EventDocumentDTO>{
+        var query = ArrayList<EventDocumentDTO>()
         viewModelScope.launch (Dispatchers.IO){
-            val events = eventRepo.getEventByEntityId(id)
-            Log.e("Eventos de esta entidad: ",events.toString())
+             query = eventRepo.getEventByEntityId(id)
         }
+        return query
     }
 
-    fun getEventsUnavailablesByEntityId(id:String){
+    fun getEventsUnavailablesByEntityId(id:String):ArrayList<EventDocumentDTO>{
+        var query = ArrayList<EventDocumentDTO>()
         viewModelScope.launch (Dispatchers.IO){
-            val events = eventRepo.getEventsUnavailablesByEntityId(id)
-            Log.e("Eventos inactivos de esta entidad: ",events.toString())
+            query = eventRepo.getEventsUnavailablesByEntityId(id)
         }
+        return query
     }
 
-    fun getEventsAvailablesByEntityId(id:String){
+    fun getEventsAvailablesByEntityId(id:String):ArrayList<EventDocumentDTO>{
+        var query = ArrayList<EventDocumentDTO>()
         viewModelScope.launch (Dispatchers.IO){
-            val events = eventRepo.getEventsAvailablesByEntityId(id)
-            Log.e("Eventos activos de esta entidad: ",events.toString())
+            query = eventRepo.getEventsAvailablesByEntityId(id)
         }
+        return query
     }
 
     fun uploadImage(uri: Uri, entityId:String, productId:String){

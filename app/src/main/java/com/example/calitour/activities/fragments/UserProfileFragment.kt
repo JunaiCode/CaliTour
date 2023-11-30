@@ -24,14 +24,18 @@ class UserProfileFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = UserProfileFragmentBinding.inflate(inflater, container, false)
-
+        viewModel.getUser()
         viewModel._user.observe(viewLifecycleOwner){
+            binding.userName.text = it.name
+        }
+
+        /*viewModel._user.observe(viewLifecycleOwner){
             Glide.with(this@UserProfileFragment)
                 .load(createPath(it.photoUri))
                 .into(binding.userIV)
-        }
+        }*/
 
-        viewModel.getUser()
+
         return binding.root
     }
 
