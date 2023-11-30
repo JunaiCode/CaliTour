@@ -43,4 +43,5 @@
     <string name="itineraryEmptyTV">You still don\'t have a plan for today, join one of the events and add it to your itinerary</string>
     <string name="itineraryFullTitleTV">I guide you</string>
     <string name="about_us">About us</string>
+    <string name="save">Save</string>
 </resources>

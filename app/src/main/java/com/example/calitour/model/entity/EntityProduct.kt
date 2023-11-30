@@ -9,3 +9,11 @@ data class EntityProduct (
     val description: String = "",
     val price: Int = 0
 )
+
+data class EntityProductFirestore(
+    val name: String = "",
+    val id: String = "",
+    var image: String = "",
+    val description: String = "",
+    val points: Int = 0
+)
