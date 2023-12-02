@@ -28,6 +28,7 @@
         <item>Reggaeton</item>
     </string-array>
     <string name="btn_create_event">Crear Evento</string>
+    <string name="btn_edit_event">Editar Evento</string>
     <string name="name_of_your_product">Nombre del producto</string>
     <string name="description_of_your_product">Descripcion del producto… </string>
     <string name="btn_create_product">Crear producto</string>

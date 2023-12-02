@@ -1,12 +1,15 @@
 package com.example.calitour.viewmodel
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.calitour.model.DTO.BadgeDTO
 import com.example.calitour.model.DTO.EventDocumentDTO
 import com.example.calitour.model.DTO.PriceDTO
 import com.example.calitour.model.entity.Event
+import com.example.calitour.model.repository.EventRepository
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -21,6 +24,9 @@ import java.util.UUID
 
 class CreateEventProductViewModel: ViewModel() {
 
+    var editEvent= MutableLiveData<EventDocumentDTO?>()
+
+    val eventrepo = EventRepository()
     //Formato en el que se debe ingresar la fecha y hora para que lo coja como timeStamp
     val dateFormat = SimpleDateFormat("dd-M-yyyy hh:mm:ss")
 
@@ -38,9 +44,25 @@ class CreateEventProductViewModel: ViewModel() {
         }
     }
 
+    fun getEventById(id:String): MutableLiveData<EventDocumentDTO?> {
+        viewModelScope.launch (Dispatchers.IO){
+            editEvent.postValue(eventrepo.getEventById(id)[0])
+        }
+        return editEvent
+    }
+
+    fun clearEditEvent(){
+        editEvent.postValue(null)
+    }
+
      fun dateToMilliseconds(date:String,dateFormat: SimpleDateFormat):Long{
         val mDate = dateFormat.parse(date)
         return mDate.time
+    }
+
+    fun millisecondsToDate(milliseconds:String,dateFormat: SimpleDateFormat):String{
+        val millis: Long = milliseconds.toLong()
+        return  dateFormat.format(millis)
     }
 
     fun uploadImages(e: Event){

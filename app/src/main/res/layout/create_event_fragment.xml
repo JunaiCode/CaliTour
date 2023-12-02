@@ -126,17 +126,31 @@
                 android:contentDescription="@string/name_of_your_event" />
         </androidx.cardview.widget.CardView>
 
-        <Button
-            android:id="@+id/btnCreateEvent"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:backgroundTint="#FFC107"
-            android:text="@string/btn_create_event"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/priceEvent" />
+            app:layout_constraintTop_toBottomOf="@+id/priceEvent">
+
+            <Button
+                android:id="@+id/btnCreateEvent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:backgroundTint="#FFC107"
+                android:text="@string/btn_create_event" />
+
+            <Button
+                android:id="@+id/btnEditEvent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:backgroundTint="#FFC107"
+                android:text="@string/btn_edit_event" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
