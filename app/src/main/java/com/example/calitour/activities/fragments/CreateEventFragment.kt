@@ -13,9 +13,6 @@ import android.widget.AdapterView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import androidx.core.view.forEach
-import androidx.core.view.get
-import androidx.core.view.indices
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
@@ -23,16 +20,15 @@ import com.example.calitour.R
 import com.example.calitour.activities.ProfileEntityActivity
 import com.example.calitour.components.adapter.CategoriesAdapterSpinner
 import com.example.calitour.databinding.CreateEventFragmentBinding
+import com.example.calitour.model.DTO.EventDocumentDTO
 import com.example.calitour.model.entity.Badge
 import com.example.calitour.model.entity.Event
 import com.example.calitour.model.entity.Price
 import com.example.calitour.model.entity.Trivia
 import com.example.calitour.viewmodel.CreateEventProductViewModel
-import com.example.calitour.viewmodel.EntityViewModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import java.util.UUID
-import com.google.firebase.Timestamp
 
 
 class CreateEventFragment: Fragment() {
@@ -53,11 +49,7 @@ class CreateEventFragment: Fragment() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.categories.adapter = adapter
         vm.editEvent.observe(viewLifecycleOwner){event ->
-            binding.nameEvent.text = Editable.Factory.getInstance().newEditable(event?.name)
-            binding.categories.setSelection(getIndexCategory(event?.category.toString()))
-            binding.dateEvent.text = Editable.Factory.getInstance().newEditable(vm.millisecondsToDate(event?.date?.toDate()?.time.toString(),vm.dateFormat))
-            binding.descriptionEvent.text = Editable.Factory.getInstance().newEditable(event?.description)
-            binding.locationEvent.text = Editable.Factory.getInstance().newEditable(event?.place)
+           setValues(event)
         }
         if(arguments?.getString("eventId") != null){
             binding.btnCreateEvent.visibility = View.GONE
@@ -141,6 +133,22 @@ class CreateEventFragment: Fragment() {
     fun onGalleryResultImage(result: ActivityResult){
         eventUri = result.data?.data!!
         Glide.with(this).load(eventUri).into(binding.eventImg)
+    }
+
+    private fun setValues(event:EventDocumentDTO?){
+        if(event !=null){
+            binding.nameEvent.text = Editable.Factory.getInstance().newEditable(event?.name)
+            binding.categories.setSelection(getIndexCategory(event?.category.toString()))
+            binding.dateEvent.text = Editable.Factory.getInstance().newEditable(vm.millisecondsToDate(event?.date?.toDate()?.time.toString(),vm.dateFormat))
+            binding.descriptionEvent.text = Editable.Factory.getInstance().newEditable(event?.description)
+            binding.locationEvent.text = Editable.Factory.getInstance().newEditable(event?.place)
+        }else{
+            binding.nameEvent.text.clear()
+            binding.categories.setSelection(0)
+            binding.dateEvent.text.clear()
+            binding.descriptionEvent.text.clear()
+            binding.locationEvent.text.clear()
+        }
     }
 
     private fun getIndexCategory(category:String):Int{
