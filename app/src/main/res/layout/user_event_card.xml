@@ -162,7 +162,7 @@
                     android:layout_height="match_parent">
 
                     <Button
-                        android:id="@+id/meInteresaEventCardBtn"
+                        android:id="@+id/editEventBtn"
                         android:layout_width="150dp"
                         android:layout_height="30dp"
                         android:background="@drawable/meinteresa_icon"

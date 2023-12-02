@@ -1,7 +1,9 @@
 package com.example.calitour.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import com.example.calitour.R
@@ -23,7 +25,15 @@ class CreateEventProductActivity : AppCompatActivity() {
 
         when(intent?.extras?.getString("fragment")){
             "EVENT" ->{
+                createEventFragment.arguments = null
                 showFragment(createEventFragment)
+            }
+            "EDIT_EVENT"->{
+                val bundle = Bundle()
+                bundle.putString("eventId",intent?.extras?.getString("id"))
+                createEventFragment.arguments = bundle
+                showFragment(createEventFragment)
+
             }
             "PRODUCT" -> {
                 showFragment(createProductFragment)

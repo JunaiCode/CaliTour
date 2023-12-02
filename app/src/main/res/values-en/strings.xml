@@ -31,6 +31,7 @@
         <item>Reggaeton</item>
     </string-array>
     <string name="btn_create_event">Create Event</string>
+    <string name="btn_edit_event">Edit Event</string>
     <string name="name_of_your_product">Name of the product</string>
     <string name="description_of_your_product">Description of the product… </string>
     <string name="btn_create_product">Create Product</string>

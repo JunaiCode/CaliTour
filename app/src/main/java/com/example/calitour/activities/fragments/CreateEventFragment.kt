@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,9 @@ import android.widget.AdapterView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.core.view.forEach
+import androidx.core.view.get
+import androidx.core.view.indices
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
@@ -24,6 +28,7 @@ import com.example.calitour.model.entity.Event
 import com.example.calitour.model.entity.Price
 import com.example.calitour.model.entity.Trivia
 import com.example.calitour.viewmodel.CreateEventProductViewModel
+import com.example.calitour.viewmodel.EntityViewModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import java.util.UUID
@@ -47,6 +52,22 @@ class CreateEventFragment: Fragment() {
         val adapter = CategoriesAdapterSpinner(appContext, android.R.layout.simple_spinner_item, categories)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.categories.adapter = adapter
+        vm.editEvent.observe(viewLifecycleOwner){event ->
+            binding.nameEvent.text = Editable.Factory.getInstance().newEditable(event?.name)
+            binding.categories.setSelection(getIndexCategory(event?.category.toString()))
+            binding.dateEvent.text = Editable.Factory.getInstance().newEditable(vm.millisecondsToDate(event?.date?.toDate()?.time.toString(),vm.dateFormat))
+            binding.descriptionEvent.text = Editable.Factory.getInstance().newEditable(event?.description)
+            binding.locationEvent.text = Editable.Factory.getInstance().newEditable(event?.place)
+        }
+        if(arguments?.getString("eventId") != null){
+            binding.btnCreateEvent.visibility = View.GONE
+            Log.e("arguments",arguments.toString())
+            val eventId = arguments?.getString("eventId").toString()
+            vm.getEventById(eventId)
+        }else{
+            vm.clearEditEvent()
+            binding.btnEditEvent.visibility = View.GONE
+        }
 
         val launcherBadge = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult(),
@@ -62,7 +83,6 @@ class CreateEventFragment: Fragment() {
             val intent = Intent(Intent.ACTION_GET_CONTENT)
             intent.type = "image/*"
             launcherBadge.launch(intent)
-
         }
 
         binding.eventImg.setOnClickListener(){
@@ -106,6 +126,10 @@ class CreateEventFragment: Fragment() {
             startActivity(Intent(requireContext(), ProfileEntityActivity::class.java))
         }
 
+        binding.btnEditEvent.setOnClickListener() {
+
+        }
+
         return binding.root
     }
 
@@ -117,6 +141,19 @@ class CreateEventFragment: Fragment() {
     fun onGalleryResultImage(result: ActivityResult){
         eventUri = result.data?.data!!
         Glide.with(this).load(eventUri).into(binding.eventImg)
+    }
+
+    private fun getIndexCategory(category:String):Int{
+        val array = resources.getStringArray(R.array.categories)
+        var position = 0
+        for(i in array){
+            if(i != category){
+                position++
+            }else{
+                return position
+            }
+        }
+        return 0
     }
 
     companion object{
