@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+        android:id="@+id/constraintLayout5"
         android:layout_width="0dp"
         android:layout_height="550dp"
         android:layout_marginTop="20dp"
@@ -145,7 +145,7 @@
         android:layout_width="272dp"
         android:layout_height="182dp"
         android:contentDescription="@string/event_header"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

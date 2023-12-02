@@ -8,7 +8,7 @@
     tools:context=".activities.ProfileEntityActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+        android:id="@+id/constraintLayout5"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@drawable/entity_profile_background"
