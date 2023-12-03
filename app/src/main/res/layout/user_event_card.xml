@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:layout_width="360dp"
-        android:layout_height="280dp"
+        android:layout_height="255dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -151,7 +151,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="0dp"
-                android:layout_height="55dp"
+                android:layout_height="30dp"
                 android:background="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -165,11 +165,14 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <Button
-                        android:id="@+id/interestedCardBttn"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
+
+                    <ImageButton
+                        android:id="@+id/interestBtn"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:background="@drawable/star_icon"
+                        android:backgroundTint="#7A8083"
+                        android:scaleType="fitCenter"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -183,10 +186,10 @@
                         android:fontFamily="@font/poppins"
                         android:text="@string/interested"
                         android:textColor="@color/black_opacity"
-                        android:textSize="18sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/interestedCardBttn"
-                        app:layout_constraintStart_toEndOf="@+id/interestedCardBttn"
-                        app:layout_constraintTop_toTopOf="@+id/interestedCardBttn" />
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/interestBtn"
+                        app:layout_constraintStart_toEndOf="@+id/interestBtn"
+                        app:layout_constraintTop_toTopOf="@+id/interestBtn" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 

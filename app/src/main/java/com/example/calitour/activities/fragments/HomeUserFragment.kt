@@ -34,8 +34,8 @@ class HomeUserFragment : Fragment(), UserEventAdapter.ItemClickListener {
         return binding.root
     }
 
-    override fun interestClickListener(eventId: String) {
-        vm.reactToEvent(eventId)
+    override fun interestClickListener(eventId: String, operation: String) {
+        vm.reactToEvent(eventId, operation)
     }
 
 

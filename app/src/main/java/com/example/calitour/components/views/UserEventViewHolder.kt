@@ -13,6 +13,6 @@ class UserEventViewHolder(root: View): ViewHolder(root) {
     val eventLocation = binding.locationActiveEvent
     val eventDate = binding.dateActiveEvent
     val image = binding.imagenFondo
-    val interestBtn = binding.interestedCardBttn
+    val interestBtn = binding.interestBtn
 
 }

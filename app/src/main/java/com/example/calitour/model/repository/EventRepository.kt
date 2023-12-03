@@ -67,16 +67,29 @@ class EventRepository {
         return events
     }
 
-    suspend fun reactToEvent(eventId: String){
+    suspend fun reactToEvent(eventId: String, operation: String){
         val result = Firebase.firestore.collection("events")
             .document(eventId)
-            .get().addOnSuccessListener {
-                val event = it.toObject(EventDocumentDTO::class.java)
-                Log.e("<<<", "$eventId es ${event.toString()}")
-                var actual = event?.reaction as Int
-            }
+            .get()
             .await()
 
+        Log.e("<<<", "encontrado ${result.toString()}")
+        val event = result.toObject(EventDocumentDTO::class.java)
+        var actual = event?.reaction as Int
+
+        when (operation){
+            "add" -> {
+                actual++
+            }
+            "remove" -> {
+                actual--
+            }
+        }
+
+        Firebase.firestore.collection("events")
+            .document(eventId)
+            .update("reaction", actual)
+            .await()
     }
 
     suspend fun getEventById(id:String): ArrayList<EventDocumentDTO> {

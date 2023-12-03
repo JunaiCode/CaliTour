@@ -47,9 +47,9 @@ class UserViewModel : ViewModel() {
         }
     }
 
-    fun reactToEvent(eventId: String){
+    fun reactToEvent(eventId: String, operation: String){
         viewModelScope.launch (Dispatchers.IO) {
-            eventRepo.reactToEvent(eventId)
+            eventRepo.reactToEvent(eventId, operation)
         }
     }
     fun getAllActiveEvents(){
