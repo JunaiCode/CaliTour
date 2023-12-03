@@ -150,6 +150,7 @@ class CreateEventFragment: Fragment() {
                 vm.eventPrices.value?.get(0)?.id),"General"))
             newEvent.badges.add(Badge(UUID.fromString(vm.eventBadges.value?.get(0)?.id),badgeUri,"Badge"))
             vm.editEvent(newEvent)
+            vm.editImages(newEvent)
             startActivity(Intent(requireContext(), ProfileEntityActivity::class.java))
         }
 

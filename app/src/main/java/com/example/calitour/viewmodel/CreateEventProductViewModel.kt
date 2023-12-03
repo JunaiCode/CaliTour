@@ -49,7 +49,17 @@ class CreateEventProductViewModel: ViewModel() {
     }
 
     fun editEvent(e:Event){
-        Log.e("Evento a editar",e.toString())
+        val eventDto = EventDocumentDTO(e.category,Timestamp(Date(e.date)),e.description,
+            e.entityId,e.id.toString(),getEventById(e.id.toString()).value?.img.toString(),e.name,e.place,e.reaction,e.score,e.state)
+        val priceDTO = PriceDTO(e.prices[0].description,e.prices[0].fee,e.prices[0].id.toString(),e.prices[0].name)
+        val badgeDTO = BadgeDTO(e.badges[0].id.toString(),getEventBadges(e.id.toString()).value?.get(0)?.img.toString(),e.badges[0].name)
+        viewModelScope.launch(Dispatchers.IO){
+            Firebase.firestore.collection("events").document(eventDto.id).set(eventDto)
+            Firebase.firestore.collection("events").document(eventDto.id).collection("prices").document(
+                priceDTO.id).set(priceDTO)
+            Firebase.firestore.collection("events").document(eventDto.id).collection("badges").document(
+                badgeDTO.id).set(badgeDTO)
+        }
     }
 
     fun getEventById(id:String): MutableLiveData<EventDocumentDTO?> {
@@ -132,6 +142,32 @@ class CreateEventProductViewModel: ViewModel() {
                     .document(e.id.toString())
                     .update("img", eventImg)
                     .await()
+
+            }catch (ex:Exception){
+                Log.e(">>>>",ex.message.toString())
+            }
+        }
+    }
+
+    fun editImages(e: Event){
+        viewModelScope.launch(Dispatchers.IO){
+            //Cargar las insignias y imagen de eventos
+            try{
+                val badgeImg = eventBadges.value?.get(0)?.img.toString()
+                Firebase.storage.reference
+                    .child("badges")
+                    .child(e.entityId)
+                    .child(e.id.toString())
+                    .child(badgeImg)
+                    .putFile(e.badges[0].img).await()
+
+                val eventImg = editEvent.value?.img.toString()
+                Firebase.storage.reference
+                    .child("eventImages")
+                    .child(e.entityId)
+                    .child(e.id.toString())
+                    .child(eventImg)
+                    .putFile(e.img).await()
 
             }catch (ex:Exception){
                 Log.e(">>>>",ex.message.toString())
