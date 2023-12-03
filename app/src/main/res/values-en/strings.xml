@@ -23,12 +23,15 @@
     <string name="price_event_product">Indicate the price</string>
     <string name="dropdown_categories">dropDownMenuCategories</string>
     <string-array name="categories">
-        <item>Category</item>
-        <item>Salsa</item>
-        <item>Hiphop</item>
-        <item>Electronic</item>
-        <item>Pacific</item>
-        <item>Reggaeton</item>
+        <item>Categories</item>
+        <item>Music</item>
+        <item>Dance</item>
+        <item>Art</item>
+        <item>Literature</item>
+        <item>Theater</item>
+        <item>Cinema</item>
+        <item>Sport</item>
+        <item>Food</item>
     </string-array>
     <string name="btn_create_event">Create Event</string>
     <string name="btn_edit_event">Edit Event</string>
