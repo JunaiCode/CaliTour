@@ -17,7 +17,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -257,6 +257,7 @@
                         android:id="@+id/eventDescriptionTV"
                         android:layout_width="320dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="48dp"
                         android:layout_marginTop="30dp"
                         android:fontFamily="@font/poppins"
                         android:text="¡Prepárate para una experiencia teatral única en Cali! Nuestra 'Muestra de Teatro Alternativa' es un viaje emocionante a través de las narrativas más creativas y provocativas del teatro contemporáneo. En este evento, explorarás una variedad de enfoques teatrales innovadores, desde obras de vanguardia hasta performances vanguardistas. Sumérgete en un mundo de expresión artística y descubre nuevas formas de contar historias en el escenario. No te pierdas esta oportunidad de vivir el teatro de una manera totalmente diferente. ¡Ven y únete a nosotros para una experiencia teatral alternativa que desafiará tus sentidos y tu imaginación!"
