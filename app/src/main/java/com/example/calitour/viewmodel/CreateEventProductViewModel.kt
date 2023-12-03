@@ -1,5 +1,6 @@
 package com.example.calitour.viewmodel
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -25,7 +26,8 @@ import java.util.UUID
 class CreateEventProductViewModel: ViewModel() {
 
     var editEvent= MutableLiveData<EventDocumentDTO?>()
-
+    var eventImgUri = MutableLiveData<Uri>()
+    var eventPrices = MutableLiveData<PriceDTO>()
     val eventrepo = EventRepository()
     //Formato en el que se debe ingresar la fecha y hora para que lo coja como timeStamp
     val dateFormat = SimpleDateFormat("dd-M-yyyy hh:mm:ss")
@@ -49,6 +51,13 @@ class CreateEventProductViewModel: ViewModel() {
             editEvent.postValue(eventrepo.getEventById(id)[0])
         }
         return editEvent
+    }
+
+    fun getImgEvent(id:String):MutableLiveData<Uri>{
+        viewModelScope.launch (Dispatchers.IO){
+            eventImgUri.postValue(eventrepo.getEventImg(id))
+        }
+        return eventImgUri
     }
 
     fun clearEditEvent(){

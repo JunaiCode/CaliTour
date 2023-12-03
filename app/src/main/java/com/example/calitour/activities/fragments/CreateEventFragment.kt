@@ -13,6 +13,8 @@ import android.widget.AdapterView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.core.net.toFile
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
@@ -50,6 +52,10 @@ class CreateEventFragment: Fragment() {
         binding.categories.adapter = adapter
         vm.editEvent.observe(viewLifecycleOwner){event ->
            setValues(event)
+        }
+        vm.eventImgUri.observe(viewLifecycleOwner){img ->
+            eventUri = img
+            Glide.with(this).load(eventUri).into(binding.eventImg)
         }
         if(arguments?.getString("eventId") != null){
             binding.btnCreateEvent.visibility = View.GONE
@@ -142,6 +148,7 @@ class CreateEventFragment: Fragment() {
             binding.dateEvent.text = Editable.Factory.getInstance().newEditable(vm.millisecondsToDate(event?.date?.toDate()?.time.toString(),vm.dateFormat))
             binding.descriptionEvent.text = Editable.Factory.getInstance().newEditable(event?.description)
             binding.locationEvent.text = Editable.Factory.getInstance().newEditable(event?.place)
+            vm.getImgEvent(event.id)
         }else{
             binding.nameEvent.text.clear()
             binding.categories.setSelection(0)
