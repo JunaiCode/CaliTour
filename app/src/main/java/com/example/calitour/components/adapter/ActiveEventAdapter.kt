@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.calitour.R
 import com.example.calitour.activities.CreateEventProductActivity
+import com.example.calitour.activities.ProfileEntityActivity
 import com.example.calitour.activities.fragments.ActiveEventFragment
 import com.example.calitour.components.views.ActiveEventViewHolder
 import com.example.calitour.model.DTO.BadgeDTO
@@ -30,6 +31,7 @@ import java.util.UUID
 class ActiveEventAdapter: Adapter<ActiveEventViewHolder>() {
     private var activeEvents : ArrayList<EventDocumentDTO> = arrayListOf()
     private val vm: CreateEventProductViewModel = CreateEventProductViewModel()
+    private val entityvm: EntityViewModel = EntityViewModel()
     init {
 
     }
@@ -58,7 +60,6 @@ class ActiveEventAdapter: Adapter<ActiveEventViewHolder>() {
             holder.editBtn.setBackgroundResource(R.drawable.edit_icon)
             holder.deleteBtn.setBackgroundResource(R.drawable.delete)
             vm.deleteEvent(activeEvents[position])
-
         }
     }
     override fun getItemCount(): Int {

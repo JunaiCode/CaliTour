@@ -6,6 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.calitour.activities.ProfileEntityActivity
+import com.example.calitour.activities.fragments.ActiveEventFragment
 import com.example.calitour.model.DTO.BadgeDTO
 import com.example.calitour.model.DTO.EventDocumentDTO
 import com.example.calitour.model.DTO.PriceDTO
