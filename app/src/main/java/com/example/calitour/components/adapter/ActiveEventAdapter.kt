@@ -1,20 +1,37 @@
 package com.example.calitour.components.adapter
 
 import android.content.Intent
+import android.net.Uri
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.calitour.R
 import com.example.calitour.activities.CreateEventProductActivity
+import com.example.calitour.activities.ProfileEntityActivity
+import com.example.calitour.activities.fragments.ActiveEventFragment
 import com.example.calitour.components.views.ActiveEventViewHolder
+import com.example.calitour.model.DTO.BadgeDTO
 import com.example.calitour.model.DTO.EventDocumentDTO
+import com.example.calitour.model.entity.Badge
+import com.example.calitour.model.entity.Event
+import com.example.calitour.model.entity.Price
+import com.example.calitour.model.entity.Trivia
+import com.example.calitour.viewmodel.CreateEventProductViewModel
+import com.example.calitour.viewmodel.EntityViewModel
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.delay
+import java.util.UUID
 
 class ActiveEventAdapter: Adapter<ActiveEventViewHolder>() {
     private var activeEvents : ArrayList<EventDocumentDTO> = arrayListOf()
-
+    private val vm: CreateEventProductViewModel = CreateEventProductViewModel()
+    private val entityvm: EntityViewModel = EntityViewModel()
     init {
 
     }
@@ -42,6 +59,7 @@ class ActiveEventAdapter: Adapter<ActiveEventViewHolder>() {
         holder.deleteBtn.setOnClickListener{
             holder.editBtn.setBackgroundResource(R.drawable.edit_icon)
             holder.deleteBtn.setBackgroundResource(R.drawable.delete)
+            vm.deleteEvent(activeEvents[position])
         }
     }
     override fun getItemCount(): Int {
@@ -50,7 +68,6 @@ class ActiveEventAdapter: Adapter<ActiveEventViewHolder>() {
 
     fun setList(list:ArrayList<EventDocumentDTO>){
         activeEvents = list
-        //Notificar RV
         notifyDataSetChanged()
     }
 }

@@ -6,16 +6,20 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.calitour.activities.ProfileEntityActivity
+import com.example.calitour.activities.fragments.ActiveEventFragment
 import com.example.calitour.model.DTO.BadgeDTO
 import com.example.calitour.model.DTO.EventDocumentDTO
 import com.example.calitour.model.DTO.PriceDTO
 import com.example.calitour.model.entity.Event
 import com.example.calitour.model.repository.EventRepository
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
@@ -31,6 +35,7 @@ class CreateEventProductViewModel: ViewModel() {
     var eventBadges = MutableLiveData<ArrayList<BadgeDTO>>()
     var eventPrices = MutableLiveData<ArrayList<PriceDTO>>()
     val eventrepo = EventRepository()
+
     //Formato en el que se debe ingresar la fecha y hora para que lo coja como timeStamp
     val dateFormat = SimpleDateFormat("dd-M-yyyy hh:mm:ss")
 
@@ -59,6 +64,12 @@ class CreateEventProductViewModel: ViewModel() {
                 priceDTO.id).set(priceDTO)
             Firebase.firestore.collection("events").document(eventDto.id).collection("badges").document(
                 badgeDTO.id).set(badgeDTO)
+        }
+    }
+
+     fun deleteEvent(e:EventDocumentDTO){
+        viewModelScope.launch(Dispatchers.IO){
+            Firebase.firestore.collection("events").document(e.id).update("state","deleted")
         }
     }
 
