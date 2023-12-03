@@ -57,9 +57,12 @@ class CreateEventFragment: Fragment() {
             eventUri = img
             Glide.with(this).load(eventUri).into(binding.eventImg)
         }
+        vm.eventBadgesUri.observe(viewLifecycleOwner){badge ->
+            badgeUri = badge[0]
+            Glide.with(this).load(badgeUri).into(binding.badgeImg)
+        }
         if(arguments?.getString("eventId") != null){
             binding.btnCreateEvent.visibility = View.GONE
-            Log.e("arguments",arguments.toString())
             val eventId = arguments?.getString("eventId").toString()
             vm.getEventById(eventId)
         }else{
@@ -149,6 +152,7 @@ class CreateEventFragment: Fragment() {
             binding.descriptionEvent.text = Editable.Factory.getInstance().newEditable(event?.description)
             binding.locationEvent.text = Editable.Factory.getInstance().newEditable(event?.place)
             vm.getImgEvent(event.id)
+            vm.getImgBadge(event.id)
         }else{
             binding.nameEvent.text.clear()
             binding.categories.setSelection(0)

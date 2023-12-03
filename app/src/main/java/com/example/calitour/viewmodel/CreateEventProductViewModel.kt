@@ -27,6 +27,7 @@ class CreateEventProductViewModel: ViewModel() {
 
     var editEvent= MutableLiveData<EventDocumentDTO?>()
     var eventImgUri = MutableLiveData<Uri>()
+    var eventBadgesUri = MutableLiveData<ArrayList<Uri>>()
     var eventPrices = MutableLiveData<PriceDTO>()
     val eventrepo = EventRepository()
     //Formato en el que se debe ingresar la fecha y hora para que lo coja como timeStamp
@@ -58,6 +59,13 @@ class CreateEventProductViewModel: ViewModel() {
             eventImgUri.postValue(eventrepo.getEventImg(id))
         }
         return eventImgUri
+    }
+
+    fun getImgBadge(id:String):MutableLiveData<ArrayList<Uri>>{
+        viewModelScope.launch (Dispatchers.IO){
+            eventBadgesUri.postValue(eventrepo.getEventBadgesImg(id))
+        }
+        return eventBadgesUri
     }
 
     fun clearEditEvent(){
