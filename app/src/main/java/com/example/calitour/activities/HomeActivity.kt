@@ -46,9 +46,7 @@ class HomeActivity : AppCompatActivity() {
             }
             true
         }
-
-
-
+        binding.navbarUser.selectedItemId = R.id.home_user
         setContentView(binding.root)
     }
 

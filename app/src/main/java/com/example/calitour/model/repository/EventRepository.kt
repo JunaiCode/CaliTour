@@ -56,10 +56,8 @@ class EventRepository {
             .await()
 
         val allEvents = result.toObjects(EventFullDTO::class.java)
-        Log.e("<<<" , "eventos hallados $allEvents")
         val events = ArrayList<EventFullDTO>()
         events.addAll(allEvents)
-        Log.e("<<<", "eventos convertidos  $events")
         events.forEach {
             val entityName = getEntityNameById(it.entityId)
             var photoUrl = it.img
@@ -113,6 +111,21 @@ class EventRepository {
             }
         }
         return eventArraylist
+    }
+
+    suspend fun getEventByIdFull(eventId: String): EventFullDTO {
+        val result = Firebase.firestore.collection("events")
+            .document(eventId)
+            .get()
+            .await()
+        val event = result.toObject(EventFullDTO::class.java)!!
+        if(event.img != ""){
+            event.img = getEventImage(event.entityId, event.id, event.img)!!
+
+        }
+        event.entityName = getEntityNameById(event.entityId)!!
+
+        return event!!
     }
 
     suspend fun getEventImg(id:String): Uri{

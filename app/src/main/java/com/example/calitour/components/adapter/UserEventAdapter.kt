@@ -1,11 +1,13 @@
 package com.example.calitour.components.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.bumptech.glide.Glide
 import com.example.calitour.R
+import com.example.calitour.activities.EventDetailActivity
 import com.example.calitour.components.views.UserEventViewHolder
 import com.example.calitour.model.DTO.EventFullDTO
 import java.text.SimpleDateFormat
@@ -65,6 +67,12 @@ class UserEventAdapter: Adapter<UserEventViewHolder>() {
 
         }else {
             holder.eventPrice.text = event.price.toString()
+        }
+
+        holder.eventName.setOnClickListener{
+            holder.itemView.context.startActivity(
+                Intent(holder.itemView.context, EventDetailActivity::class.java).putExtra("event_id", event.id)
+            )
         }
     }
 
