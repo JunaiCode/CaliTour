@@ -13,8 +13,6 @@ import android.widget.AdapterView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import androidx.core.net.toFile
-import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
@@ -43,7 +41,7 @@ class CreateEventFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val appContext = requireContext()
         binding = CreateEventFragmentBinding.inflate(inflater,container,false)
         val categories = resources.getStringArray(R.array.categories)
@@ -63,7 +61,7 @@ class CreateEventFragment: Fragment() {
             Glide.with(this).load(badgeUri).into(binding.badgeImg)
         }
         vm.eventPrices.observe(viewLifecycleOwner){prices->
-            binding.priceEvent.text = Editable.Factory.getInstance().newEditable(prices[0]?.fee.toString())
+            binding.priceEvent.text = Editable.Factory.getInstance().newEditable(prices[0].fee.toString())
         }
         if(arguments?.getString("eventId") != null){
             binding.btnCreateEvent.visibility = View.GONE
@@ -140,9 +138,9 @@ class CreateEventFragment: Fragment() {
                 binding.descriptionEvent.text.toString(),
                 binding.nameEvent.text.toString(),
                 binding.locationEvent.text.toString(),
-                0,
-                0.0,
-                "available",
+                vm.editEvent.value?.reaction.toString().toInt(),
+                vm.editEvent.value?.score.toString().toDouble(),
+                vm.editEvent.value?.state.toString(),
                 eventUri,
                 ArrayList<Price>(),
                 ArrayList<Badge>(),
@@ -174,11 +172,11 @@ class CreateEventFragment: Fragment() {
             vm.getImgBadge(event.id)
             vm.getPricesEvent(event.id)
             vm.getEventBadges(event.id)
-            binding.nameEvent.text = Editable.Factory.getInstance().newEditable(event?.name)
-            binding.categories.setSelection(getIndexCategory(event?.category.toString()))
-            binding.dateEvent.text = Editable.Factory.getInstance().newEditable(vm.millisecondsToDate(event?.date?.toDate()?.time.toString(),vm.dateFormat))
-            binding.descriptionEvent.text = Editable.Factory.getInstance().newEditable(event?.description)
-            binding.locationEvent.text = Editable.Factory.getInstance().newEditable(event?.place)
+            binding.nameEvent.text = Editable.Factory.getInstance().newEditable(event.name)
+            binding.categories.setSelection(getIndexCategory(event.category))
+            binding.dateEvent.text = Editable.Factory.getInstance().newEditable(vm.millisecondsToDate(event.date.toDate().time.toString(),vm.dateFormat))
+            binding.descriptionEvent.text = Editable.Factory.getInstance().newEditable(event.description)
+            binding.locationEvent.text = Editable.Factory.getInstance().newEditable(event.place)
         }else{
             binding.nameEvent.text.clear()
             binding.categories.setSelection(0)
