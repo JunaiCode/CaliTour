@@ -60,7 +60,12 @@ class UserEventAdapter: Adapter<UserEventViewHolder>() {
         holder.eventEntity.text = event.entityName
         holder.eventDate.text = date
         holder.eventLocation.text = event.place
-        holder.eventPrice.text
+        if(event.price==0){
+            holder.eventPrice.text = holder.itemView.context.getString (R.string.free)
+
+        }else {
+            holder.eventPrice.text = event.price.toString()
+        }
     }
 
     override fun getItemCount(): Int {

@@ -28,6 +28,7 @@ class HomeUserFragment : Fragment(), UserEventAdapter.ItemClickListener {
         binding.userHomeEventsRV.adapter = adapter
         binding.userHomeEventsRV.layoutManager = LinearLayoutManager(context)
         binding.userHomeEventsRV.setHasFixedSize(true)
+        binding.userHomeEventsRV.isNestedScrollingEnabled = false
         vm.eventsQuery.observe(viewLifecycleOwner){ events ->
             adapter.setEvents(events)
         }

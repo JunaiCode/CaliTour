@@ -19,6 +19,7 @@ data class EventDocumentDTO(
 data class EventFullDTO (
     var category: String = "",
     var date: Timestamp = Timestamp.now() ,
+    var price: Int = 0,
     var description: String = "",
     var entityId: String = "",
     var id: String = "",

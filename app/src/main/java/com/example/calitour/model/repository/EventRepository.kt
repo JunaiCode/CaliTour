@@ -56,16 +56,20 @@ class EventRepository {
             .await()
 
         val allEvents = result.toObjects(EventFullDTO::class.java)
+        Log.e("<<<" , "eventos hallados $allEvents")
         val events = ArrayList<EventFullDTO>()
         events.addAll(allEvents)
+        Log.e("<<<", "eventos convertidos  $events")
         events.forEach {
             val entityName = getEntityNameById(it.entityId)
             var photoUrl = it.img
             if(photoUrl.isNotEmpty()){
                 photoUrl = getEventImage(it.entityId, it.id,it.img)!!
             }
+            val price = getPricesEvent(it.id)[0].fee
             it.img = photoUrl
             it.entityName = entityName!!
+            it.price = price.toInt()
         }
         return events
     }
