@@ -31,7 +31,6 @@ import java.util.UUID
 class ActiveEventAdapter: Adapter<ActiveEventViewHolder>() {
     private var activeEvents : ArrayList<EventDocumentDTO> = arrayListOf()
     private val vm: CreateEventProductViewModel = CreateEventProductViewModel()
-    private val entityvm: EntityViewModel = EntityViewModel()
     init {
 
     }
@@ -59,7 +58,7 @@ class ActiveEventAdapter: Adapter<ActiveEventViewHolder>() {
         holder.deleteBtn.setOnClickListener{
             holder.editBtn.setBackgroundResource(R.drawable.edit_icon)
             holder.deleteBtn.setBackgroundResource(R.drawable.delete)
-            vm.deleteEvent(activeEvents[position])
+            activeEvents = vm.deleteEvent(activeEvents[position])
         }
     }
     override fun getItemCount(): Int {

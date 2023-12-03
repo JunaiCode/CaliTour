@@ -67,10 +67,13 @@ class CreateEventProductViewModel: ViewModel() {
         }
     }
 
-     fun deleteEvent(e:EventDocumentDTO){
+     fun deleteEvent(e:EventDocumentDTO): ArrayList<EventDocumentDTO>{
+         var array = ArrayList<EventDocumentDTO>()
         viewModelScope.launch(Dispatchers.IO){
             Firebase.firestore.collection("events").document(e.id).update("state","deleted")
+            array = eventrepo.getEventsAvailablesByEntityId(e.entityId)
         }
+         return array
     }
 
     fun getEventById(id:String): MutableLiveData<EventDocumentDTO?> {
