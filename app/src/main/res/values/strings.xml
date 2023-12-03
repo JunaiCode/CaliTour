@@ -21,11 +21,14 @@
     <string name="dropdown_categories">dropDownMenuCategories</string>
     <string-array name="categories">
         <item>Categoría</item>
-        <item>Salsa</item>
-        <item>Hiphop</item>
-        <item>Electronica</item>
-        <item>Pacifico</item>
-        <item>Reggaeton</item>
+        <item>Música</item>
+        <item>Baile</item>
+        <item>Arte</item>
+        <item>Literatura</item>
+        <item>Teatro</item>
+        <item>Cine</item>
+        <item>Deporte</item>
+        <item>Comida</item>
     </string-array>
     <string name="btn_create_event">Crear Evento</string>
     <string name="btn_edit_event">Editar Evento</string>
