@@ -4,10 +4,10 @@ import android.net.Uri
 import android.util.Log
 import com.example.calitour.model.DTO.BadgeDTO
 import com.example.calitour.model.DTO.EventDocumentDTO
+import com.example.calitour.model.DTO.EventFullDTO
+import com.example.calitour.model.entity.EntityFirestore
 import com.example.calitour.model.DTO.PriceDTO
-import com.example.calitour.model.entity.Price
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.toObject
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.tasks.await
@@ -27,6 +27,76 @@ class EventRepository {
         return eventArraylist
     }
 
+    suspend fun getEntityNameById(entityId: String): String?{
+        val result = Firebase.firestore
+            .collection("entities")
+            .document(entityId)
+            .get()
+            .await().toObject(EntityFirestore::class.java)
+        return  result?.name
+    }
+
+    suspend fun getEventImage(entityId: String, eventId: String, photoId:String): String?{
+
+        return Firebase.storage.reference
+                    .child("eventImages")
+                    .child(entityId)
+                    .child(eventId)
+                    .child(photoId)
+                    .downloadUrl
+                    .await()
+                    .toString()
+    }
+
+    suspend fun getAllActiveEvents():ArrayList<EventFullDTO>{
+
+        val result = Firebase.firestore.collection("events")
+            .whereEqualTo("state", "available")
+            .get()
+            .await()
+
+        val allEvents = result.toObjects(EventFullDTO::class.java)
+        val events = ArrayList<EventFullDTO>()
+        events.addAll(allEvents)
+        events.forEach {
+            val entityName = getEntityNameById(it.entityId)
+            var photoUrl = it.img
+            if(photoUrl.isNotEmpty()){
+                photoUrl = getEventImage(it.entityId, it.id,it.img)!!
+            }
+            val price = getPricesEvent(it.id)[0].fee
+            it.img = photoUrl
+            it.entityName = entityName!!
+            it.price = price.toInt()
+        }
+        return events
+    }
+
+    suspend fun reactToEvent(eventId: String, operation: String){
+        val result = Firebase.firestore.collection("events")
+            .document(eventId)
+            .get()
+            .await()
+
+        Log.e("<<<", "encontrado ${result.toString()}")
+        val event = result.toObject(EventDocumentDTO::class.java)
+        var actual = event?.reaction as Int
+
+        when (operation){
+            "add" -> {
+                actual++
+            }
+            "remove" -> {
+                actual--
+            }
+        }
+
+        Firebase.firestore.collection("events")
+            .document(eventId)
+            .update("reaction", actual)
+            .await()
+    }
+
     suspend fun getEventById(id:String): ArrayList<EventDocumentDTO> {
         val result = Firebase.firestore.collection("events")
             .whereEqualTo("id",id)
@@ -41,6 +111,21 @@ class EventRepository {
             }
         }
         return eventArraylist
+    }
+
+    suspend fun getEventByIdFull(eventId: String): EventFullDTO {
+        val result = Firebase.firestore.collection("events")
+            .document(eventId)
+            .get()
+            .await()
+        val event = result.toObject(EventFullDTO::class.java)!!
+        if(event.img != ""){
+            event.img = getEventImage(event.entityId, event.id, event.img)!!
+
+        }
+        event.entityName = getEntityNameById(event.entityId)!!
+
+        return event!!
     }
 
     suspend fun getEventImg(id:String): Uri{

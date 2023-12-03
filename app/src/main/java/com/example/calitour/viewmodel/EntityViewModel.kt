@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.calitour.model.entity.EntityFirestore
 import com.example.calitour.model.DTO.EventDocumentDTO
+import com.example.calitour.model.DTO.EventFullDTO
 import com.example.calitour.model.entity.EntityProduct
 import com.example.calitour.model.entity.EntityProductFirestore
 import com.example.calitour.model.entity.UserType
@@ -26,6 +27,7 @@ class EntityViewModel:ViewModel() {
 
     var completedProduct = MutableLiveData<Boolean>()
     var eventsQuery = MutableLiveData<ArrayList<EventDocumentDTO>>()
+    var singleEvent = MutableLiveData<EventFullDTO>()
     var eventRepo = EventRepository()
     var profile =MutableLiveData<EntityFirestore>()
     var products = MutableLiveData<List<EntityProductFirestore>>()
@@ -62,6 +64,13 @@ class EntityViewModel:ViewModel() {
         }
     }
 
+    fun getFullEventById(eventId: String) {
+        viewModelScope.launch {
+            singleEvent.postValue(eventRepo.getEventByIdFull(eventId))
+        }
+    }
+
+
      fun getAllEvents(): LiveData<ArrayList<EventDocumentDTO>> {
         eventsQuery.value = arrayListOf()
         viewModelScope.launch (Dispatchers.IO){
@@ -69,6 +78,7 @@ class EntityViewModel:ViewModel() {
         }
         return eventsQuery
     }
+
 
     fun getEventsById(id:String): LiveData<ArrayList<EventDocumentDTO>>{
         eventsQuery.value = arrayListOf()
