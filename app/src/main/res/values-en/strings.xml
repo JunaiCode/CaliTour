@@ -48,4 +48,10 @@
     <string name="itineraryFullTitleTV">I guide you</string>
     <string name="about_us">About us</string>
     <string name="save">Save</string>
+    <string name="add">Add</string>
+    <string name="notify">Notify</string>
+    <string name="interested">I\'m interested</string>
+    <string name="home_title">What\'s up?</string>
+    <string name="home_header">What\'s going on today?</string>
+    <string name="free">Free</string>
 </resources>

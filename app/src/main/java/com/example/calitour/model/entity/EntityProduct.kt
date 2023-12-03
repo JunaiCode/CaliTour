@@ -11,9 +11,9 @@ data class EntityProduct (
 )
 
 data class EntityProductFirestore(
-    val name: String = "",
-    val id: String = "",
+    var name: String = "",
+    var id: String = "",
     var image: String = "",
-    val description: String = "",
-    val points: Int = 0
+    var description: String = "",
+    var points: Int = 0
 )
