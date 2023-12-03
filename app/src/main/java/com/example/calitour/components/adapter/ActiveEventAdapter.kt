@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView.Adapter
+import com.bumptech.glide.Glide
 import com.example.calitour.R
 import com.example.calitour.activities.CreateEventProductActivity
 import com.example.calitour.activities.ProfileEntityActivity
@@ -30,6 +31,7 @@ import java.util.UUID
 
 class ActiveEventAdapter: Adapter<ActiveEventViewHolder>() {
     private var activeEvents : ArrayList<EventDocumentDTO> = arrayListOf()
+    private var imageEvent : Uri = Uri.EMPTY
     private val vm: CreateEventProductViewModel = CreateEventProductViewModel()
     init {
 
@@ -45,10 +47,11 @@ class ActiveEventAdapter: Adapter<ActiveEventViewHolder>() {
 
 
     override fun onBindViewHolder(holder: ActiveEventViewHolder, position: Int) {
-        holder.date.text = activeEvents[position].date.toString()
+        holder.date.text = activeEvents[position].date.toDate().toString()
         holder.place.text = activeEvents[position].place
         holder.price.text = "Multiples precios"
         holder.title.text = activeEvents[position].name
+        // Glide.with(holder.itemView).load(vm.eventrepo).into(holder.img)
         holder.editBtn.setOnClickListener{
             holder.editBtn.setBackgroundResource(R.drawable.edit)
             holder.deleteBtn.setBackgroundResource(R.drawable.delete_icon)
@@ -58,7 +61,9 @@ class ActiveEventAdapter: Adapter<ActiveEventViewHolder>() {
         holder.deleteBtn.setOnClickListener{
             holder.editBtn.setBackgroundResource(R.drawable.edit_icon)
             holder.deleteBtn.setBackgroundResource(R.drawable.delete)
-            activeEvents = vm.deleteEvent(activeEvents[position])
+            vm.deleteEvent(activeEvents[position])
+            activeEvents.removeAt(position)
+            notifyItemRemoved(position)
         }
     }
     override fun getItemCount(): Int {
@@ -67,6 +72,11 @@ class ActiveEventAdapter: Adapter<ActiveEventViewHolder>() {
 
     fun setList(list:ArrayList<EventDocumentDTO>){
         activeEvents = list
+        notifyDataSetChanged()
+    }
+
+    fun setImg(img:Uri){
+        imageEvent = img
         notifyDataSetChanged()
     }
 }

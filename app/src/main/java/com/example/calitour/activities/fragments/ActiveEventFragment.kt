@@ -19,6 +19,7 @@ import com.google.firebase.ktx.Firebase
 
 class ActiveEventFragment: Fragment() {
     private val vm = EntityViewModel()
+    private val vmEvent = CreateEventProductViewModel()
     private lateinit var  binding: ActiveEventFragmentBinding
     private lateinit var  adapter: ActiveEventAdapter
 
@@ -36,7 +37,9 @@ class ActiveEventFragment: Fragment() {
         binding.activeEventList.setHasFixedSize(true)
         vm.eventsQuery.observe(viewLifecycleOwner){ list->
             adapter.setList(list)
-            Log.e("Eliminado",list.toString())
+        }
+        vmEvent.eventImgUri.observe(viewLifecycleOwner){ uri->
+            Log.e("dsadsa",uri.toString())
         }
         return binding.root
     }
