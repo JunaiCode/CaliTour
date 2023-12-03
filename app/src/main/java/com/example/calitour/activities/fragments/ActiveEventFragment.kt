@@ -32,14 +32,15 @@ class ActiveEventFragment: Fragment() {
         binding = ActiveEventFragmentBinding.inflate(inflater, container, false)
         adapter = ActiveEventAdapter()
         vm.getEventsAvailablesByEntityId(Firebase.auth.currentUser?.uid.toString())
+        vm.getImagesEntityAvailableEvents(Firebase.auth.currentUser?.uid.toString())
         binding.activeEventList.adapter = adapter
         binding.activeEventList.layoutManager = LinearLayoutManager(context)
         binding.activeEventList.setHasFixedSize(true)
         vm.eventsQuery.observe(viewLifecycleOwner){ list->
             adapter.setList(list)
         }
-        vmEvent.eventImgUri.observe(viewLifecycleOwner){ uri->
-            Log.e("dsadsa",uri.toString())
+        vm.uriEventsEntity.observe(viewLifecycleOwner){uris->
+            adapter.setUris(uris)
         }
         return binding.root
     }

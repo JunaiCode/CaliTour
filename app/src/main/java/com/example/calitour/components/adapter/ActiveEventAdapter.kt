@@ -26,12 +26,14 @@ import com.example.calitour.viewmodel.CreateEventProductViewModel
 import com.example.calitour.viewmodel.EntityViewModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.tasks.await
 import java.util.UUID
 
 class ActiveEventAdapter: Adapter<ActiveEventViewHolder>() {
     private var activeEvents : ArrayList<EventDocumentDTO> = arrayListOf()
-    private var imageEvent : Uri = Uri.EMPTY
+    private var uris :ArrayList<Uri> = arrayListOf()
     private val vm: CreateEventProductViewModel = CreateEventProductViewModel()
     init {
 
@@ -51,7 +53,9 @@ class ActiveEventAdapter: Adapter<ActiveEventViewHolder>() {
         holder.place.text = activeEvents[position].place
         holder.price.text = "Multiples precios"
         holder.title.text = activeEvents[position].name
-        // Glide.with(holder.itemView).load(vm.eventrepo).into(holder.img)
+        if(uris.size>0){
+            Glide.with(holder.itemView.context).load(uris[position]).into(holder.img)
+        }
         holder.editBtn.setOnClickListener{
             holder.editBtn.setBackgroundResource(R.drawable.edit)
             holder.deleteBtn.setBackgroundResource(R.drawable.delete_icon)
@@ -75,8 +79,8 @@ class ActiveEventAdapter: Adapter<ActiveEventViewHolder>() {
         notifyDataSetChanged()
     }
 
-    fun setImg(img:Uri){
-        imageEvent = img
+    fun setUris(uriArray:ArrayList<Uri>){
+        uris = uriArray
         notifyDataSetChanged()
     }
 }

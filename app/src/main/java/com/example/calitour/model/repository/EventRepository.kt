@@ -69,6 +69,24 @@ class EventRepository {
         return uriArrayList
     }
 
+    suspend fun getEventsActiveImgByEntity(id:String): ArrayList<Uri>{
+        val events = getEventsAvailablesByEntityId(id)
+        var uris = ArrayList<Uri>();
+        events.forEach{
+             uris.add(getEventImg(it.id))
+        }
+        return uris
+    }
+
+    suspend fun getEventsInactiveImgByEntity(id:String): ArrayList<Uri>{
+        val events = getEventsUnavailablesByEntityId(id)
+        var uris = ArrayList<Uri>();
+        events.forEach{
+            uris.add(getEventImg(it.id))
+        }
+        return uris
+    }
+
     suspend fun getEventBadges(id: String): ArrayList<BadgeDTO>{
         val event = getEventById(id)[0]
         val badges = Firebase.firestore.collection("events").document(event.id).collection("badges").get().await().documents
