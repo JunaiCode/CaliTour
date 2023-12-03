@@ -62,6 +62,7 @@ class EntityViewModel:ViewModel() {
         }
     }
 
+
      fun getAllEvents(): LiveData<ArrayList<EventDocumentDTO>> {
         eventsQuery.value = arrayListOf()
         viewModelScope.launch (Dispatchers.IO){

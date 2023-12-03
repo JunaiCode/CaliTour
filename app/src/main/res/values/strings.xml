@@ -43,4 +43,9 @@
 
     <string name="about_us">Sobre nosotros</string>
     <string name="save">Guardar</string>
+    <string name="add">Añadir</string>
+    <string name="notify">Notificar</string>
+    <string name="interested">Me interesa</string>
+    <string name="home_title">¿Qué te contás ve?</string>
+    <string name="home_header">¿Qué hay pa hacer hoy?</string>
 </resources>
