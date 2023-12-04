@@ -52,6 +52,13 @@ class CreateEventFragment: Fragment() {
         vm.editEvent.observe(viewLifecycleOwner){event ->
            setValues(event)
         }
+        vm.uploadedComplete.observe(viewLifecycleOwner){files->
+            Log.e("Entro al observe",files.toString())
+            if(files.size == 2 && files[0] && files[1] === true){
+                startActivity(Intent(requireContext(), ProfileEntityActivity::class.java))
+                vm.uploadedComplete.postValue(ArrayList<Boolean>())
+            }
+        }
         vm.eventBadges.observe(viewLifecycleOwner){}
         vm.eventImgUri.observe(viewLifecycleOwner){img ->
             eventUri = img
@@ -126,7 +133,6 @@ class CreateEventFragment: Fragment() {
             newEvent.prices.add(Price("Entrada General",binding.priceEvent.text.toString().toDouble(),UUID.randomUUID(),"General"))
             newEvent.badges.add(Badge(UUID.randomUUID(),badgeUri,"Badge"))
             vm.createEvent(newEvent)
-            startActivity(Intent(requireContext(), ProfileEntityActivity::class.java))
         }
 
         binding.btnEditEvent.setOnClickListener() {
