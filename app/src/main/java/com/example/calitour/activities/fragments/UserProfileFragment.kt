@@ -28,6 +28,7 @@ class UserProfileFragment: Fragment() {
         viewModel.getUser()
         viewModel._user.observe(viewLifecycleOwner){
             binding.userName.text = it.name
+            binding.points.text = it.points.toString()
         }
 
         viewModel._user.observe(viewLifecycleOwner){
