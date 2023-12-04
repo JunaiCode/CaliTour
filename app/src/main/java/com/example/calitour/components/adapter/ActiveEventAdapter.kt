@@ -54,9 +54,10 @@ class ActiveEventAdapter: Adapter<ActiveEventViewHolder>() {
         val date = sdf.format(activeEvents[position].date.toDate())
         holder.date.text = date
         holder.place.text = activeEvents[position].place
-        val price = vm.getPricesEvent(activeEvents[position].id).value?.get(0)?.fee?.toInt();
-        if(price != 0){
-            holder.price.text = price.toString()
+        holder.title.text = activeEvents[position].name
+        val price = vm.getPricesEvent(activeEvents[position].id).value?.get(0)?.fee
+        if(price == 0.0){
+            holder.price.text = holder.itemView.context.getString(R.string.free)
         }else{
             holder.price.text = R.string.free.toString()
         }
