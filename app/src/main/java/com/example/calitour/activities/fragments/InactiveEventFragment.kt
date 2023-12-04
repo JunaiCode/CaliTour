@@ -25,11 +25,15 @@ class InactiveEventFragment: Fragment() {
         binding = InactiveEventFragmentBinding.inflate(inflater, container, false)
         adapter = InactiveEventAdapter()
         vm.getEventsUnavailablesByEntityId(Firebase.auth.currentUser?.uid.toString())
+        vm.getImagesEntityUnavailableEventsEvents(Firebase.auth.currentUser?.uid.toString())
         binding.inactiveEventList.adapter = adapter
         binding.inactiveEventList.layoutManager = LinearLayoutManager(context)
         binding.inactiveEventList.setHasFixedSize(true)
         vm.eventsQuery.observe(viewLifecycleOwner){ list->
             adapter.setList(list)
+        }
+        vm.uriEventsEntity.observe(viewLifecycleOwner){uris->
+            adapter.setUris(uris)
         }
         return binding.root
     }

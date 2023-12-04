@@ -10,4 +10,6 @@ class ItineraryEventView(root: View) : RecyclerView.ViewHolder(root){
     val timeEvent = binding.timeTV
     val priceEvent = binding.priceTV
     val placeEvent = binding.placeTV
+    val image = binding.eventImageView
+    val card = binding.itineraryEventCV
 }

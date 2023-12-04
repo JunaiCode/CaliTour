@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+        android:id="@+id/constraintLayout5"
         android:layout_width="0dp"
         android:layout_height="550dp"
         android:layout_marginTop="20dp"
@@ -126,17 +126,31 @@
                 android:contentDescription="@string/name_of_your_event" />
         </androidx.cardview.widget.CardView>
 
-        <Button
-            android:id="@+id/btnCreateEvent"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:backgroundTint="#FFC107"
-            android:text="@string/btn_create_event"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/priceEvent" />
+            app:layout_constraintTop_toBottomOf="@+id/priceEvent">
+
+            <Button
+                android:id="@+id/btnCreateEvent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:backgroundTint="#FFC107"
+                android:text="@string/btn_create_event" />
+
+            <Button
+                android:id="@+id/btnEditEvent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:backgroundTint="#FFC107"
+                android:text="@string/btn_edit_event" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -145,7 +159,7 @@
         android:layout_width="272dp"
         android:layout_height="182dp"
         android:contentDescription="@string/event_header"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

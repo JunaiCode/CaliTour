@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:layout_width="409dp"
-        android:layout_height="345dp"
+        android:layout_height="280dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -19,11 +19,11 @@
             <ImageView
                 android:id="@+id/imagenFondo"
                 android:layout_width="match_parent"
-                android:layout_height="275dp"
+                android:layout_height="225dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:background="@drawable/entity_event_img"
                 android:contentDescription="Imagen de Fondo"
+                android:scaleType="fitXY"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -151,7 +151,7 @@
             <RelativeLayout
                 android:id="@+id/btnLayout"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="55dp"
                 android:background="@drawable/color_border_event_card"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -162,18 +162,19 @@
                     android:layout_height="match_parent">
 
                     <Button
-                        android:id="@+id/meInteresaEventCardBtn"
+                        android:id="@+id/editEventBtn"
                         android:layout_width="25dp"
                         android:layout_height="30dp"
                         android:layout_marginStart="150dp"
                         android:background="@drawable/edit_icon"
                         android:textColor="#000000"
+                        android:textColorHighlight="#673AB7"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <Button
-                        android:id="@+id/deleteEventCardBtn"
+                        android:id="@+id/deleteEventBtn"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_marginEnd="150dp"
