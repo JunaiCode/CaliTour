@@ -1,16 +1,23 @@
 package com.example.calitour.model.repository
 
 import android.net.Uri
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import com.example.calitour.model.DTO.BadgeDTO
 import com.example.calitour.model.DTO.EventDocumentDTO
 import com.example.calitour.model.DTO.EventFullDTO
+import com.example.calitour.model.DTO.EventItineraryDTO
 import com.example.calitour.model.entity.EntityFirestore
 import com.example.calitour.model.DTO.PriceDTO
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.tasks.await
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 
 class EventRepository {
@@ -25,6 +32,18 @@ class EventRepository {
             }
         }
         return eventArraylist
+    }
+
+    suspend fun getAllEventsItinerary(userId:String, day: String):ArrayList<EventDocumentDTO>{
+        var eventItineraryArraylist = ArrayList<EventDocumentDTO>();
+        val result = Firebase.firestore.collection("users").document(userId).collection("itinerary")
+            .whereEqualTo("day", day)
+            .get().await()
+        val allEventsItinerary = result.toObjects(EventItineraryDTO::class.java)
+        val eventsItinerary = ArrayList<EventItineraryDTO>()
+        eventsItinerary.addAll(allEventsItinerary)
+
+        return eventItineraryArraylist
     }
 
     suspend fun getEntityNameById(entityId: String): String?{
@@ -125,6 +144,25 @@ class EventRepository {
         }
         event.entityName = getEntityNameById(event.entityId)!!
 
+        return event!!
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    suspend fun getEventItineraryById(eventId: String): EventItineraryDTO {
+        val result = Firebase.firestore.collection("events")
+            .document(eventId)
+            .get()
+            .await()
+        val event = result.toObject(EventItineraryDTO::class.java)!!
+        val timestamp = event.date
+        val localDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(timestamp.seconds * 1000), ZoneId.systemDefault())
+        val formatter = DateTimeFormatter.ofPattern("HH:mm")
+        val formattedTime = localDateTime.format(formatter)
+        event.eventTime=formattedTime
+        if(event.img != ""){
+            event.img = getEventImage(event.entityId, event.id, event.img)!!
+
+        }
         return event!!
     }
 

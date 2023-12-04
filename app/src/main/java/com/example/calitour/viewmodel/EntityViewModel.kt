@@ -9,26 +9,32 @@ import androidx.lifecycle.viewModelScope
 import com.example.calitour.model.entity.EntityFirestore
 import com.example.calitour.model.DTO.EventDocumentDTO
 import com.example.calitour.model.DTO.EventFullDTO
+import com.example.calitour.model.DTO.ItineraryDTO
 import com.example.calitour.model.entity.EntityProduct
 import com.example.calitour.model.entity.EntityProductFirestore
 import com.example.calitour.model.entity.UserType
 import com.google.firebase.auth.ktx.auth
 import com.example.calitour.model.repository.EventRepository
+import com.example.calitour.model.repository.ItineraryRepository
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.util.UUID
+import kotlin.coroutines.resume
 
 class EntityViewModel:ViewModel() {
 
     var completedProduct = MutableLiveData<Boolean>()
     var eventsQuery = MutableLiveData<ArrayList<EventDocumentDTO>>()
     var singleEvent = MutableLiveData<EventFullDTO>()
+    var itineraryId = MutableLiveData<String>()
     var eventRepo = EventRepository()
+    var itineraryRepo = ItineraryRepository()
     var profile =MutableLiveData<EntityFirestore>()
     var products = MutableLiveData<List<EntityProductFirestore>>()
 
@@ -131,6 +137,50 @@ class EntityViewModel:ViewModel() {
                 products.value=productsFirestore
             }
         }
+    }
+
+    fun removeEventFromItinerary(dateItinerary: String, eventId: String?, itineraryId: String) {
+        val userId = Firebase.auth.currentUser!!.uid
+        viewModelScope.launch (Dispatchers.IO) {
+            if (eventId != null) {
+                itineraryRepo.removeEventFromItinerary(userId,itineraryId,eventId)
+            }
+        }
+    }
+
+    fun addEventToItinerary(dateItinerary: String, eventId: String?, itineraryId: String) {
+        val userId = Firebase.auth.currentUser!!.uid
+        viewModelScope.launch (Dispatchers.IO) {
+            if (itineraryId.isNotEmpty()) {
+                if (eventId != null) {
+                    itineraryRepo.addEventToExistingItinerary(userId,itineraryId,eventId)
+                }
+            }else{
+                if (eventId != null) {
+                    itineraryRepo.addEventToItineraryNonExisting(userId,dateItinerary,eventId)
+                }
+            }
+        }
+    }
+
+    suspend fun findItineraryIdByEventId(eventId: String): String {
+        var itineraryId = ""
+        val userId = Firebase.auth.currentUser!!.uid
+
+        try {
+            itineraryId = suspendCancellableCoroutine { continuation ->
+                viewModelScope.launch(Dispatchers.IO) {
+                    Log.i("...EVENTO....", eventId)
+                    Log.i("...USUARIO....", userId)
+                    itineraryId = itineraryRepo.findItineraryIdByEventId(userId, eventId)
+                    continuation.resume(itineraryId)
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("Exception", e.message ?: "Unknown error")
+        }
+
+        return itineraryId
     }
 
      fun loadProfile(){

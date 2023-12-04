@@ -31,3 +31,14 @@ data class EventFullDTO (
     var state: String = "",
     var entityName: String = ""
 )
+
+data class EventItineraryDTO (
+    var entityId: String = "",
+    var id: String = "",
+    var name: String = "",
+    var place: String = "",
+    var date: Timestamp = Timestamp.now(),
+    var eventTime: String = "",
+    var img: String = "",
+    var price: Double = 0.0
+)
