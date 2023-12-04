@@ -1,5 +1,6 @@
 package com.example.calitour.activities.fragments
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -125,7 +126,6 @@ class CreateEventFragment: Fragment() {
             newEvent.prices.add(Price("Entrada General",binding.priceEvent.text.toString().toDouble(),UUID.randomUUID(),"General"))
             newEvent.badges.add(Badge(UUID.randomUUID(),badgeUri,"Badge"))
             vm.createEvent(newEvent)
-            vm.uploadImages(newEvent)
             startActivity(Intent(requireContext(), ProfileEntityActivity::class.java))
         }
 
@@ -150,7 +150,6 @@ class CreateEventFragment: Fragment() {
                 vm.eventPrices.value?.get(0)?.id),"General"))
             newEvent.badges.add(Badge(UUID.fromString(vm.eventBadges.value?.get(0)?.id),badgeUri,"Badge"))
             vm.editEvent(newEvent)
-            vm.editImages(newEvent)
             startActivity(Intent(requireContext(), ProfileEntityActivity::class.java))
         }
 
@@ -158,13 +157,17 @@ class CreateEventFragment: Fragment() {
     }
 
     fun onGalleryResultBadge(result: ActivityResult){
-        badgeUri = result.data?.data!!
-        Glide.with(this).load(badgeUri).into(binding.badgeImg)
+        if(result.resultCode != Activity.RESULT_CANCELED) {
+            badgeUri = result.data?.data!!
+            Glide.with(this).load(badgeUri).into(binding.badgeImg)
+        }
     }
 
     fun onGalleryResultImage(result: ActivityResult){
-        eventUri = result.data?.data!!
-        Glide.with(this).load(eventUri).into(binding.eventImg)
+        if(result.resultCode != Activity.RESULT_CANCELED) {
+            eventUri = result.data?.data!!
+            Glide.with(this).load(eventUri).into(binding.eventImg)
+        }
     }
 
     private fun setValues(event:EventDocumentDTO?){
