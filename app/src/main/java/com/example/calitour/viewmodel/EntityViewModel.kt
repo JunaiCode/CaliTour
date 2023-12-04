@@ -11,6 +11,7 @@ import com.example.calitour.model.DTO.EventDocumentDTO
 import com.example.calitour.model.entity.EntityProduct
 import com.example.calitour.model.entity.EntityProductFirestore
 import com.example.calitour.model.entity.UserType
+import com.example.calitour.model.repository.EntityRepository
 import com.google.firebase.auth.ktx.auth
 import com.example.calitour.model.repository.EventRepository
 import com.google.firebase.firestore.ktx.firestore
@@ -27,6 +28,7 @@ class EntityViewModel:ViewModel() {
     var completedProduct = MutableLiveData<Boolean>()
     var eventsQuery = MutableLiveData<ArrayList<EventDocumentDTO>>()
     var eventRepo = EventRepository()
+    var entityRepo = EntityRepository()
     var profile =MutableLiveData<EntityFirestore>()
     var products = MutableLiveData<List<EntityProductFirestore>>()
 
@@ -123,8 +125,15 @@ class EntityViewModel:ViewModel() {
         }
     }
 
-     fun loadProfile(){
-        viewModelScope.launch (Dispatchers.IO) {
+    fun getEntityProfile(entityId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            profile.postValue(entityRepo.getEntityProfile(entityId))
+
+        }
+    }
+
+    fun loadProfile() {
+        viewModelScope.launch(Dispatchers.IO) {
             val entityId = Firebase.auth.currentUser?.uid.toString()
             var userFirestore: EntityFirestore? = null
             val snapshot = Firebase.firestore.collection("entities")
@@ -137,7 +146,7 @@ class EntityViewModel:ViewModel() {
                     val imageUrl = Firebase.storage.reference.child("profileImages")
                         .child(userFirestore!!.photoID)
                         .downloadUrl.await().toString()
-                    userFirestore.photoID= imageUrl
+                    userFirestore.photoID = imageUrl
                 }
             }
 
@@ -146,16 +155,14 @@ class EntityViewModel:ViewModel() {
             }
         }
 
-
-
     }
 
-    fun updateEntity(entity: EntityFirestore){
-        viewModelScope.launch (Dispatchers.IO) {
+    fun updateEntity(entity: EntityFirestore) {
+        viewModelScope.launch(Dispatchers.IO) {
             val snapshot = Firebase.firestore.collection("entities")
                 .document(entity.id)
                 .get().await().toObject(EntityFirestore::class.java)
-            if(snapshot!=null){
+            if (snapshot != null) {
                 val newEntity = hashMapOf(
                     "name" to entity.name,
                     "id" to entity.id,
@@ -165,16 +172,16 @@ class EntityViewModel:ViewModel() {
                     "facebook" to entity.facebook,
                     "X" to entity.x,
                     "instagram" to entity.instagram
-                ) as MutableMap<String?,Any>
+                ) as MutableMap<String?, Any>
 
                 Firebase.firestore.collection("entities")
                     .document(entity.id)
                     .update(newEntity).await()
 
-                if(entity.photoID!=""){
-                    if(newEntity["photoID"].toString()!=""){
+                if (entity.photoID != "") {
+                    if (newEntity["photoID"].toString() != "") {
                         updateImage(Uri.parse(entity.photoID), newEntity["photoID"].toString())
-                    }else {
+                    } else {
                         uploadImage(Uri.parse(entity.photoID), entity.id, UserType.ENTITY)
                     }
                 }
@@ -184,9 +191,9 @@ class EntityViewModel:ViewModel() {
         }
     }
 
-    fun updateImage(uri: Uri, imageId: String){
+    fun updateImage(uri: Uri, imageId: String) {
 
-        viewModelScope.launch (Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.IO) {
             Firebase.storage.reference
                 .child("profileImages")
                 .child(imageId)
@@ -196,8 +203,8 @@ class EntityViewModel:ViewModel() {
     }
 
 
-    fun uploadImage(uri: Uri, id:String, type: UserType){
-        viewModelScope.launch (Dispatchers.IO) {
+    fun uploadImage(uri: Uri, id: String, type: UserType) {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 val uuid = UUID.randomUUID().toString()
                 Firebase.storage.reference
@@ -205,31 +212,32 @@ class EntityViewModel:ViewModel() {
                     .child(uuid)
                     .putFile(uri).await()
 
-                when(type){
+                when (type) {
                     UserType.USER -> {
                         Firebase.firestore.collection("users")
                             .document(id)
-                            .update("photoID", uuid )
+                            .update("photoID", uuid)
                             .await()
                     }
+
                     UserType.ENTITY -> {
                         Firebase.firestore.collection("entities")
                             .document(id)
-                            .update("photoID", uuid )
+                            .update("photoID", uuid)
                             .await()
                     }
                 }
 
 
-            }catch (ex:Exception){
+            } catch (ex: Exception) {
                 Log.e("<<<<<", ex.message.toString())
             }
 
         }
     }
 
-    fun uploadImage(uri: Uri, entityId:String, productId:String){
-        viewModelScope.launch (Dispatchers.IO) {
+    fun uploadImage(uri: Uri, entityId: String, productId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 val uuid = UUID.randomUUID().toString()
                 Firebase.storage.reference
@@ -244,11 +252,12 @@ class EntityViewModel:ViewModel() {
                     .update("image", uuid)
                     .await()
 
-            }catch (ex:Exception){
+            } catch (ex: Exception) {
                 Log.e("<<<<<", ex.message.toString())
             }
 
         }
     }
+
 
 }
