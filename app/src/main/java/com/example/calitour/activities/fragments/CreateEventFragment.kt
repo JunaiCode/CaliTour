@@ -152,7 +152,6 @@ class CreateEventFragment: Fragment() {
             vm.editEvent(newEvent)
             startActivity(Intent(requireContext(), ProfileEntityActivity::class.java))
         }
-
         return binding.root
     }
 
@@ -162,7 +161,6 @@ class CreateEventFragment: Fragment() {
             Glide.with(this).load(badgeUri).into(binding.badgeImg)
         }
     }
-
     fun onGalleryResultImage(result: ActivityResult){
         if(result.resultCode != Activity.RESULT_CANCELED) {
             eventUri = result.data?.data!!
