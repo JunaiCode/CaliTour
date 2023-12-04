@@ -122,7 +122,11 @@ class ItineraryFragment : Fragment() {
             }else{
                 vm.getEventsItineraryByDate(day).observe(viewLifecycleOwner) { events ->
                     adapter.updateData(events)
-                    showFullPage()
+                    if(adapter.itemCount==0){
+                        showEmptyPage()
+                    }else{
+                        showFullPage()
+                    }
                 }
             }
         }

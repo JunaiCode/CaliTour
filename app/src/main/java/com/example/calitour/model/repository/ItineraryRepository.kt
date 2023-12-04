@@ -62,9 +62,13 @@ class ItineraryRepository {
             if (itinerary != null) {
                 itinerary.events.remove(eventId)
 
-                itineraryRef.set(itinerary).await()
-
-                Log.i("Evento Eliminado", "Se eliminó el evento $eventId del itinerario $itineraryId")
+                if (itinerary.events.isEmpty()) {
+                    itineraryRef.delete().await()
+                    Log.i("Itinerario Eliminado", "Se eliminó el itinerario $itineraryId ya que no tiene eventos.")
+                } else {
+                    itineraryRef.set(itinerary).await()
+                    Log.i("Evento Eliminado", "Se eliminó el evento $eventId del itinerario $itineraryId")
+                }
             } else {
                 Log.e("Error", "No se encontró el itinerario con ID $itineraryId")
             }
@@ -72,6 +76,7 @@ class ItineraryRepository {
             Log.e("Error", "Error al eliminar el evento: ${e.message}")
         }
     }
+
 
     suspend fun addEventToExistingItinerary(userId: String, itineraryId: String, eventId: String){
         val itineraryRef = Firebase.firestore.collection("users").document(userId).collection("itinerary")
