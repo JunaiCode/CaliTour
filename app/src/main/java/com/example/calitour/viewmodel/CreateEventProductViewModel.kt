@@ -50,6 +50,9 @@ class CreateEventProductViewModel: ViewModel() {
                 priceDTO.id).set(priceDTO)
             Firebase.firestore.collection("events").document(eventDto.id).collection("badges").document(
                 badgeDTO.id).set(badgeDTO)
+            if(e.img != Uri.parse("") && e.badges[0].img != Uri.parse("")){
+                uploadImages(e)
+            }
         }
     }
 
@@ -64,6 +67,9 @@ class CreateEventProductViewModel: ViewModel() {
                 priceDTO.id).set(priceDTO)
             Firebase.firestore.collection("events").document(eventDto.id).collection("badges").document(
                 badgeDTO.id).set(badgeDTO)
+            if(e.img != Uri.parse("") && e.badges[0].img != Uri.parse("")){
+                editImages(e)
+            }
         }
     }
 

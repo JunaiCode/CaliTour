@@ -29,6 +29,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.tasks.await
+import java.text.SimpleDateFormat
 import java.util.UUID
 
 class ActiveEventAdapter: Adapter<ActiveEventViewHolder>() {
@@ -49,10 +50,16 @@ class ActiveEventAdapter: Adapter<ActiveEventViewHolder>() {
 
 
     override fun onBindViewHolder(holder: ActiveEventViewHolder, position: Int) {
-        holder.date.text = activeEvents[position].date.toDate().toString()
+        val sdf = SimpleDateFormat("dd/MM - HH:mm a")
+        val date = sdf.format(activeEvents[position].date.toDate())
+        holder.date.text = date
         holder.place.text = activeEvents[position].place
-        holder.price.text = "Multiples precios"
-        holder.title.text = activeEvents[position].name
+        val price = vm.getPricesEvent(activeEvents[position].id).value?.get(0)?.fee?.toInt();
+        if(price != 0){
+            holder.price.text = price.toString()
+        }else{
+            holder.price.text = R.string.free.toString()
+        }
         if(uris.size>0){
             Glide.with(holder.itemView.context).load(uris[position]).into(holder.img)
         }
@@ -61,6 +68,7 @@ class ActiveEventAdapter: Adapter<ActiveEventViewHolder>() {
             holder.deleteBtn.setBackgroundResource(R.drawable.delete_icon)
             val intent = Intent(holder.itemView.context, CreateEventProductActivity::class.java).putExtra("fragment", "EDIT_EVENT").putExtra("id",activeEvents[position].id)
             holder.itemView.context.startActivity(intent)
+            holder.editBtn.setBackgroundResource(R.drawable.edit_icon)
         }
         holder.deleteBtn.setOnClickListener{
             holder.editBtn.setBackgroundResource(R.drawable.edit_icon)
