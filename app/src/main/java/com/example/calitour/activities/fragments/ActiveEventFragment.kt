@@ -19,7 +19,6 @@ import com.google.firebase.ktx.Firebase
 
 class ActiveEventFragment: Fragment() {
     private val vm = EntityViewModel()
-    private val vmEvent = CreateEventProductViewModel()
     private lateinit var  binding: ActiveEventFragmentBinding
     private lateinit var  adapter: ActiveEventAdapter
 

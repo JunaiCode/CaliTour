@@ -50,9 +50,7 @@ class CreateEventProductViewModel: ViewModel() {
                 priceDTO.id).set(priceDTO)
             Firebase.firestore.collection("events").document(eventDto.id).collection("badges").document(
                 badgeDTO.id).set(badgeDTO)
-            if(e.img != Uri.parse("") && e.badges[0].img != Uri.parse("")){
-                uploadImages(e)
-            }
+            uploadImages(e)
         }
     }
 
@@ -67,9 +65,7 @@ class CreateEventProductViewModel: ViewModel() {
                 priceDTO.id).set(priceDTO)
             Firebase.firestore.collection("events").document(eventDto.id).collection("badges").document(
                 badgeDTO.id).set(badgeDTO)
-            if(e.img != Uri.parse("") && e.badges[0].img != Uri.parse("")){
-                editImages(e)
-            }
+            editImages(e)
         }
     }
 
@@ -129,63 +125,32 @@ class CreateEventProductViewModel: ViewModel() {
     }
 
     fun uploadImages(e: Event){
-        viewModelScope.launch(Dispatchers.IO){
-            //Cargar las insignias y imagen de eventos
-            try{
-                val badgeImg = UUID.randomUUID().toString()
-                Firebase.storage.reference
-                    .child("badges")
-                    .child(e.entityId)
-                    .child(e.id.toString())
-                    .child(badgeImg)
-                    .putFile(e.badges[0].img).await()
-
-                Firebase.firestore.collection("events")
-                    .document(e.id.toString())
-                    .collection("badges")
-                    .document(e.badges[0].id.toString())
-                    .update("img", badgeImg)
-                    .await()
-
-                val eventImg = UUID.randomUUID().toString()
-                Firebase.storage.reference
-                    .child("eventImages")
-                    .child(e.entityId)
-                    .child(e.id.toString())
-                    .child(eventImg)
-                    .putFile(e.img).await()
-
-                Firebase.firestore.collection("events")
-                    .document(e.id.toString())
-                    .update("img", eventImg)
-                    .await()
-
-            }catch (ex:Exception){
-                Log.e(">>>>",ex.message.toString())
-            }
-        }
+        val badgeImg = UUID.randomUUID().toString()
+        val eventImg = UUID.randomUUID().toString()
+        val eventImgRef = Firebase.storage.reference.child("eventImages/${e.entityId}/${e.id}/${eventImg}")
+        val badgeImgRef = Firebase.storage.reference.child("badges/${e.entityId}/${e.id}/${badgeImg}")
+        eventImgRef.putFile(e.img)
+        badgeImgRef.putFile(e.badges[0].img)
+        Firebase.firestore.collection("events")
+            .document(e.id.toString())
+            .update("img", eventImg)
+        Firebase.firestore.collection("events")
+            .document(e.id.toString())
+            .collection("badges")
+            .document(e.badges[0].id.toString())
+            .update("img", badgeImg)
     }
 
     fun editImages(e: Event){
         viewModelScope.launch(Dispatchers.IO){
             //Cargar las insignias y imagen de eventos
+            val badgeImg = eventBadges.value?.get(0)?.img.toString()
+            val eventImg = editEvent.value?.img.toString()
             try{
-                val badgeImg = eventBadges.value?.get(0)?.img.toString()
-                Firebase.storage.reference
-                    .child("badges")
-                    .child(e.entityId)
-                    .child(e.id.toString())
-                    .child(badgeImg)
-                    .putFile(e.badges[0].img).await()
-
-                val eventImg = editEvent.value?.img.toString()
-                Firebase.storage.reference
-                    .child("eventImages")
-                    .child(e.entityId)
-                    .child(e.id.toString())
-                    .child(eventImg)
-                    .putFile(e.img).await()
-
+                val eventImgRef = Firebase.storage.reference.child("eventImages/${e.entityId}/${e.id}/${eventImg}")
+                val badgeImgRef = Firebase.storage.reference.child("badges/${e.entityId}/${e.id}/${badgeImg}")
+                badgeImgRef.putFile(e.badges[0].img)
+                eventImgRef.putFile(e.img)
             }catch (ex:Exception){
                 Log.e(">>>>",ex.message.toString())
             }
