@@ -8,7 +8,7 @@
     tools:context=".activities.ProfileEntityActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+        android:id="@+id/constraintLayout5"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@drawable/entity_profile_background"
@@ -61,22 +61,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:fontFamily="@font/poppins_light"
-                android:text="@string/contact_us" />
+                android:text="@string/about_us" />
 
             <TextView
-                android:id="@+id/phoneEntitytTV"
+                android:id="@+id/descriptionEntityTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
-                android:text="Número" />
-
-            <TextView
-                android:id="@+id/emailEntityTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:fontFamily="@font/poppins"
-                android:text="Correo" />
+                android:text="Descripcion" />
 
         </LinearLayout>
 
@@ -167,9 +159,9 @@
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/fragmentContainer"
-            android:layout_width="409dp"
-            android:layout_height="495dp"
+            android:id="@+id/fragmentContainerEntity"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_marginTop="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -177,6 +169,18 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageButton
+            android:id="@+id/editEntityProfileBtn"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="10dp"
+            android:background="#00FFFFFF"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="@+id/entityName"
+            app:layout_constraintStart_toEndOf="@+id/entityName"
+            app:layout_constraintTop_toTopOf="@+id/entityName"
+            app:srcCompat="@drawable/edit" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

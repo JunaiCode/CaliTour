@@ -19,15 +19,20 @@
     <string name="location_event">Añade la ubicacion</string>
     <string name="price_event_product">Indica el precio</string>
     <string name="dropdown_categories">dropDownMenuCategories</string>
+    <string name="points_label">Mis Puntos</string>
     <string-array name="categories">
         <item>Categoría</item>
-        <item>Salsa</item>
-        <item>Hiphop</item>
-        <item>Electronica</item>
-        <item>Pacifico</item>
-        <item>Reggaeton</item>
+        <item>Música</item>
+        <item>Baile</item>
+        <item>Arte</item>
+        <item>Literatura</item>
+        <item>Teatro</item>
+        <item>Cine</item>
+        <item>Deporte</item>
+        <item>Comida</item>
     </string-array>
     <string name="btn_create_event">Crear Evento</string>
+    <string name="btn_edit_event">Editar Evento</string>
     <string name="name_of_your_product">Nombre del producto</string>
     <string name="description_of_your_product">Descripcion del producto… </string>
     <string name="btn_create_product">Crear producto</string>
@@ -37,4 +42,15 @@
     <string name="welcome_message">Vení a la sucursal del cielo y date un borondo, ve!</string>
     <string name="start">Comenzar</string>
     <string name="description">Descripción</string>
+    <string name="itineraryEmptyTV">Aún no tenés un plan pa hoy, parchate en uno de los eventos y mételo a tu itinerario</string>
+    <string name="itineraryFullTitleTV">Yo te guio manit@</string>
+
+    <string name="about_us">Sobre nosotros</string>
+    <string name="save">Guardar</string>
+    <string name="add">Añadir</string>
+    <string name="notify">Notificar</string>
+    <string name="interested">Me interesa</string>
+    <string name="home_title">¿Qué te contás ve?</string>
+    <string name="home_header">¿Qué hay pa hacer hoy?</string>
+    <string name="free">Gratis</string>
 </resources>

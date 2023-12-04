@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.calitour.activities.HomeActivity
+import com.example.calitour.activities.ProfileEntityActivity
 import com.example.calitour.activities.SignInSignUpActivity
 import com.example.calitour.databinding.SignInFragmentBinding
 import com.example.calitour.viewmodel.AuthViewModel
@@ -21,7 +22,7 @@ class SignInFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         val binding:SignInFragmentBinding = SignInFragmentBinding.inflate(inflater, container, false)
         binding.noAccTV.setOnClickListener{
@@ -36,7 +37,12 @@ class SignInFragment: Fragment() {
 
         vm.authStateLV.observe(viewLifecycleOwner){ state ->
             if(state.isAuth){
-                startActivity(Intent(requireContext(), HomeActivity::class.java))
+                if(state.userType=="user"){
+                    startActivity(Intent(requireContext(), HomeActivity::class.java))
+
+                }else {
+                    startActivity(Intent(requireContext(), ProfileEntityActivity::class.java))
+                }
             }
         }
 
