@@ -13,14 +13,10 @@
         android:theme="@style/Theme.CaliTour"
         tools:targetApi="31">
         <activity
-<<<<<<< HEAD
-            android:name=".activities.EventsActivity"
-=======
             android:name=".activities.EventDetailActivity"
             android:exported="false" />
         <activity
             android:name=".activities.EditProfileActivity"
->>>>>>> 53eb61b14763ba011aede22e3a644223aa03f54f
             android:exported="false" />
         <activity
             android:name=".activities.SignInSignUpActivity"
@@ -33,17 +29,10 @@
         </activity>
         <activity
             android:name=".activities.CreateEventProductActivity"
-<<<<<<< HEAD
             android:exported="true"></activity>
         <activity
             android:name=".activities.ProfileEntityActivity"
-            android:exported="true"></activity>
-=======
-            android:exported="true" />
-        <activity
-            android:name=".activities.ProfileEntityActivity"
-            android:exported="true" />
->>>>>>> 53eb61b14763ba011aede22e3a644223aa03f54f
+            android:exported="true"/>
 
         <meta-data
             android:name="preloaded_fonts"
@@ -51,17 +40,10 @@
 
         <activity
             android:name=".activities.HomeActivity"
-<<<<<<< HEAD
             android:exported="true"></activity>
         <activity
             android:name=".activities.MainActivity"
-            android:exported="true"></activity>
-=======
-            android:exported="true" />
-        <activity
-            android:name=".activities.MainActivity"
-            android:exported="true" />
->>>>>>> 53eb61b14763ba011aede22e3a644223aa03f54f
+            android:exported="true"/>
     </application>
 
 </manifest>

@@ -45,10 +45,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="itineraryEmptyTV">Aún no tenés un plan pa hoy, parchate en uno de los eventos y mételo a tu itinerario</string>
     <string name="itineraryFullTitleTV">Yo te guio manit@</string>
-
-<<<<<<< HEAD
->>>>>>> c8e2881292632e351c77d8bf117cfdd0cc626de8
-=======
     <string name="about_us">Sobre nosotros</string>
     <string name="save">Guardar</string>
     <string name="add">Añadir</string>
@@ -57,5 +53,4 @@
     <string name="home_title">¿Qué te contás ve?</string>
     <string name="home_header">¿Qué hay pa hacer hoy?</string>
     <string name="free">Gratis</string>
->>>>>>> 53eb61b14763ba011aede22e3a644223aa03f54f
 </resources>
