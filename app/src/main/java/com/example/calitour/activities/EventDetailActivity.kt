@@ -37,7 +37,9 @@ class EventDetailActivity : AppCompatActivity() {
             val date = sdf.format(event.date.toDate())
 
             val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            Log.i("FECHAAA DE LOS DETALLES  ",event.date.toDate().toString())
             dateItinerary =dateFormat.format(event.date.toDate())
+            Log.i("FECHAAA DE LOS DETALLES 22 ",dateItinerary)
 
 
             binding.eventDescriptionTV.text = event.description
@@ -65,7 +67,10 @@ class EventDetailActivity : AppCompatActivity() {
                         vm.removeEventFromItinerary(dateItinerary,eventId,itineraryId)
                         binding.addToItinerary.text = "Añadir"
                     }else{
-                        vm.addEventToItinerary(dateItinerary,eventId,itineraryId)
+                        var newItineraryId=vm.addEventToItinerary(dateItinerary,eventId,itineraryId)
+                        if(newItineraryId.toString()!=""){
+                            itineraryId= newItineraryId.toString()
+                        }
                         binding.addToItinerary.text = "Agregado"
                     }
                 }

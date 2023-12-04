@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.calitour.model.DTO.BadgeDTO
 import com.example.calitour.model.DTO.EventDocumentDTO
 import com.example.calitour.model.DTO.ItineraryDTO
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
@@ -71,6 +72,7 @@ class ItineraryRepository {
                 }
             } else {
                 Log.e("Error", "No se encontró el itinerario con ID $itineraryId")
+                removeEventFromItinerary(userId,findItineraryIdByEventId(userId,eventId), eventId)
             }
         } catch (e: Exception) {
             Log.e("Error", "Error al eliminar el evento: ${e.message}")
@@ -78,7 +80,7 @@ class ItineraryRepository {
     }
 
 
-    suspend fun addEventToExistingItinerary(userId: String, itineraryId: String, eventId: String){
+    suspend fun addEventToExistingItinerary(userId: String, itineraryId: String, eventId: String,day: String){
         val itineraryRef = Firebase.firestore.collection("users").document(userId).collection("itinerary")
             .document(itineraryId)
 
@@ -94,6 +96,7 @@ class ItineraryRepository {
                 Log.i("Evento Añadido", "Se Añadio el evento $eventId al itinerario $itineraryId")
             } else {
                 Log.e("Error", "No se encontró el itinerario con ID $itineraryId")
+                addEventToItineraryNonExisting(userId,day, eventId)
             }
         } catch (e: Exception) {
             Log.e("Error", "Error al añadir el evento: ${e.message}")

@@ -170,7 +170,7 @@ class EntityViewModel:ViewModel() {
         viewModelScope.launch (Dispatchers.IO) {
             if (itineraryId.isNotEmpty()) {
                 if (eventId != null) {
-                    itineraryRepo.addEventToExistingItinerary(userId,itineraryId,eventId)
+                    itineraryRepo.addEventToExistingItinerary(userId,itineraryId,eventId,dateItinerary)
                 }
             }else{
                 if (eventId != null) {

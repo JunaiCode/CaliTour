@@ -22,6 +22,7 @@ import com.example.calitour.databinding.ItineraryFragmentBinding
 import com.example.calitour.model.DTO.EventItineraryDTO
 import com.example.calitour.viewmodel.ItineraryViewModel
 import com.example.calitour.viewmodel.UserViewModel
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -91,11 +92,50 @@ class ItineraryFragment : Fragment() {
     }
 
     fun convertToFormattedDate(inputDate: String): String {
-        val inputFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss 'GMT'Z yyyy", Locale.ENGLISH)
-        val date = inputFormat.parse(inputDate) ?: return ""
-        val outputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        return outputFormat.format(date)
+        //Mon Dec 04 17:25:34 GMT 2023 en ingles
+        //Mon Dec 04 12:26:45 GMT-05:00 2023 en español
+        val inputFormatEn = SimpleDateFormat("EEE MMM dd HH:mm:ss 'GMT' yyyy", Locale.US)
+        val inputFormatEs = SimpleDateFormat("EEE MMM dd HH:mm:ss 'GMT'Z yyyy", Locale.ENGLISH)
+        Log.i("lo de la fechaaaa",inputDate)
+        val currentLocales = context?.resources?.configuration?.locales
+        Log.i("IDIOMA", currentLocales.toString())
+        //[en_US]
+        //[es_US]
+        if(currentLocales.toString()=="[en_US]"){
+            Log.i("IDIOMA","Esta en ingles")
+            val date = inputFormatEn.parse(inputDate) ?: return ""
+            val outputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            return outputFormat.format(date)
+        }else if(currentLocales.toString()=="[es_US]"){
+            Log.i("IDIOMA","Esta en Español")
+            val date = inputFormatEs.parse(inputDate) ?: return ""
+            val outputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            return outputFormat.format(date)
+        }
+        return ""
     }
+
+
+    /*fun convertToFormattedDate(inputDate: String): String {
+        //Mon Dec 04 17:25:34 GMT 2023 en ingles
+        //Mon Dec 04 12:26:45 GMT-05:00 2023 en español
+        val inputFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss 'GMT'Z yyyy", Locale.US)
+        Log.i("lo de la fechaaaa", inputDate)
+
+        try {
+            // Si hay un guion antes de la zona horaria, reemplácelo con espacio para manejar ambos casos
+            val formattedInputDate = inputDate.replace("GMT-","GMT- ")
+
+            val date = inputFormat.parse(formattedInputDate) ?: return ""
+            val outputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            return outputFormat.format(date)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+            return ""
+        }
+    }*/
+
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun updateDateTextView() {
@@ -106,6 +146,7 @@ class ItineraryFragment : Fragment() {
             showEmptyPage()
             adapter = ItineraryEventAdapter()
             var day = convertToFormattedDate(currentDate.toString())
+            Log.i("lo de la fechaaaa 22222", day)
             if (viewLifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.CREATED)) {
                 Log.i("---------", day)
                 vm.getEventsItineraryByDate(day).observe(viewLifecycleOwner) { events ->
