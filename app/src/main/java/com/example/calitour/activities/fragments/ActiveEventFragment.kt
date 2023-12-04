@@ -16,6 +16,7 @@ import com.example.calitour.viewmodel.CreateEventProductViewModel
 import com.example.calitour.viewmodel.EntityViewModel
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.delay
 
 class ActiveEventFragment: Fragment() {
     private val vm = EntityViewModel()
