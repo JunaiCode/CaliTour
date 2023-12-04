@@ -67,10 +67,7 @@ class EventDetailActivity : AppCompatActivity() {
                         vm.removeEventFromItinerary(dateItinerary,eventId,itineraryId)
                         binding.addToItinerary.text = "Añadir"
                     }else{
-                        var newItineraryId=vm.addEventToItinerary(dateItinerary,eventId,itineraryId)
-                        if(newItineraryId.toString()!=""){
-                            itineraryId= newItineraryId.toString()
-                        }
+                        vm.addEventToItinerary(dateItinerary,eventId,itineraryId)
                         binding.addToItinerary.text = "Agregado"
                     }
                 }

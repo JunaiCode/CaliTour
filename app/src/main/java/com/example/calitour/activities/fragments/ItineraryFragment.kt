@@ -116,27 +116,6 @@ class ItineraryFragment : Fragment() {
     }
 
 
-    /*fun convertToFormattedDate(inputDate: String): String {
-        //Mon Dec 04 17:25:34 GMT 2023 en ingles
-        //Mon Dec 04 12:26:45 GMT-05:00 2023 en español
-        val inputFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss 'GMT'Z yyyy", Locale.US)
-        Log.i("lo de la fechaaaa", inputDate)
-
-        try {
-            // Si hay un guion antes de la zona horaria, reemplácelo con espacio para manejar ambos casos
-            val formattedInputDate = inputDate.replace("GMT-","GMT- ")
-
-            val date = inputFormat.parse(formattedInputDate) ?: return ""
-            val outputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-            return outputFormat.format(date)
-        } catch (e: ParseException) {
-            e.printStackTrace()
-            return ""
-        }
-    }*/
-
-
-
     @RequiresApi(Build.VERSION_CODES.O)
     private fun updateDateTextView() {
         if (::binding.isInitialized && view != null) {
