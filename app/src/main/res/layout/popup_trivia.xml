@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/titleTriviasTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¿Que hay pa preguntar?"
+        tools:layout_editor_absoluteX="132dp"
+        tools:layout_editor_absoluteY="31dp" />
+
+    <EditText
+        android:id="@+id/newQuestionET"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Nombre De La Trivia"
+        tools:layout_editor_absoluteX="113dp"
+        tools:layout_editor_absoluteY="79dp" />
+
+    <TextView
+        android:id="@+id/questionsTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Preguntas"
+        tools:layout_editor_absoluteX="59dp"
+        tools:layout_editor_absoluteY="166dp" />
+
+    <Button
+        android:id="@+id/addQuestionBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/add_event_itinerary"
+        tools:layout_editor_absoluteX="149dp"
+        tools:layout_editor_absoluteY="388dp" />
+
+    <Button
+        android:id="@+id/saveBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Guardar"
+        tools:layout_editor_absoluteX="149dp"
+        tools:layout_editor_absoluteY="502dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="176dp"
+        android:layout_height="143dp"
+        tools:layout_editor_absoluteX="123dp"
+        tools:layout_editor_absoluteY="185dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
