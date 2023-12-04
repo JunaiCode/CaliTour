@@ -8,27 +8,36 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.calitour.model.entity.EntityFirestore
 import com.example.calitour.model.DTO.EventDocumentDTO
+import com.example.calitour.model.DTO.EventFullDTO
+import com.example.calitour.model.DTO.ItineraryDTO
 import com.example.calitour.model.entity.EntityProduct
 import com.example.calitour.model.entity.EntityProductFirestore
 import com.example.calitour.model.entity.UserType
 import com.example.calitour.model.repository.EntityRepository
 import com.google.firebase.auth.ktx.auth
 import com.example.calitour.model.repository.EventRepository
+import com.example.calitour.model.repository.ItineraryRepository
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.util.UUID
+import kotlin.coroutines.resume
 
 class EntityViewModel:ViewModel() {
 
     var completedProduct = MutableLiveData<Boolean>()
     var eventsQuery = MutableLiveData<ArrayList<EventDocumentDTO>>()
+    var uriEventsEntity = MutableLiveData<ArrayList<Uri>>()
+    var singleEvent = MutableLiveData<EventFullDTO>()
+    var itineraryId = MutableLiveData<String>()
     var eventRepo = EventRepository()
     var entityRepo = EntityRepository()
+    var itineraryRepo = ItineraryRepository()
     var profile =MutableLiveData<EntityFirestore>()
     var products = MutableLiveData<List<EntityProductFirestore>>()
 
@@ -64,6 +73,29 @@ class EntityViewModel:ViewModel() {
         }
     }
 
+    fun getImagesEntityAvailableEvents(id: String):LiveData<ArrayList<Uri>>{
+        uriEventsEntity.value = arrayListOf()
+        viewModelScope.launch (Dispatchers.IO){
+            uriEventsEntity.postValue(eventRepo.getEventsActiveImgByEntity(id))
+        }
+        return uriEventsEntity
+    }
+
+    fun getImagesEntityUnavailableEventsEvents(id: String):LiveData<ArrayList<Uri>>{
+        uriEventsEntity.value = arrayListOf()
+        viewModelScope.launch (Dispatchers.IO){
+            uriEventsEntity.postValue(eventRepo.getEventsInactiveImgByEntity(id))
+        }
+        return uriEventsEntity
+    }
+
+    fun getFullEventById(eventId: String) {
+        viewModelScope.launch {
+            singleEvent.postValue(eventRepo.getEventByIdFull(eventId))
+        }
+    }
+
+
      fun getAllEvents(): LiveData<ArrayList<EventDocumentDTO>> {
         eventsQuery.value = arrayListOf()
         viewModelScope.launch (Dispatchers.IO){
@@ -71,6 +103,7 @@ class EntityViewModel:ViewModel() {
         }
         return eventsQuery
     }
+
 
     fun getEventsById(id:String): LiveData<ArrayList<EventDocumentDTO>>{
         eventsQuery.value = arrayListOf()
@@ -134,6 +167,52 @@ class EntityViewModel:ViewModel() {
 
     fun loadProfile() {
         viewModelScope.launch(Dispatchers.IO) {
+    fun removeEventFromItinerary(dateItinerary: String, eventId: String?, itineraryId: String) {
+        val userId = Firebase.auth.currentUser!!.uid
+        viewModelScope.launch (Dispatchers.IO) {
+            if (eventId != null) {
+                itineraryRepo.removeEventFromItinerary(userId,itineraryId,eventId)
+            }
+        }
+    }
+
+    fun addEventToItinerary(dateItinerary: String, eventId: String?, itineraryId: String) {
+        val userId = Firebase.auth.currentUser!!.uid
+        viewModelScope.launch (Dispatchers.IO) {
+            if (itineraryId.isNotEmpty()) {
+                if (eventId != null) {
+                    itineraryRepo.addEventToExistingItinerary(userId,itineraryId,eventId,dateItinerary)
+                }
+            }else{
+                if (eventId != null) {
+                    itineraryRepo.addEventToItineraryNonExisting(userId,dateItinerary,eventId)
+                }
+            }
+        }
+    }
+
+    suspend fun findItineraryIdByEventId(eventId: String): String {
+        var itineraryId = ""
+        val userId = Firebase.auth.currentUser!!.uid
+
+        try {
+            itineraryId = suspendCancellableCoroutine { continuation ->
+                viewModelScope.launch(Dispatchers.IO) {
+                    Log.i("...EVENTO....", eventId)
+                    Log.i("...USUARIO....", userId)
+                    itineraryId = itineraryRepo.findItineraryIdByEventId(userId, eventId)
+                    continuation.resume(itineraryId)
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("Exception", e.message ?: "Unknown error")
+        }
+
+        return itineraryId
+    }
+
+     fun loadProfile(){
+        viewModelScope.launch (Dispatchers.IO) {
             val entityId = Firebase.auth.currentUser?.uid.toString()
             var userFirestore: EntityFirestore? = null
             val snapshot = Firebase.firestore.collection("entities")
@@ -146,7 +225,7 @@ class EntityViewModel:ViewModel() {
                     val imageUrl = Firebase.storage.reference.child("profileImages")
                         .child(userFirestore!!.photoID)
                         .downloadUrl.await().toString()
-                    userFirestore.photoID = imageUrl
+                    userFirestore.photoID= imageUrl
                 }
             }
 
@@ -154,6 +233,8 @@ class EntityViewModel:ViewModel() {
                 profile.value = userFirestore!!
             }
         }
+
+
 
     }
 
@@ -178,10 +259,10 @@ class EntityViewModel:ViewModel() {
                     .document(entity.id)
                     .update(newEntity).await()
 
-                if (entity.photoID != "") {
-                    if (newEntity["photoID"].toString() != "") {
+                if(entity.photoID!=""){
+                    if(newEntity["photoID"].toString()!=""){
                         updateImage(Uri.parse(entity.photoID), newEntity["photoID"].toString())
-                    } else {
+                    }else {
                         uploadImage(Uri.parse(entity.photoID), entity.id, UserType.ENTITY)
                     }
                 }
@@ -258,6 +339,5 @@ class EntityViewModel:ViewModel() {
 
         }
     }
-
 
 }

@@ -158,7 +158,6 @@ class ProfileEntityActivity : AppCompatActivity() {
 
         binding.liveEvents.performClick()
     }
-
     fun showFragment(fragment: Fragment){
         supportFragmentManager.beginTransaction().replace(R.id.fragmentContainerEntity,fragment).commit()
     }

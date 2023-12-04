@@ -2,6 +2,7 @@ package com.example.calitour.activities.fragments
 
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,20 +28,24 @@ class UserProfileFragment: Fragment() {
         viewModel.getUser()
         viewModel._user.observe(viewLifecycleOwner){
             binding.userName.text = it.name
+            binding.points.text = it.points.toString()
         }
 
-        /*viewModel._user.observe(viewLifecycleOwner){
+        viewModel._user.observe(viewLifecycleOwner){
+            Log.e(">>>>", it.toString())
+
+
             Glide.with(this@UserProfileFragment)
-                .load(createPath(it.photoUri))
+                .load(createPath(it.photoID))
                 .into(binding.userIV)
-        }*/
+        }
 
 
         return binding.root
     }
 
     fun createPath(id : String) : String {
-        return "https://firebasestorage.googleapis.com/v0/b/calitour.appspot.com/o/profileImages%2F${id}?alt=media&token=7207e3a5-8514-4831-87a7-58e100b28efb"
+        return "https://firebasestorage.googleapis.com/v0/b/calitour.appspot.com/o/profileImages%2F${id}?alt=media&token=84dab1d6-2144-4a84-b5db-a8525e3b3252"
     }
 
     companion object{

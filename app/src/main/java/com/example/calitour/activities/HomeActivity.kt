@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import com.example.calitour.R
 import com.example.calitour.activities.fragments.EmptyFragment
+import com.example.calitour.activities.fragments.HomeUserFragment
 import com.example.calitour.activities.fragments.ItineraryFragment
 import com.example.calitour.activities.fragments.UserProfileFragment
 import com.example.calitour.databinding.ActivityHomeBinding
@@ -16,10 +17,10 @@ class HomeActivity : AppCompatActivity() {
         ActivityHomeBinding.inflate(layoutInflater)
     }
 
-    private val home = EmptyFragment()
+    private val home = HomeUserFragment.newInstance()
     private val search = EmptyFragment()
     private val itinerary = ItineraryFragment()
-    private val profile = UserProfileFragment()
+    private val profile = UserProfileFragment.newInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -45,7 +46,7 @@ class HomeActivity : AppCompatActivity() {
             }
             true
         }
-
+        binding.navbarUser.selectedItemId = R.id.home_user
         setContentView(binding.root)
     }
 
