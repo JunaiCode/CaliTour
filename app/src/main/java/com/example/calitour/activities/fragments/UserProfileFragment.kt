@@ -1,6 +1,6 @@
 package com.example.calitour.activities.fragments
 
-import android.graphics.Bitmap
+
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,13 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.calitour.R
 import com.example.calitour.components.adapter.HistoricEventAdapter
 import com.example.calitour.databinding.UserProfileFragmentBinding
 import com.example.calitour.viewmodel.UserViewModel
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.ktx.storage
-import java.io.File
 
 class UserProfileFragment: Fragment() {
 
@@ -28,8 +25,8 @@ class UserProfileFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = UserProfileFragmentBinding.inflate(inflater, container, false)
+        binding.pointsIcon.setImageResource(R.drawable.points_icon)
         historialAdapter = HistoricEventAdapter()
-
         binding.historialRV.layoutManager = LinearLayoutManager(requireContext())
         binding.historialRV.setHasFixedSize(false)
         binding.historialRV.adapter = historialAdapter
