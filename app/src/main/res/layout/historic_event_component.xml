@@ -88,7 +88,7 @@
                 android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="@+id/cardView"
                 app:layout_constraintTop_toBottomOf="@+id/eventSummary"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
+                app:srcCompat="@drawable/full_star" />
 
             <ImageView
                 android:id="@+id/star2"
@@ -97,7 +97,7 @@
                 android:layout_marginStart="20dp"
                 app:layout_constraintStart_toEndOf="@+id/star1"
                 app:layout_constraintTop_toTopOf="@+id/star1"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
+                app:srcCompat="@drawable/full_star" />
 
             <ImageView
                 android:id="@+id/star3"
@@ -106,7 +106,7 @@
                 android:layout_marginStart="20dp"
                 app:layout_constraintStart_toEndOf="@+id/star2"
                 app:layout_constraintTop_toTopOf="@+id/star2"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
+                app:srcCompat="@drawable/full_star" />
 
             <ImageView
                 android:id="@+id/star4"
@@ -115,7 +115,7 @@
                 android:layout_marginStart="20dp"
                 app:layout_constraintStart_toEndOf="@+id/star3"
                 app:layout_constraintTop_toTopOf="@+id/star3"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
+                app:srcCompat="@drawable/full_star" />
 
             <ImageView
                 android:id="@+id/star5"
@@ -124,7 +124,7 @@
                 android:layout_marginStart="20dp"
                 app:layout_constraintStart_toEndOf="@+id/star4"
                 app:layout_constraintTop_toTopOf="@+id/star4"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
+                app:srcCompat="@drawable/half_star" />
 
             <ImageView
                 android:id="@+id/likeButton"
@@ -133,7 +133,7 @@
                 android:layout_marginEnd="20dp"
                 app:layout_constraintEnd_toStartOf="@+id/commentButton"
                 app:layout_constraintTop_toTopOf="@+id/star5"
-                app:srcCompat="@drawable/googleg_standard_color_18" />
+                app:srcCompat="@drawable/like_button" />
 
             <ImageView
                 android:id="@+id/commentButton"
@@ -142,7 +142,7 @@
                 android:layout_marginEnd="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/likeButton"
-                app:srcCompat="@drawable/googleg_standard_color_18" />
+                app:srcCompat="@drawable/comment_button" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
