@@ -103,9 +103,10 @@
                     app:layout_constraintTop_toTopOf="@+id/seeEventEntity">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/constraintLayout5"
-                        android:layout_width="48dp"
+                        android:id="@+id/addEventItinerary"
+                        android:layout_width="55dp"
                         android:layout_height="match_parent"
+                        android:clickable="true"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
@@ -114,12 +115,14 @@
                             android:layout_width="23dp"
                             android:layout_height="20dp"
                             android:background="@drawable/map_black"
+                            android:clickable="false"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:id="@+id/addToItinerary"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:text="@string/add"
@@ -127,6 +130,7 @@
                             android:textSize="12dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
+                            android:gravity="center_horizontal"
                             app:layout_constraintTop_toBottomOf="@+id/button_agregar" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -137,7 +141,7 @@
                         android:layout_height="match_parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/constraintLayout7"
-                        app:layout_constraintStart_toEndOf="@+id/constraintLayout5"
+                        app:layout_constraintStart_toEndOf="@+id/addEventItinerary"
                         app:layout_constraintTop_toTopOf="parent">
 
                         <Button

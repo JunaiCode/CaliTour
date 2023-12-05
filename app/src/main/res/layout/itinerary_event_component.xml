@@ -7,6 +7,7 @@
     android:padding="1dp">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/itineraryEventCV"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="4dp"
@@ -16,6 +17,7 @@
         app:cardBackgroundColor="#FFFFFF"
         app:cardCornerRadius="10dp"
         app:cardElevation="4dp"
+        android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,11 +40,11 @@
                 app:layout_constraintVertical_bias="0.47">
 
                 <ImageView
-                    android:id="@+id/imageView6"
+                    android:id="@+id/eventImageView"
                     android:layout_width="51dp"
                     android:layout_height="50dp"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/event_example" />
+                    android:background="@color/black_opacity"
+                    android:scaleType="fitXY" />
             </androidx.cardview.widget.CardView>
 
             <TextView
