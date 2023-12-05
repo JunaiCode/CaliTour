@@ -55,9 +55,10 @@ class HomeUserFragment : Fragment(), UserEventAdapter.ItemClickListener {
 
     fun handleActivityResult(result: ActivityResult){
         val data = result.data?.extras?.getString("entity_id")
-
-        val activity = activity as HomeActivity
-        activity.showEntity(data.toString())
+        if(data != null){
+            val activity = activity as HomeActivity
+            activity.showEntity(data.toString())
+        }
     }
 
 
