@@ -8,7 +8,6 @@ import com.example.calitour.databinding.EntityEventCardBinding
 class ActiveEventViewHolder(root:View): ViewHolder(root) {
     private val binding = EntityEventCardBinding.bind(root)
     val title = binding.activeEventTitle
-    val entityName = binding.entityEventName
     val price = binding.activePriceEvent
     val place = binding.locationActiveEvent
     val date = binding.dateActiveEvent

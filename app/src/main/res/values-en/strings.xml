@@ -22,6 +22,7 @@
     <string name="location_event">Add the location</string>
     <string name="price_event_product">Indicate the price</string>
     <string name="dropdown_categories">dropDownMenuCategories</string>
+    <string name="user_event_historial_title"> your story</string>
     <string name="points_label">My Points</string>
     <string-array name="categories">
         <item>Categories</item>
@@ -45,7 +46,6 @@
     <string name="welcome_message">Come to the branch of heaven and have a blast!</string>
     <string name="start">Start</string>
     <string name="description">Description</string>
-    <string name="hello_blank_fragment">Hello</string>
     <string name="itineraryEmptyTV">You still don\'t have a plan for today, join one of the events and add it to your itinerary</string>
     <string name="itineraryFullTitleTV">I guide you</string>
     <string name="about_us">About us</string>
@@ -56,6 +56,25 @@
     <string name="home_title">What\'s up?</string>
     <string name="home_header">What\'s going on today?</string>
     <string name="free">Free</string>
+
+    <string name="titleEventTriviasTV">Trivia</string>
+    <string name="subtitleEventTriviasTV">My active events</string>
+
+    <string name="titleQuestionTV">Editing Your Question</string>
+    <string name="AnswersTV">Options</string>
+    <string name="saveBtn">Save</string>
+    <string name="questionTV">Question</string>
+    <string name="warningTV">Caution! Remember that the first option is the correct answer.</string>
+    <string name="option1ET">Option 1</string>
+    <string name="option2ET">Option 2</string>
+    <string name="option3ET">Option 3</string>
+    <string name="option4ET">Option 4</string>
+
+    <string name="titleTriviasTV">What\'s to Ask?</string>
+    <string name="questionsTV">Questions</string>
+
+    <string name="editBtn">Edit</string>
+
     <string name="music">Music</string>
     <string name="dance">Dance</string>
     <string name="art">Art</string>

@@ -20,6 +20,7 @@
     <string name="price_event_product">Indica el precio</string>
     <string name="dropdown_categories">dropDownMenuCategories</string>
     <string name="points_label">Mis Puntos</string>
+    <string name="user_event_historial_title"> Tu historia</string>
     <string-array name="categories">
         <item>Categoría</item>
         <item>Música</item>
@@ -42,7 +43,6 @@
     <string name="welcome_message">Vení a la sucursal del cielo y date un borondo, ve!</string>
     <string name="start">Comenzar</string>
     <string name="description">Descripción</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="itineraryEmptyTV">Aún no tenés un plan pa hoy, parchate en uno de los eventos y mételo a tu itinerario</string>
     <string name="itineraryFullTitleTV">Yo te guio manit@</string>
     <string name="about_us">Sobre nosotros</string>
@@ -60,4 +60,24 @@
     <string name="theater">Teatro</string>
     <string name="sport">Deporte</string>
     <string name="food">Comida</string>
+
+
+    <string name="titleEventTriviasTV">Trivias</string>
+    <string name="subtitleEventTriviasTV">Mis eventos activos</string>
+
+
+    <string name="titleQuestionTV">Editando Tu Pregunta</string>
+    <string name="AnswersTV">Opciones</string>
+    <string name="saveBtn">Guardar</string>
+    <string name="questionTV">Pregunta</string>
+    <string name="warningTV">¡Ojo! Recuerda que la primera opción es la respuesta correcta.</string>
+    <string name="option1ET">Opcion 1</string>
+    <string name="option2ET">Opcion 2</string>
+    <string name="option3ET">Opcion 3</string>
+    <string name="option4ET">Opcion 4</string>
+
+    <string name="titleTriviasTV">¿Que hay pa preguntar?</string>
+    <string name="questionsTV">Preguntas</string>
+
+    <string name="editBtn">Editar</string>
 </resources>

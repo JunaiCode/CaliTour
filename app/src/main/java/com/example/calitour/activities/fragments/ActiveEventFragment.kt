@@ -23,7 +23,6 @@ class ActiveEventFragment: Fragment() {
     private lateinit var  binding: ActiveEventFragmentBinding
     private lateinit var  adapter: ActiveEventAdapter
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -33,6 +32,7 @@ class ActiveEventFragment: Fragment() {
         adapter = ActiveEventAdapter()
         vm.getEventsAvailablesByEntityId(Firebase.auth.currentUser?.uid.toString())
         vm.getImagesEntityAvailableEvents(Firebase.auth.currentUser?.uid.toString())
+        vm.getPricesEntityAvailableEvents(Firebase.auth.currentUser?.uid.toString())
         binding.activeEventList.adapter = adapter
         binding.activeEventList.layoutManager = LinearLayoutManager(context)
         binding.activeEventList.setHasFixedSize(true)
@@ -41,6 +41,9 @@ class ActiveEventFragment: Fragment() {
         }
         vm.uriEventsEntity.observe(viewLifecycleOwner){uris->
             adapter.setUris(uris)
+        }
+        vm.allPrices.observe(viewLifecycleOwner){prices->
+            adapter.setPrices(prices)
         }
         return binding.root
     }

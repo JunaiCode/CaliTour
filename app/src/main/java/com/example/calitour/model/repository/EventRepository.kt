@@ -8,8 +8,10 @@ import com.example.calitour.model.DTO.BadgeDTO
 import com.example.calitour.model.DTO.EventDocumentDTO
 import com.example.calitour.model.DTO.EventFullDTO
 import com.example.calitour.model.DTO.EventItineraryDTO
+import com.example.calitour.model.DTO.EventTriviaDTO
 import com.example.calitour.model.entity.EntityFirestore
 import com.example.calitour.model.DTO.PriceDTO
+import com.example.calitour.model.DTO.QuestionDTO
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -91,6 +93,57 @@ class EventRepository {
         return events
     }
 
+    suspend fun getAllEntityActiveEvents(entityId: String):ArrayList<EventFullDTO>{
+
+        val result = Firebase.firestore.collection("events")
+            .whereEqualTo("entityId", entityId)
+            .whereEqualTo("state", "available")
+            .get()
+            .await()
+
+        val allEvents = result.toObjects(EventFullDTO::class.java)
+        val events = ArrayList<EventFullDTO>()
+        events.addAll(allEvents)
+        events.forEach {
+            val entityName = getEntityNameById(it.entityId)
+            var photoUrl = it.img
+            if(photoUrl.isNotEmpty()){
+                photoUrl = getEventImage(it.entityId, it.id,it.img)!!
+            }
+            val price = getPricesEvent(it.id)[0].fee
+            it.img = photoUrl
+            it.entityName = entityName!!
+            it.price = price.toInt()
+        }
+        return events
+    }
+
+    suspend fun getAllEntityPassedEvents(entityId: String):ArrayList<EventFullDTO>{
+
+        val result = Firebase.firestore.collection("events")
+            .whereEqualTo("entityId", entityId)
+            .whereEqualTo("state", "unavailable")
+            .get()
+            .await()
+
+        val allEvents = result.toObjects(EventFullDTO::class.java)
+        val events = ArrayList<EventFullDTO>()
+        events.addAll(allEvents)
+        events.forEach {
+            val entityName = getEntityNameById(it.entityId)
+            var photoUrl = it.img
+            if(photoUrl.isNotEmpty()){
+                photoUrl = getEventImage(it.entityId, it.id,it.img)!!
+            }
+            val price = getPricesEvent(it.id)[0].fee
+            it.img = photoUrl
+            it.entityName = entityName!!
+            it.price = price.toInt()
+        }
+        return events
+    }
+
+
     suspend fun getFilteredEvents(category: String): ArrayList<EventFullDTO> {
         val result = Firebase.firestore.collection("events")
             .whereEqualTo("category", category)
@@ -171,6 +224,24 @@ class EventRepository {
         return event!!
     }
 
+    suspend fun getAllPricesAvailableEventsByEntityId(id: String): ArrayList<String> {
+        val events = getEventsAvailablesByEntityId(id)
+        val prices = ArrayList<String>()
+        events.forEach { event ->
+            prices.add(getPricesEvent(event.id)[0].fee.toInt().toString())
+        }
+        return prices
+    }
+
+    suspend fun getAllPricesUnavailableEventsByEntityId(id: String): ArrayList<String> {
+        val events = getEventsUnavailablesByEntityId(id)
+        val prices = ArrayList<String>()
+        events.forEach { event ->
+            prices.add(getPricesEvent(event.id)[0].fee.toInt().toString())
+        }
+        return prices
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     suspend fun getEventItineraryById(eventId: String): EventItineraryDTO {
         val result = Firebase.firestore.collection("events")
@@ -188,6 +259,7 @@ class EventRepository {
 
         }
         return event!!
+
     }
 
     suspend fun getEventImg(id:String): Uri{
@@ -293,6 +365,55 @@ class EventRepository {
         }
         return eventArraylist
     }
+
+    suspend  fun getEventsAvailablesTriviaByEntityId(id:String): ArrayList<EventTriviaDTO>{
+        val result = Firebase.firestore.collection("events")
+            .whereEqualTo("entityId",id)
+            .whereEqualTo("state","available")
+            .get()
+            .await()
+        val events = result.documents
+        var eventArraylist = ArrayList<EventTriviaDTO>();
+        events.forEach{
+            val event = it.toObject(EventTriviaDTO::class.java)
+            event?.let {
+                eventArraylist.add(event)
+            }
+        }
+        return eventArraylist
+    }
+
+    suspend fun getQuestionsByEventId(eventId: String): ArrayList<QuestionDTO>{
+        val result = Firebase.firestore.collection("events")
+            .document(eventId).collection("questions")
+            .get()
+            .await()
+        val questions = result.documents
+        var questionsArraylist = ArrayList<QuestionDTO>();
+        questions.forEach{
+            val question = it.toObject(QuestionDTO::class.java)
+            question?.let {
+                questionsArraylist.add(question)
+            }
+        }
+        return questionsArraylist
+    }
+
+    suspend fun updateQuestion(eventId: String, questionId: String, updatedTitle: String, updatedOptions: List<String>) {
+        val questionRef = Firebase.firestore.collection("events")
+            .document(eventId)
+            .collection("questions")
+            .document(questionId)
+
+        val updates = hashMapOf(
+            "title" to updatedTitle,
+            "correctAns" to updatedOptions.get(0),
+            "options" to updatedOptions
+        )
+
+        questionRef.update(updates).await()
+    }
+
 
     suspend  fun getEventsUnavailablesByEntityId(id:String): ArrayList<EventDocumentDTO>{
         val result = Firebase.firestore.collection("events")

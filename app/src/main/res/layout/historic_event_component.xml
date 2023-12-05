@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/white">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
         app:cardCornerRadius="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -37,8 +35,7 @@
                 <ImageView
                     android:id="@+id/entityImg"
                     android:layout_width="70dp"
-                    android:layout_height="70dp"
-                     />
+                    android:layout_height="70dp" />
             </androidx.cardview.widget.CardView>
 
             <TextView
@@ -55,7 +52,7 @@
 
             <TextView
                 android:id="@+id/eventSummary"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
@@ -88,60 +85,55 @@
                 android:id="@+id/star1"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="@+id/cardView"
-                app:layout_constraintTop_toBottomOf="@+id/cardView"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
+                app:layout_constraintTop_toBottomOf="@+id/eventSummary"
+                app:srcCompat="@drawable/full_star" />
 
             <ImageView
                 android:id="@+id/star2"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="15dp"
                 app:layout_constraintStart_toEndOf="@+id/star1"
-                app:layout_constraintTop_toBottomOf="@+id/cardView"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
+                app:layout_constraintTop_toTopOf="@+id/star1"
+                app:srcCompat="@drawable/full_star" />
 
             <ImageView
                 android:id="@+id/star3"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="15dp"
                 app:layout_constraintStart_toEndOf="@+id/star2"
-                app:layout_constraintTop_toBottomOf="@+id/cardView"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
+                app:layout_constraintTop_toTopOf="@+id/star2"
+                app:srcCompat="@drawable/full_star" />
 
             <ImageView
                 android:id="@+id/star4"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="15dp"
                 app:layout_constraintStart_toEndOf="@+id/star3"
-                app:layout_constraintTop_toBottomOf="@+id/cardView"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
+                app:layout_constraintTop_toTopOf="@+id/star3"
+                app:srcCompat="@drawable/full_star" />
 
             <ImageView
                 android:id="@+id/star5"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="15dp"
                 app:layout_constraintStart_toEndOf="@+id/star4"
-                app:layout_constraintTop_toBottomOf="@+id/cardView"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
+                app:layout_constraintTop_toTopOf="@+id/star4"
+                app:srcCompat="@drawable/half_star" />
 
             <ImageView
                 android:id="@+id/likeButton"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:layout_marginTop="15dp"
                 android:layout_marginEnd="20dp"
                 app:layout_constraintEnd_toStartOf="@+id/commentButton"
-                app:layout_constraintTop_toBottomOf="@+id/cardView"
-                app:srcCompat="@drawable/googleg_standard_color_18" />
+                app:layout_constraintTop_toTopOf="@+id/star5"
+                app:srcCompat="@drawable/like_button" />
 
             <ImageView
                 android:id="@+id/commentButton"
@@ -150,7 +142,7 @@
                 android:layout_marginEnd="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/likeButton"
-                app:srcCompat="@drawable/googleg_standard_color_18" />
+                app:srcCompat="@drawable/comment_button" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

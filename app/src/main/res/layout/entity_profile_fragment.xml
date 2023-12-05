@@ -3,16 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".activities.ProfileEntityActivity">
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout5"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@drawable/entity_profile_background"
-        app:layout_constraintBottom_toTopOf="@+id/cardViewNavBar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -27,14 +25,14 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/entityIV"
+                android:id="@+id/userEntityIV"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:src="@drawable/profile" />
         </androidx.cardview.widget.CardView>
 
         <TextView
-            android:id="@+id/entityName"
+            android:id="@+id/userEntityName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -66,7 +64,7 @@
                 android:text="@string/about_us" />
 
             <TextView
-                android:id="@+id/descriptionEntityTV"
+                android:id="@+id/userDescriptionEntityTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
@@ -76,31 +74,31 @@
 
         <LinearLayout
             android:id="@+id/linearLayout3"
-            android:layout_width="0dip"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="@+id/entityName"
-            app:layout_constraintStart_toStartOf="@+id/entityName"
-            app:layout_constraintTop_toBottomOf="@+id/entityName">
+            app:layout_constraintEnd_toEndOf="@+id/userEntityName"
+            app:layout_constraintStart_toStartOf="@+id/userEntityName"
+            app:layout_constraintTop_toBottomOf="@+id/userEntityName">
 
             <ImageView
-                android:id="@+id/facebook"
+                android:id="@+id/userFacebook"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginEnd="5dp"
                 app:srcCompat="@drawable/facebook" />
 
             <ImageView
-                android:id="@+id/instagram"
+                android:id="@+id/userInstagram"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginEnd="5dp"
                 android:src="@drawable/instagram" />
 
             <ImageView
-                android:id="@+id/twitter"
+                android:id="@+id/userTwitter"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginEnd="5dp"
@@ -132,17 +130,16 @@
             app:layout_constraintTop_toBottomOf="@+id/view">
 
             <ImageButton
-                android:id="@+id/liveEvents"
+                android:id="@+id/userLiveEvents"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_weight="1"
                 android:background="#00FFFFFF"
                 android:scaleType="fitCenter"
-                android:src="@drawable/live_gray"
-                 />
+                android:src="@drawable/live_gray" />
 
             <ImageButton
-                android:id="@+id/shop"
+                android:id="@+id/userShop"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_weight="1"
@@ -151,7 +148,7 @@
                 android:src="@drawable/shop_gray" />
 
             <ImageButton
-                android:id="@+id/endendEvents"
+                android:id="@+id/userEndedEvents"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_weight="1"
@@ -160,55 +157,17 @@
                 android:src="@drawable/clock_gray" />
         </LinearLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/fragmentContainerEntity"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/userEntityProfileList"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <ImageButton
-            android:id="@+id/editEntityProfileBtn"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="10dp"
-            android:background="#00FFFFFF"
-            android:scaleType="fitCenter"
-            app:layout_constraintBottom_toBottomOf="@+id/entityName"
-            app:layout_constraintStart_toEndOf="@+id/entityName"
-            app:layout_constraintTop_toTopOf="@+id/entityName"
-            app:srcCompat="@drawable/edit" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardViewNavBar"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        app:cardCornerRadius="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottomNavigationView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#FFFFFF"
-            app:labelVisibilityMode="unlabeled"
-            app:menu="@menu/nav_bar_entity">
-
-        </com.google.android.material.bottomnavigation.BottomNavigationView>
-    </androidx.cardview.widget.CardView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

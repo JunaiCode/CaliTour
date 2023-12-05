@@ -35,6 +35,7 @@ import java.util.UUID
 class ActiveEventAdapter: Adapter<ActiveEventViewHolder>() {
     private var activeEvents : ArrayList<EventDocumentDTO> = arrayListOf()
     private var uris :ArrayList<Uri> = arrayListOf()
+    private var prices :ArrayList<String> = arrayListOf()
     private val vm: CreateEventProductViewModel = CreateEventProductViewModel()
     init {
 
@@ -55,11 +56,12 @@ class ActiveEventAdapter: Adapter<ActiveEventViewHolder>() {
         holder.date.text = date
         holder.place.text = activeEvents[position].place
         holder.title.text = activeEvents[position].name
-        val price = vm.getPricesEvent(activeEvents[position].id).value?.get(0)?.fee
-        if(price == 0.0){
-            holder.price.text = holder.itemView.context.getString(R.string.free)
-        }else{
-            holder.price.text = R.string.free.toString()
+        if(prices.size>0){
+            if(prices[position] == "0"){
+                holder.price.text = holder.itemView.context.getString(R.string.free)
+            }else{
+                holder.price.text = prices[position]
+            }
         }
         if(uris.size>0){
             Glide.with(holder.itemView.context).load(uris[position]).into(holder.img)
@@ -90,6 +92,11 @@ class ActiveEventAdapter: Adapter<ActiveEventViewHolder>() {
 
     fun setUris(uriArray:ArrayList<Uri>){
         uris = uriArray
+        notifyDataSetChanged()
+    }
+
+    fun setPrices(pricesArray:ArrayList<String>){
+        prices = pricesArray
         notifyDataSetChanged()
     }
 }
