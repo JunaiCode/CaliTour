@@ -53,7 +53,7 @@ class ProfileEntityActivity : AppCompatActivity() {
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
                 binding.bottomNavigationView.menu[0].itemId ->{
-                    startActivity(Intent(this, MainActivity::class.java))
+                    startActivity(Intent(this, EventsTriviaActivity::class.java))
                 }
 
                 binding.bottomNavigationView.menu[1].itemId ->{

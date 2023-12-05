@@ -53,4 +53,8 @@
     <string name="home_title">¿Qué te contás ve?</string>
     <string name="home_header">¿Qué hay pa hacer hoy?</string>
     <string name="free">Gratis</string>
+
+
+    <string name="titleEventTriviasTV">Trivias</string>
+    <string name="subtitleEventTriviasTV">Mis eventos activos</string>
 </resources>

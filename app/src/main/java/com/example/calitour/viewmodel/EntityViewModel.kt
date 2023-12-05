@@ -9,7 +9,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.calitour.model.entity.EntityFirestore
 import com.example.calitour.model.DTO.EventDocumentDTO
 import com.example.calitour.model.DTO.EventFullDTO
+import com.example.calitour.model.DTO.EventTriviaDTO
 import com.example.calitour.model.DTO.ItineraryDTO
+import com.example.calitour.model.DTO.QuestionDTO
 import com.example.calitour.model.entity.EntityProduct
 import com.example.calitour.model.entity.EntityProductFirestore
 import com.example.calitour.model.entity.UserType
@@ -31,6 +33,8 @@ class EntityViewModel:ViewModel() {
 
     var completedProduct = MutableLiveData<Boolean>()
     var eventsQuery = MutableLiveData<ArrayList<EventDocumentDTO>>()
+    var eventsTriviaQuery = MutableLiveData<ArrayList<EventTriviaDTO>>()
+    var questionsQuery = MutableLiveData<ArrayList<QuestionDTO>>()
     var uriEventsEntity = MutableLiveData<ArrayList<Uri>>()
     var singleEvent = MutableLiveData<EventFullDTO>()
     var itineraryId = MutableLiveData<String>()
@@ -127,6 +131,14 @@ class EntityViewModel:ViewModel() {
         return eventsQuery
     }
 
+    fun getEventsAvailablesTriviaByEntityId(id:String):LiveData<ArrayList<EventTriviaDTO>>{
+        eventsTriviaQuery.value = arrayListOf()
+        viewModelScope.launch (Dispatchers.IO){
+            eventsTriviaQuery.postValue(eventRepo.getEventsAvailablesTriviaByEntityId(id))
+        }
+        return eventsTriviaQuery
+    }
+
     fun loadProducts(){
         viewModelScope.launch(Dispatchers.IO) {
             val entityId = Firebase.auth.currentUser?.uid.toString()
@@ -154,6 +166,29 @@ class EntityViewModel:ViewModel() {
                 products.value=productsFirestore
             }
         }
+    }
+
+    fun updateQuestion(eventId: String, questionId: String, updatedTitle: String, updatedOptions: List<String>){
+        viewModelScope.launch (Dispatchers.IO){
+            val questionRef = Firebase.firestore.collection("events")
+                .document(eventId)
+                .collection("questions")
+                .document(questionId)
+
+            val updates = hashMapOf(
+                "title" to updatedTitle,
+                "correctAns" to updatedOptions.get(0),
+                "options" to updatedOptions
+            )
+            questionRef.update(updates).await()
+        }
+    }
+    fun getQuestionsByEventId(eventId:String): LiveData<ArrayList<QuestionDTO>>{
+        questionsQuery.value = arrayListOf()
+        viewModelScope.launch (Dispatchers.IO){
+            questionsQuery.postValue(eventRepo.getQuestionsByEventId(eventId))
+        }
+        return questionsQuery
     }
 
     fun removeEventFromItinerary(dateItinerary: String, eventId: String?, itineraryId: String) {
@@ -325,6 +360,31 @@ class EntityViewModel:ViewModel() {
                 Log.e("<<<<<", ex.message.toString())
             }
 
+        }
+    }
+
+    fun addQuestion(eventId: String, updatedTitle: String, updatedOptions: List<String>, correctAns: String) {
+        viewModelScope.launch (Dispatchers.IO) {
+            val questionRef = Firebase.firestore.collection("events")
+                .document(eventId)
+                .collection("questions")
+            try {
+                val questionId = UUID.randomUUID().toString()
+                val newQuestion = hashMapOf(
+                    "title" to updatedTitle,
+                    "correctAns" to correctAns,
+                    "options" to updatedOptions,
+                    "id" to questionId
+                )
+
+                val questionDocument = questionRef.document(questionId)
+                questionDocument.set(newQuestion).await()
+
+                Log.i("Nueva pregunta", "Pregunta creada con ID: $questionId")
+
+            } catch (e: Exception) {
+                Log.e("Error", "Error al agregar pregunta: ${e.message}")
+            }
         }
     }
 

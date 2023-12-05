@@ -42,3 +42,11 @@ data class EventItineraryDTO (
     var img: String = "",
     var price: Double = 0.0
 )
+
+data class EventTriviaDTO (
+    var entityId: String = "",
+    var id: String = "",
+    var name: String = "",
+    var img: String = "",
+    var numTrivias: Int =0
+)

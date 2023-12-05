@@ -1,55 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="340dp"
+    android:layout_height="560dp">
 
     <TextView
         android:id="@+id/titleTriviasTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
         android:text="¿Que hay pa preguntar?"
-        tools:layout_editor_absoluteX="132dp"
-        tools:layout_editor_absoluteY="31dp" />
-
-    <EditText
-        android:id="@+id/newQuestionET"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:text="Nombre De La Trivia"
-        tools:layout_editor_absoluteX="113dp"
-        tools:layout_editor_absoluteY="79dp" />
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/questionsTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
         android:text="Preguntas"
-        tools:layout_editor_absoluteX="59dp"
-        tools:layout_editor_absoluteY="166dp" />
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleTriviasTV" />
 
     <Button
         android:id="@+id/addQuestionBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
         android:background="@drawable/add_event_itinerary"
-        tools:layout_editor_absoluteX="149dp"
-        tools:layout_editor_absoluteY="388dp" />
+        app:layout_constraintBottom_toBottomOf="@+id/questionsTV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.917"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/questionsTV"
+        app:layout_constraintVertical_bias="0.388" />
 
     <Button
         android:id="@+id/saveBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Guardar"
-        tools:layout_editor_absoluteX="149dp"
-        tools:layout_editor_absoluteY="502dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/questionsRecyclerView" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="176dp"
-        android:layout_height="143dp"
-        tools:layout_editor_absoluteX="123dp"
-        tools:layout_editor_absoluteY="185dp" />
+        android:id="@+id/questionsRecyclerView"
+        android:layout_width="289dp"
+        android:layout_height="302dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/questionsTV" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

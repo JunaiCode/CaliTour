@@ -55,4 +55,7 @@
     <string name="home_title">What\'s up?</string>
     <string name="home_header">What\'s going on today?</string>
     <string name="free">Free</string>
+
+    <string name="titleEventTriviasTV">Trivia</string>
+    <string name="subtitleEventTriviasTV">My active events</string>
 </resources>

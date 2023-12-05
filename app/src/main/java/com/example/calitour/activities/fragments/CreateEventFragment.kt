@@ -25,6 +25,7 @@ import com.example.calitour.model.DTO.EventDocumentDTO
 import com.example.calitour.model.entity.Badge
 import com.example.calitour.model.entity.Event
 import com.example.calitour.model.entity.Price
+import com.example.calitour.model.entity.Question
 import com.example.calitour.model.entity.Trivia
 import com.example.calitour.viewmodel.CreateEventProductViewModel
 import com.google.firebase.auth.ktx.auth
@@ -121,7 +122,7 @@ class CreateEventFragment: Fragment() {
                 eventUri,
                 ArrayList<Price>(),
                 ArrayList<Badge>(),
-                ArrayList<Trivia>()
+                ArrayList<Question>()
             )
             newEvent.prices.add(Price("Entrada General",binding.priceEvent.text.toString().toDouble(),UUID.randomUUID(),"General"))
             newEvent.badges.add(Badge(UUID.randomUUID(),badgeUri,"Badge"))
@@ -144,7 +145,7 @@ class CreateEventFragment: Fragment() {
                 eventUri,
                 ArrayList<Price>(),
                 ArrayList<Badge>(),
-                ArrayList<Trivia>()
+                ArrayList<Question>()
             )
             newEvent.prices.add(Price("Entrada General",binding.priceEvent.text.toString().toDouble(),UUID.fromString(
                 vm.eventPrices.value?.get(0)?.id),"General"))

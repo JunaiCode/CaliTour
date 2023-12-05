@@ -8,8 +8,10 @@ import com.example.calitour.model.DTO.BadgeDTO
 import com.example.calitour.model.DTO.EventDocumentDTO
 import com.example.calitour.model.DTO.EventFullDTO
 import com.example.calitour.model.DTO.EventItineraryDTO
+import com.example.calitour.model.DTO.EventTriviaDTO
 import com.example.calitour.model.entity.EntityFirestore
 import com.example.calitour.model.DTO.PriceDTO
+import com.example.calitour.model.DTO.QuestionDTO
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -269,6 +271,55 @@ class EventRepository {
         }
         return eventArraylist
     }
+
+    suspend  fun getEventsAvailablesTriviaByEntityId(id:String): ArrayList<EventTriviaDTO>{
+        val result = Firebase.firestore.collection("events")
+            .whereEqualTo("entityId",id)
+            .whereEqualTo("state","available")
+            .get()
+            .await()
+        val events = result.documents
+        var eventArraylist = ArrayList<EventTriviaDTO>();
+        events.forEach{
+            val event = it.toObject(EventTriviaDTO::class.java)
+            event?.let {
+                eventArraylist.add(event)
+            }
+        }
+        return eventArraylist
+    }
+
+    suspend fun getQuestionsByEventId(eventId: String): ArrayList<QuestionDTO>{
+        val result = Firebase.firestore.collection("events")
+            .document(eventId).collection("questions")
+            .get()
+            .await()
+        val questions = result.documents
+        var questionsArraylist = ArrayList<QuestionDTO>();
+        questions.forEach{
+            val question = it.toObject(QuestionDTO::class.java)
+            question?.let {
+                questionsArraylist.add(question)
+            }
+        }
+        return questionsArraylist
+    }
+
+    suspend fun updateQuestion(eventId: String, questionId: String, updatedTitle: String, updatedOptions: List<String>) {
+        val questionRef = Firebase.firestore.collection("events")
+            .document(eventId)
+            .collection("questions")
+            .document(questionId)
+
+        val updates = hashMapOf(
+            "title" to updatedTitle,
+            "correctAns" to updatedOptions.get(0),
+            "options" to updatedOptions
+        )
+
+        questionRef.update(updates).await()
+    }
+
 
     suspend  fun getEventsUnavailablesByEntityId(id:String): ArrayList<EventDocumentDTO>{
         val result = Firebase.firestore.collection("events")
