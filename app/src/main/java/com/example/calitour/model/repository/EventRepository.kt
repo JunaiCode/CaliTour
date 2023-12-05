@@ -147,6 +147,7 @@ class EventRepository {
     suspend fun getFilteredEvents(category: String): ArrayList<EventFullDTO> {
         val result = Firebase.firestore.collection("events")
             .whereEqualTo("category", category)
+            .whereEqualTo("state", "available")
             .get()
             .await()
 
