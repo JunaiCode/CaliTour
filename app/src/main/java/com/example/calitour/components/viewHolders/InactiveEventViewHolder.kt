@@ -8,7 +8,6 @@ import com.example.calitour.databinding.EntityRecentEventCardBinding
 class InactiveEventViewHolder(root: View): RecyclerView.ViewHolder(root) {
     private val binding = EntityRecentEventCardBinding.bind(root)
     val title = binding.inactiveEventTitle
-    val entityName = binding.entityEventName
     val price = binding.inactivePriceEvent
     val place = binding.locationInactiveEvent
     val date = binding.dateInactiveEvent

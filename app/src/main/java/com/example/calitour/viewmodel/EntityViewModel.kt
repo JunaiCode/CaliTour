@@ -84,6 +84,14 @@ class EntityViewModel:ViewModel() {
         return allPrices
     }
 
+    fun getPricesEntityInavailableEvents(id:String):LiveData<ArrayList<String>>{
+        allPrices.value = arrayListOf()
+        viewModelScope.launch(Dispatchers.IO){
+            allPrices.postValue(eventRepo.getAllPricesUnavailableEventsByEntityId(id))
+        }
+        return allPrices
+    }
+
     fun getImagesEntityAvailableEvents(id: String):LiveData<ArrayList<Uri>>{
         uriEventsEntity.value = arrayListOf()
         viewModelScope.launch (Dispatchers.IO){

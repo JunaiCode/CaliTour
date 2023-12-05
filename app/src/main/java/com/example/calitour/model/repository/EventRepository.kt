@@ -158,6 +158,15 @@ class EventRepository {
         return prices
     }
 
+    suspend fun getAllPricesUnavailableEventsByEntityId(id: String): ArrayList<String> {
+        val events = getEventsUnavailablesByEntityId(id)
+        val prices = ArrayList<String>()
+        events.forEach { event ->
+            prices.add(getPricesEvent(event.id)[0].fee.toInt().toString())
+        }
+        return prices
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     suspend fun getEventItineraryById(eventId: String): EventItineraryDTO {
         val result = Firebase.firestore.collection("events")
