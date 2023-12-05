@@ -1,20 +1,13 @@
 package com.example.calitour.activities.fragments
 
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.viewModels
 import com.example.calitour.R
-import com.example.calitour.databinding.EventsFragmentBinding
-import com.example.calitour.databinding.FilterEventsFragmentBinding
-import com.example.calitour.viewmodel.EventsViewModel
+import com.example.calitour.databinding.SearchFragmentBinding
 
 class EventsFragment: Fragment() {
 
@@ -23,19 +16,19 @@ class EventsFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = EventsFragmentBinding.inflate(inflater, container, false)
+        val binding = SearchFragmentBinding.inflate(inflater, container, false)
 
         binding.musicaFilterButton.setOnClickListener{
             Log.d("","OKK")
-            changeFragment()
+            //changeFragment()
         }
 
         binding.baileFilterButton.setOnClickListener{
-            changeFragment()
+            //changeFragment()
         }
 
         binding.arteFilterButton.setOnClickListener{
-            changeFragment()
+            //changeFragment()
         }
 
 //        binding.literaturaFilterButton.setOnClickListener(
