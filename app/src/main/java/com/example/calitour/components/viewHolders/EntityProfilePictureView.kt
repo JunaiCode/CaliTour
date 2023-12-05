@@ -1,4 +1,4 @@
-package com.example.calitour.components.views
+package com.example.calitour.components.viewHolders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView.ViewHolder

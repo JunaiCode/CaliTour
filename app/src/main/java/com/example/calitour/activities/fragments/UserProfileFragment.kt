@@ -8,7 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.calitour.components.adapter.HistoricEventAdapter
 import com.example.calitour.databinding.UserProfileFragmentBinding
 import com.example.calitour.viewmodel.UserViewModel
 import com.google.firebase.auth.ktx.auth
@@ -18,6 +20,7 @@ import java.io.File
 
 class UserProfileFragment: Fragment() {
 
+    lateinit var historialAdapter : HistoricEventAdapter
     val viewModel : UserViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,6 +28,15 @@ class UserProfileFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = UserProfileFragmentBinding.inflate(inflater, container, false)
+        historialAdapter = HistoricEventAdapter()
+
+        binding.historialRV.layoutManager = LinearLayoutManager(requireContext())
+        binding.historialRV.setHasFixedSize(false)
+        binding.historialRV.adapter = historialAdapter
+
+
+        Log.e(">>>>", "${historialAdapter.events.size}")
+
         viewModel.getUser()
         viewModel._user.observe(viewLifecycleOwner){
             binding.userName.text = it.name
