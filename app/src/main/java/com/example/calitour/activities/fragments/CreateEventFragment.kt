@@ -38,6 +38,7 @@ class CreateEventFragment: Fragment() {
     private var badgeUri: Uri = Uri.parse("")
     private var eventUri: Uri = Uri.parse("")
     private val vm: CreateEventProductViewModel by viewModels()
+    private var category = ""
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -108,8 +109,17 @@ class CreateEventFragment: Fragment() {
 
         binding.categories.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if (position > 0) {
-                    Log.e("Posicion seleccionada",position.toString())
+                when (binding.categories.selectedItem.toString()) {
+                    "Categoría" -> category = "Categories"
+                    "Música" -> category = "Music"
+                    "Baile" -> category = "Dance"
+                    "Arte" -> category = "Art"
+                    "Literatura" -> category = "Literature"
+                    "Teatro" -> category = "Theater"
+                    "Cine" -> category = "Cinema"
+                    "Deporte" -> category = "Sport"
+                    "Comida" -> category = "Food"
+                    else -> category = binding.categories.selectedItem.toString()
                 }
             }
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -121,7 +131,7 @@ class CreateEventFragment: Fragment() {
             val newEvent = Event(
                 UUID.randomUUID(),
                 Firebase.auth.currentUser?.uid.toString(),
-                binding.categories.selectedItem.toString(),
+                category,
                 vm.dateToMilliseconds(binding.dateEvent.text.toString(),vm.dateFormat),
                 binding.descriptionEvent.text.toString(),
                 binding.nameEvent.text.toString(),
@@ -143,7 +153,7 @@ class CreateEventFragment: Fragment() {
             val newEvent = Event(
                 UUID.fromString(vm.editEvent.value?.id),
                 Firebase.auth.currentUser?.uid.toString(),
-                binding.categories.selectedItem.toString(),
+                category,
                 vm.dateToMilliseconds(binding.dateEvent.text.toString(),vm.dateFormat),
                 binding.descriptionEvent.text.toString(),
                 binding.nameEvent.text.toString(),
