@@ -45,7 +45,6 @@
     <string name="description">Descripción</string>
     <string name="itineraryEmptyTV">Aún no tenés un plan pa hoy, parchate en uno de los eventos y mételo a tu itinerario</string>
     <string name="itineraryFullTitleTV">Yo te guio manit@</string>
-
     <string name="about_us">Sobre nosotros</string>
     <string name="save">Guardar</string>
     <string name="add">Añadir</string>
@@ -54,6 +53,13 @@
     <string name="home_title">¿Qué te contás ve?</string>
     <string name="home_header">¿Qué hay pa hacer hoy?</string>
     <string name="free">Gratis</string>
+    <string name="music">Música</string>
+    <string name="dance">Baile</string>
+    <string name="art">Arte</string>
+    <string name="literature">Literatura</string>
+    <string name="theater">Teatro</string>
+    <string name="sport">Deporte</string>
+    <string name="food">Comida</string>
 
 
     <string name="titleEventTriviasTV">Trivias</string>

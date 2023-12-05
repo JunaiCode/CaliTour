@@ -37,6 +37,7 @@ class EntityViewModel:ViewModel() {
     var eventsQuery = MutableLiveData<ArrayList<EventDocumentDTO>>()
     var eventsTriviaQuery = MutableLiveData<ArrayList<EventTriviaDTO>>()
     var questionsQuery = MutableLiveData<ArrayList<QuestionDTO>>()
+    var eventsFiltered = MutableLiveData<ArrayList<EventFullDTO>>()
     var uriEventsEntity = MutableLiveData<ArrayList<Uri>>()
     var allPrices = MutableLiveData<ArrayList<String>>()
     var singleEvent = MutableLiveData<EventFullDTO>()
@@ -103,6 +104,15 @@ class EntityViewModel:ViewModel() {
             uriEventsEntity.postValue(eventRepo.getEventsActiveImgByEntity(id))
         }
         return uriEventsEntity
+    }
+
+    fun getFilteredEvents(category: String) {
+
+        eventsFiltered.value = arrayListOf()
+        viewModelScope.launch  (Dispatchers.IO){
+            eventsFiltered.postValue(eventRepo.getFilteredEvents(category))
+        }
+
     }
 
     fun getImagesEntityUnavailableEventsEvents(id: String):LiveData<ArrayList<Uri>>{
@@ -333,19 +343,16 @@ class EntityViewModel:ViewModel() {
                     "facebook" to entity.facebook,
                     "X" to entity.x,
                     "instagram" to entity.instagram
-                ) as MutableMap<String?, Any>
+                ) as MutableMap<String?,Any>
 
                 Firebase.firestore.collection("entities")
                     .document(entity.id)
                     .update(newEntity).await()
 
-                if (entity.photoID != "") {
-                    if (newEntity["photoID"].toString() != "") {
-                        updateImage(
-                            Uri.parse(entity.photoID),
-                            newEntity["photoID"].toString()
-                        )
-                    } else {
+                if(entity.photoID!=""){
+                    if(newEntity["photoID"].toString()!=""){
+                        updateImage(Uri.parse(entity.photoID), newEntity["photoID"].toString())
+                    }else {
                         uploadImage(Uri.parse(entity.photoID), entity.id, UserType.ENTITY)
                     }
                 }
@@ -392,15 +399,15 @@ class EntityViewModel:ViewModel() {
                 }
 
 
-            } catch (ex: Exception) {
+            }catch (ex:Exception){
                 Log.e("<<<<<", ex.message.toString())
             }
 
         }
     }
 
-    fun uploadImage(uri: Uri, entityId: String, productId: String) {
-        viewModelScope.launch(Dispatchers.IO) {
+    fun uploadImage(uri: Uri, entityId:String, productId:String){
+        viewModelScope.launch (Dispatchers.IO) {
             try {
                 val uuid = UUID.randomUUID().toString()
                 Firebase.storage.reference
@@ -415,7 +422,7 @@ class EntityViewModel:ViewModel() {
                     .update("image", uuid)
                     .await()
 
-            } catch (ex: Exception) {
+            }catch (ex:Exception){
                 Log.e("<<<<<", ex.message.toString())
             }
 

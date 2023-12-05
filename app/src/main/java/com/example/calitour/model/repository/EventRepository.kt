@@ -144,6 +144,31 @@ class EventRepository {
     }
 
 
+    suspend fun getFilteredEvents(category: String): ArrayList<EventFullDTO> {
+        val result = Firebase.firestore.collection("events")
+            .whereEqualTo("category", category)
+            .whereEqualTo("state", "available")
+            .get()
+            .await()
+
+        val allEvents = result.toObjects(EventFullDTO::class.java)
+        val events = ArrayList<EventFullDTO>()
+        events.addAll(allEvents)
+        events.forEach {
+            val entityName = getEntityNameById(it.entityId)
+            var photoUrl = it.img
+            if(photoUrl.isNotEmpty()){
+                photoUrl = getEventImage(it.entityId, it.id,it.img)!!
+            }
+            val price = getPricesEvent(it.id)[0].fee
+            it.img = photoUrl
+            it.entityName = entityName!!
+            it.price = price.toInt()
+        }
+
+        return events
+    }
+
     suspend fun reactToEvent(eventId: String, operation: String){
         val result = Firebase.firestore.collection("events")
             .document(eventId)
