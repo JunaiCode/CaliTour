@@ -25,7 +25,6 @@ class CreateProductFragment: Fragment() {
     private val vm: EntityViewModel by activityViewModels()
     private var uri: Uri = Uri.parse("")
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

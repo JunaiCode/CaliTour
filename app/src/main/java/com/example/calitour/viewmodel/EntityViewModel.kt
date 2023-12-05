@@ -15,9 +15,11 @@ import com.example.calitour.model.DTO.QuestionDTO
 import com.example.calitour.model.entity.EntityProduct
 import com.example.calitour.model.entity.EntityProductFirestore
 import com.example.calitour.model.entity.UserType
+import com.example.calitour.model.repository.EntityRepository
 import com.google.firebase.auth.ktx.auth
 import com.example.calitour.model.repository.EventRepository
 import com.example.calitour.model.repository.ItineraryRepository
+import com.example.calitour.model.repository.ProductRepository
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -38,8 +40,11 @@ class EntityViewModel:ViewModel() {
     var uriEventsEntity = MutableLiveData<ArrayList<Uri>>()
     var allPrices = MutableLiveData<ArrayList<String>>()
     var singleEvent = MutableLiveData<EventFullDTO>()
+    var eventsFull = MutableLiveData<ArrayList<EventFullDTO>>()
     var itineraryId = MutableLiveData<String>()
     var eventRepo = EventRepository()
+    var entityRepo = EntityRepository()
+    var productRepo = ProductRepository()
     var itineraryRepo = ItineraryRepository()
     var profile =MutableLiveData<EntityFirestore>()
     var products = MutableLiveData<List<EntityProductFirestore>>()
@@ -123,6 +128,14 @@ class EntityViewModel:ViewModel() {
         return eventsQuery
     }
 
+    fun getProductsByEntityId(entityId: String){
+
+        viewModelScope.launch (Dispatchers.IO){
+            products.postValue(productRepo.getProductsByEntityId(entityId))
+        }
+
+    }
+
 
     fun getEventsById(id:String): LiveData<ArrayList<EventDocumentDTO>>{
         eventsQuery.value = arrayListOf()
@@ -146,6 +159,20 @@ class EntityViewModel:ViewModel() {
             eventsQuery.postValue(eventRepo.getEventsAvailablesByEntityId(id))
         }
         return eventsQuery
+    }
+
+    fun getAvailableEventsByEntityIdFull(entityId: String){
+        eventsFull.value = arrayListOf()
+        viewModelScope.launch (Dispatchers.IO) {
+            eventsFull.postValue(eventRepo.getAllEntityActiveEvents(entityId))
+        }
+    }
+
+    fun getUnavailableEventsByEntityIdFull(entityId: String){
+        eventsFull.value = arrayListOf()
+        viewModelScope.launch (Dispatchers.IO) {
+            eventsFull.postValue(eventRepo.getAllEntityPassedEvents(entityId))
+        }
     }
 
     fun getEventsAvailablesTriviaByEntityId(id:String):LiveData<ArrayList<EventTriviaDTO>>{
@@ -208,7 +235,19 @@ class EntityViewModel:ViewModel() {
         return questionsQuery
     }
 
-    fun removeEventFromItinerary(dateItinerary: String, eventId: String?, itineraryId: String) {
+    fun getEntityProfile(entityId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            profile.postValue(entityRepo.getEntityProfile(entityId))
+
+        }
+    }
+
+
+    fun removeEventFromItinerary(
+        dateItinerary: String,
+        eventId: String?,
+        itineraryId: String
+    ) {
         val userId = Firebase.auth.currentUser!!.uid
         viewModelScope.launch (Dispatchers.IO) {
             if (eventId != null) {
@@ -279,12 +318,12 @@ class EntityViewModel:ViewModel() {
 
     }
 
-    fun updateEntity(entity: EntityFirestore){
-        viewModelScope.launch (Dispatchers.IO) {
+    fun updateEntity(entity: EntityFirestore) {
+        viewModelScope.launch(Dispatchers.IO) {
             val snapshot = Firebase.firestore.collection("entities")
                 .document(entity.id)
                 .get().await().toObject(EntityFirestore::class.java)
-            if(snapshot!=null){
+            if (snapshot != null) {
                 val newEntity = hashMapOf(
                     "name" to entity.name,
                     "id" to entity.id,
@@ -294,16 +333,19 @@ class EntityViewModel:ViewModel() {
                     "facebook" to entity.facebook,
                     "X" to entity.x,
                     "instagram" to entity.instagram
-                ) as MutableMap<String?,Any>
+                ) as MutableMap<String?, Any>
 
                 Firebase.firestore.collection("entities")
                     .document(entity.id)
                     .update(newEntity).await()
 
-                if(entity.photoID!=""){
-                    if(newEntity["photoID"].toString()!=""){
-                        updateImage(Uri.parse(entity.photoID), newEntity["photoID"].toString())
-                    }else {
+                if (entity.photoID != "") {
+                    if (newEntity["photoID"].toString() != "") {
+                        updateImage(
+                            Uri.parse(entity.photoID),
+                            newEntity["photoID"].toString()
+                        )
+                    } else {
                         uploadImage(Uri.parse(entity.photoID), entity.id, UserType.ENTITY)
                     }
                 }
@@ -313,9 +355,9 @@ class EntityViewModel:ViewModel() {
         }
     }
 
-    fun updateImage(uri: Uri, imageId: String){
+    fun updateImage(uri: Uri, imageId: String) {
 
-        viewModelScope.launch (Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.IO) {
             Firebase.storage.reference
                 .child("profileImages")
                 .child(imageId)
@@ -325,8 +367,8 @@ class EntityViewModel:ViewModel() {
     }
 
 
-    fun uploadImage(uri: Uri, id:String, type: UserType){
-        viewModelScope.launch (Dispatchers.IO) {
+    fun uploadImage(uri: Uri, id: String, type: UserType) {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 val uuid = UUID.randomUUID().toString()
                 Firebase.storage.reference
@@ -334,31 +376,31 @@ class EntityViewModel:ViewModel() {
                     .child(uuid)
                     .putFile(uri).await()
 
-                when(type){
+                when (type) {
                     UserType.USER -> {
                         Firebase.firestore.collection("users")
                             .document(id)
-                            .update("photoID", uuid )
+                            .update("photoID", uuid)
                             .await()
                     }
                     UserType.ENTITY -> {
                         Firebase.firestore.collection("entities")
                             .document(id)
-                            .update("photoID", uuid )
+                            .update("photoID", uuid)
                             .await()
                     }
                 }
 
 
-            }catch (ex:Exception){
+            } catch (ex: Exception) {
                 Log.e("<<<<<", ex.message.toString())
             }
 
         }
     }
 
-    fun uploadImage(uri: Uri, entityId:String, productId:String){
-        viewModelScope.launch (Dispatchers.IO) {
+    fun uploadImage(uri: Uri, entityId: String, productId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 val uuid = UUID.randomUUID().toString()
                 Firebase.storage.reference
@@ -373,7 +415,7 @@ class EntityViewModel:ViewModel() {
                     .update("image", uuid)
                     .await()
 
-            }catch (ex:Exception){
+            } catch (ex: Exception) {
                 Log.e("<<<<<", ex.message.toString())
             }
 
