@@ -1,8 +1,10 @@
 package com.example.calitour.activities
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.example.calitour.R
 import com.example.calitour.activities.fragments.EventsFragment
@@ -23,6 +25,7 @@ class HomeActivity : AppCompatActivity() {
     private val itinerary = ItineraryFragment()
     private val profile = UserProfileFragment.newInstance()
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

@@ -21,30 +21,30 @@ class EventsFragment: Fragment() {
         val binding = EventsFragmentBinding.inflate(inflater, container, false)
         viewModel.getEvents()
 
-        binding.musicaFilterButton.setOnClickListener(
-
-        )
-        binding.baileFilterButton.setOnClickListener(
-
-        )
-        binding.arteFilterButton.setOnClickListener(
-
-        )
-        binding.literaturaFilterButton.setOnClickListener(
-
-        )
-        binding.teatroFilterButton.setOnClickListener(
-
-        )
-        binding.cineFilterButton.setOnClickListener(
-
-        )
-        binding.deporteFilterButton.setOnClickListener(
-
-        )
-        binding.comidaFilterButton.setOnClickListener(
-            
-        )
+//        binding.musicaFilterButton.setOnClickListener(
+//
+//        )
+//        binding.baileFilterButton.setOnClickListener(
+//
+//        )
+//        binding.arteFilterButton.setOnClickListener(
+//
+//        )
+//        binding.literaturaFilterButton.setOnClickListener(
+//
+//        )
+//        binding.teatroFilterButton.setOnClickListener(
+//
+//        )
+//        binding.cineFilterButton.setOnClickListener(
+//
+//        )
+//        binding.deporteFilterButton.setOnClickListener(
+//
+//        )
+//        binding.comidaFilterButton.setOnClickListener(
+//
+//        )
 
 
 
