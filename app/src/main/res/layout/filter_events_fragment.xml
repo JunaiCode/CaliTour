@@ -71,12 +71,12 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/eventsFound"
-        android:layout_width="135dp"
-        android:layout_height="392dp"
-        android:layout_marginStart="138dp"
-        android:layout_marginTop="65dp"
-        android:layout_marginEnd="138dp"
-        android:layout_marginBottom="56dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

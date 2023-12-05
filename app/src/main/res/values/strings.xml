@@ -53,4 +53,11 @@
     <string name="home_title">¿Qué te contás ve?</string>
     <string name="home_header">¿Qué hay pa hacer hoy?</string>
     <string name="free">Gratis</string>
+    <string name="music">Música</string>
+    <string name="dance">Baile</string>
+    <string name="art">Arte</string>
+    <string name="literature">Literatura</string>
+    <string name="theater">Teatro</string>
+    <string name="sport">Deporte</string>
+    <string name="food">Comida</string>
 </resources>

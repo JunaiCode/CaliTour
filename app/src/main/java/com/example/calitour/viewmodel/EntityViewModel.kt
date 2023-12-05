@@ -31,6 +31,7 @@ open class EntityViewModel:ViewModel() {
 
     var completedProduct = MutableLiveData<Boolean>()
     var eventsQuery = MutableLiveData<ArrayList<EventDocumentDTO>>()
+    var eventsFiltered = MutableLiveData<ArrayList<EventFullDTO>>()
     var uriEventsEntity = MutableLiveData<ArrayList<Uri>>()
     var singleEvent = MutableLiveData<EventFullDTO>()
     var itineraryId = MutableLiveData<String>()
@@ -77,6 +78,15 @@ open class EntityViewModel:ViewModel() {
             uriEventsEntity.postValue(eventRepo.getEventsActiveImgByEntity(id))
         }
         return uriEventsEntity
+    }
+
+    fun getFilteredEvents(category: String) {
+
+        eventsFiltered.value = arrayListOf()
+        viewModelScope.launch  (Dispatchers.IO){
+            eventsFiltered.postValue(eventRepo.getFilteredEvents(category))
+        }
+
     }
 
     fun getImagesEntityUnavailableEventsEvents(id: String):LiveData<ArrayList<Uri>>{
