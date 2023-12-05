@@ -75,12 +75,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
                         android:layout_marginTop="21dp"
-                        android:layout_marginEnd="109dp"
                         android:text="Gratis"
                         android:textColor="#FFFFFF"
                         android:textSize="18dp"
                         android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/priceIconImg"
                         app:layout_constraintTop_toBottomOf="@+id/inactiveEventTitle" />
 
@@ -100,12 +98,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
                         android:layout_marginTop="12dp"
-                        android:layout_marginEnd="120dp"
                         android:text="9km"
                         android:textColor="#FFFFFF"
                         android:textSize="18dp"
                         android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/locationIconImg"
                         app:layout_constraintTop_toBottomOf="@+id/inactivePriceEvent" />
 
@@ -125,12 +121,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
                         android:layout_marginTop="12dp"
-                        android:layout_marginEnd="30dp"
                         android:text="04/09 - 3:00pm"
                         android:textColor="#FFFFFF"
                         android:textSize="18dp"
                         android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/calendarIconImg"
                         app:layout_constraintTop_toBottomOf="@+id/locationInactiveEvent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
