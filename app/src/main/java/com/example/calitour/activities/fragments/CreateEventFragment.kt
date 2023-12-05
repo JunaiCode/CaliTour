@@ -25,6 +25,7 @@ import com.example.calitour.model.DTO.EventDocumentDTO
 import com.example.calitour.model.entity.Badge
 import com.example.calitour.model.entity.Event
 import com.example.calitour.model.entity.Price
+import com.example.calitour.model.entity.Question
 import com.example.calitour.model.entity.Trivia
 import com.example.calitour.viewmodel.CreateEventProductViewModel
 import com.google.firebase.auth.ktx.auth
@@ -52,11 +53,14 @@ class CreateEventFragment: Fragment() {
         vm.editEvent.observe(viewLifecycleOwner){event ->
            setValues(event)
         }
-        vm.uploadedComplete.observe(viewLifecycleOwner){files->
-            Log.e("Entro al observe",files.toString())
-            if(files.size == 2 && files[0] && files[1] === true){
+        vm.uploadedEventImgComplete.observe(viewLifecycleOwner){img->
+            if(img == true && vm.uploadedBadgeImgComplete.value == true){
+                    startActivity(Intent(requireContext(), ProfileEntityActivity::class.java))
+            }
+        }
+        vm.uploadedBadgeImgComplete.observe(viewLifecycleOwner){img->
+            if(img == true && vm.uploadedEventImgComplete.value == true){
                 startActivity(Intent(requireContext(), ProfileEntityActivity::class.java))
-                vm.uploadedComplete.postValue(ArrayList<Boolean>())
             }
         }
         vm.eventBadges.observe(viewLifecycleOwner){}
@@ -128,7 +132,7 @@ class CreateEventFragment: Fragment() {
                 eventUri,
                 ArrayList<Price>(),
                 ArrayList<Badge>(),
-                ArrayList<Trivia>()
+                ArrayList<Question>()
             )
             newEvent.prices.add(Price("Entrada General",binding.priceEvent.text.toString().toDouble(),UUID.randomUUID(),"General"))
             newEvent.badges.add(Badge(UUID.randomUUID(),badgeUri,"Badge"))
@@ -150,7 +154,7 @@ class CreateEventFragment: Fragment() {
                 eventUri,
                 ArrayList<Price>(),
                 ArrayList<Badge>(),
-                ArrayList<Trivia>()
+                ArrayList<Question>()
             )
             newEvent.prices.add(Price("Entrada General",binding.priceEvent.text.toString().toDouble(),UUID.fromString(
                 vm.eventPrices.value?.get(0)?.id),"General"))

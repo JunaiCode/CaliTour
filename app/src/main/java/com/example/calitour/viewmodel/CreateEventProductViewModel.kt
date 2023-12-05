@@ -36,7 +36,8 @@ class CreateEventProductViewModel: ViewModel() {
     var eventBadgesUri = MutableLiveData<ArrayList<Uri>>()
     var eventBadges = MutableLiveData<ArrayList<BadgeDTO>>()
     var eventPrices = MutableLiveData<ArrayList<PriceDTO>>()
-    var uploadedComplete = MutableLiveData<ArrayList<Boolean>>()
+    var uploadedBadgeImgComplete = MutableLiveData<Boolean>()
+    var uploadedEventImgComplete = MutableLiveData<Boolean>()
     val eventrepo = EventRepository()
 
     //Formato en el que se debe ingresar la fecha y hora para que lo coja como timeStamp
@@ -135,16 +136,10 @@ class CreateEventProductViewModel: ViewModel() {
         val eventsRef = Firebase.firestore.collection("events").document("${e.id}")
         val badgesRef = Firebase.firestore.collection("events").document("${e.id}").collection("badges").document(e.badges[0].id.toString())
         eventImgRef.putFile(e.img).addOnCompleteListener(){ task->
-            val temp = ArrayList<Boolean>(uploadedComplete.value)
-            temp.add(true)
-            uploadedComplete.postValue(temp)
-            Log.e("Aja",uploadedComplete.value.toString())
+            uploadedEventImgComplete.postValue(true)
         }
         badgeImgRef.putFile(e.badges[0].img).addOnCompleteListener(){ task->
-            val temp = ArrayList<Boolean>(uploadedComplete.value)
-            temp.add(true)
-            uploadedComplete.postValue(temp)
-            Log.e("Aja",uploadedComplete.value.toString())
+            uploadedBadgeImgComplete.postValue(true)
         }
         badgesRef.update("img",badgeImg)
         eventsRef.update("img",eventImg)

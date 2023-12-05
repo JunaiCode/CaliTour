@@ -22,6 +22,7 @@
     <string name="location_event">Add the location</string>
     <string name="price_event_product">Indicate the price</string>
     <string name="dropdown_categories">dropDownMenuCategories</string>
+    <string name="user_event_historial_title"> your story</string>
     <string name="points_label">My Points</string>
     <string-array name="categories">
         <item>Categories</item>
@@ -55,4 +56,7 @@
     <string name="home_title">What\'s up?</string>
     <string name="home_header">What\'s going on today?</string>
     <string name="free">Free</string>
+
+    <string name="titleEventTriviasTV">Trivia</string>
+    <string name="subtitleEventTriviasTV">My active events</string>
 </resources>
