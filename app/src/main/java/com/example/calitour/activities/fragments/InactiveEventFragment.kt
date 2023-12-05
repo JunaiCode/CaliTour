@@ -26,6 +26,7 @@ class InactiveEventFragment: Fragment() {
         adapter = InactiveEventAdapter()
         vm.getEventsUnavailablesByEntityId(Firebase.auth.currentUser?.uid.toString())
         vm.getImagesEntityUnavailableEventsEvents(Firebase.auth.currentUser?.uid.toString())
+        vm.getPricesEntityUnavailableEvents(Firebase.auth.currentUser?.uid.toString())
         binding.inactiveEventList.adapter = adapter
         binding.inactiveEventList.layoutManager = LinearLayoutManager(context)
         binding.inactiveEventList.setHasFixedSize(true)
