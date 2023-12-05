@@ -149,6 +149,15 @@ class EventRepository {
         return event!!
     }
 
+    suspend fun getAllPricesAvailableEventsByEntityId(id: String): ArrayList<String> {
+        val events = getEventsAvailablesByEntityId(id)
+        val prices = ArrayList<String>()
+        events.forEach { event ->
+            prices.add(getPricesEvent(event.id)[0].fee.toInt().toString())
+        }
+        return prices
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     suspend fun getEventItineraryById(eventId: String): EventItineraryDTO {
         val result = Firebase.firestore.collection("events")
@@ -166,6 +175,7 @@ class EventRepository {
 
         }
         return event!!
+
     }
 
     suspend fun getEventImg(id:String): Uri{

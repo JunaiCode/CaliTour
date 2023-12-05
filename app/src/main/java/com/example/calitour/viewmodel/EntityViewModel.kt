@@ -36,6 +36,7 @@ class EntityViewModel:ViewModel() {
     var eventsTriviaQuery = MutableLiveData<ArrayList<EventTriviaDTO>>()
     var questionsQuery = MutableLiveData<ArrayList<QuestionDTO>>()
     var uriEventsEntity = MutableLiveData<ArrayList<Uri>>()
+    var allPrices = MutableLiveData<ArrayList<String>>()
     var singleEvent = MutableLiveData<EventFullDTO>()
     var itineraryId = MutableLiveData<String>()
     var eventRepo = EventRepository()
@@ -73,6 +74,14 @@ class EntityViewModel:ViewModel() {
             }
 
         }
+    }
+
+    fun getPricesEntityAvailableEvents(id:String):LiveData<ArrayList<String>>{
+        allPrices.value = arrayListOf()
+        viewModelScope.launch(Dispatchers.IO){
+           allPrices.postValue(eventRepo.getAllPricesAvailableEventsByEntityId(id))
+        }
+        return allPrices
     }
 
     fun getImagesEntityAvailableEvents(id: String):LiveData<ArrayList<Uri>>{

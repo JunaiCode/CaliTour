@@ -1,6 +1,8 @@
 package com.example.calitour.viewmodel
 
+import android.content.Intent
 import android.net.Uri
+import android.util.Dumpable
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -34,6 +36,8 @@ class CreateEventProductViewModel: ViewModel() {
     var eventBadgesUri = MutableLiveData<ArrayList<Uri>>()
     var eventBadges = MutableLiveData<ArrayList<BadgeDTO>>()
     var eventPrices = MutableLiveData<ArrayList<PriceDTO>>()
+    var uploadedBadgeImgComplete = MutableLiveData<Boolean>()
+    var uploadedEventImgComplete = MutableLiveData<Boolean>()
     val eventrepo = EventRepository()
 
     //Formato en el que se debe ingresar la fecha y hora para que lo coja como timeStamp
@@ -129,16 +133,16 @@ class CreateEventProductViewModel: ViewModel() {
         val eventImg = UUID.randomUUID().toString()
         val eventImgRef = Firebase.storage.reference.child("eventImages/${e.entityId}/${e.id}/${eventImg}")
         val badgeImgRef = Firebase.storage.reference.child("badges/${e.entityId}/${e.id}/${badgeImg}")
-        eventImgRef.putFile(e.img)
-        badgeImgRef.putFile(e.badges[0].img)
-        Firebase.firestore.collection("events")
-            .document(e.id.toString())
-            .update("img", eventImg)
-        Firebase.firestore.collection("events")
-            .document(e.id.toString())
-            .collection("badges")
-            .document(e.badges[0].id.toString())
-            .update("img", badgeImg)
+        val eventsRef = Firebase.firestore.collection("events").document("${e.id}")
+        val badgesRef = Firebase.firestore.collection("events").document("${e.id}").collection("badges").document(e.badges[0].id.toString())
+        eventImgRef.putFile(e.img).addOnCompleteListener(){ task->
+            uploadedEventImgComplete.postValue(true)
+        }
+        badgeImgRef.putFile(e.badges[0].img).addOnCompleteListener(){ task->
+            uploadedBadgeImgComplete.postValue(true)
+        }
+        badgesRef.update("img",badgeImg)
+        eventsRef.update("img",eventImg)
     }
 
     fun editImages(e: Event){
