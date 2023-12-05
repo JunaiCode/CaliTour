@@ -23,11 +23,12 @@ class EventsViewModel:EntityViewModel() {
                         }
                         Log.e(">>>", events.toString())
                     }
-
-
                 }
         }
+    }
 
+
+    fun showPopularEvents(){
 
     }
 }
