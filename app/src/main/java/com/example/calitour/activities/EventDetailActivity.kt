@@ -1,5 +1,7 @@
 package com.example.calitour.activities
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -50,6 +52,14 @@ class EventDetailActivity : AppCompatActivity() {
             binding.dateEventTV.text = date
             binding.eventReactionTV.text = event.reaction.toString()
 
+            binding.seeEventEntity.setOnClickListener{
+                val entityId = event.entityId
+                val intent = Intent()
+                intent.putExtra("entity_id", entityId)
+                setResult(Activity.RESULT_OK, intent)
+                finish()
+            }
+
             lifecycleScope.launch {
                 itineraryId = vm.findItineraryIdByEventId(event.id)
                 if (itineraryId.isNotEmpty()) {
@@ -71,6 +81,8 @@ class EventDetailActivity : AppCompatActivity() {
                         binding.addToItinerary.text = "Agregado"
                     }
                 }
+
+
             }
 
         }
@@ -85,4 +97,5 @@ class EventDetailActivity : AppCompatActivity() {
 
         setContentView(binding.root)
     }
+
 }

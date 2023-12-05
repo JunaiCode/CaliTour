@@ -9,7 +9,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.calitour.model.entity.EntityFirestore
 import com.example.calitour.model.DTO.EventDocumentDTO
 import com.example.calitour.model.DTO.EventFullDTO
-import com.example.calitour.model.DTO.ItineraryDTO
 import com.example.calitour.model.entity.EntityProduct
 import com.example.calitour.model.entity.EntityProductFirestore
 import com.example.calitour.model.entity.UserType
@@ -165,27 +164,39 @@ class EntityViewModel:ViewModel() {
         }
     }
 
-    fun loadProfile() {
-        viewModelScope.launch(Dispatchers.IO) {
-    fun removeEventFromItinerary(dateItinerary: String, eventId: String?, itineraryId: String) {
+
+    fun removeEventFromItinerary(
+        dateItinerary: String,
+        eventId: String?,
+        itineraryId: String
+    ) {
         val userId = Firebase.auth.currentUser!!.uid
-        viewModelScope.launch (Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.IO) {
             if (eventId != null) {
-                itineraryRepo.removeEventFromItinerary(userId,itineraryId,eventId)
+                itineraryRepo.removeEventFromItinerary(userId, itineraryId, eventId)
             }
         }
     }
 
     fun addEventToItinerary(dateItinerary: String, eventId: String?, itineraryId: String) {
         val userId = Firebase.auth.currentUser!!.uid
-        viewModelScope.launch (Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.IO) {
             if (itineraryId.isNotEmpty()) {
                 if (eventId != null) {
-                    itineraryRepo.addEventToExistingItinerary(userId,itineraryId,eventId,dateItinerary)
+                    itineraryRepo.addEventToExistingItinerary(
+                        userId,
+                        itineraryId,
+                        eventId,
+                        dateItinerary
+                    )
                 }
-            }else{
+            } else {
                 if (eventId != null) {
-                    itineraryRepo.addEventToItineraryNonExisting(userId,dateItinerary,eventId)
+                    itineraryRepo.addEventToItineraryNonExisting(
+                        userId,
+                        dateItinerary,
+                        eventId
+                    )
                 }
             }
         }
@@ -211,8 +222,8 @@ class EntityViewModel:ViewModel() {
         return itineraryId
     }
 
-     fun loadProfile(){
-        viewModelScope.launch (Dispatchers.IO) {
+    fun loadProfile() {
+        viewModelScope.launch(Dispatchers.IO) {
             val entityId = Firebase.auth.currentUser?.uid.toString()
             var userFirestore: EntityFirestore? = null
             val snapshot = Firebase.firestore.collection("entities")
@@ -225,7 +236,7 @@ class EntityViewModel:ViewModel() {
                     val imageUrl = Firebase.storage.reference.child("profileImages")
                         .child(userFirestore!!.photoID)
                         .downloadUrl.await().toString()
-                    userFirestore.photoID= imageUrl
+                    userFirestore.photoID = imageUrl
                 }
             }
 
@@ -233,7 +244,6 @@ class EntityViewModel:ViewModel() {
                 profile.value = userFirestore!!
             }
         }
-
 
 
     }
@@ -259,10 +269,13 @@ class EntityViewModel:ViewModel() {
                     .document(entity.id)
                     .update(newEntity).await()
 
-                if(entity.photoID!=""){
-                    if(newEntity["photoID"].toString()!=""){
-                        updateImage(Uri.parse(entity.photoID), newEntity["photoID"].toString())
-                    }else {
+                if (entity.photoID != "") {
+                    if (newEntity["photoID"].toString() != "") {
+                        updateImage(
+                            Uri.parse(entity.photoID),
+                            newEntity["photoID"].toString()
+                        )
+                    } else {
                         uploadImage(Uri.parse(entity.photoID), entity.id, UserType.ENTITY)
                     }
                 }
