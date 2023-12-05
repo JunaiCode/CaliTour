@@ -11,6 +11,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
 class EventHistorialViewModel : ViewModel() {
     private val reviews : MutableCollection<ReviewDTO> = arrayListOf()
@@ -53,25 +55,16 @@ class EventHistorialViewModel : ViewModel() {
     }
 
     private fun getEvent(id : String){
-            Firebase.firestore.collection("events").document(id).get()
-                .addOnSuccessListener {
-                    events.add(
-                        EventDTO(
-                            id,
-                            it.get("category") as String,
-                            it.get("date") as String,
-                            it.get("description") as String,
-                            it.get("entityId") as String,
-                            it.get("name") as String,
-                            it.get("place") as String,
-                            it.get("reaction") as Long,
-                            it.get("score") as Long,
-                            it.get("state") as String
-                        )
-                    )
-                }.addOnFailureListener{
-                    Log.e(">>>", it.message.toString())
-                }
+        viewModelScope.launch(Dispatchers.IO) {
+            var newItem = Firebase.firestore.collection("events").document(id).get().await()
+            var newEventDTO = newItem.toObject(EventDTO::class.java)
+            withContext(Dispatchers.Main){
+                events.add(newEventDTO!!)
+            }
+        }
+
+
+
 
     }
 

@@ -6,4 +6,8 @@ data class ReviewDTO(
     val idEvent: String,
     val idUser : String,
     val score : Long
-)
+){
+    constructor(): this("","","","",0){
+
+    }
+}
