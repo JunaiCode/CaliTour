@@ -28,6 +28,7 @@ class EntityViewModel:ViewModel() {
     var completedProduct = MutableLiveData<Boolean>()
     var eventsQuery = MutableLiveData<ArrayList<EventDocumentDTO>>()
     var uriEventsEntity = MutableLiveData<ArrayList<Uri>>()
+    var allPrices = MutableLiveData<ArrayList<String>>()
     var singleEvent = MutableLiveData<EventFullDTO>()
     var eventRepo = EventRepository()
     var profile =MutableLiveData<EntityFirestore>()
@@ -63,6 +64,14 @@ class EntityViewModel:ViewModel() {
             }
 
         }
+    }
+
+    fun getPricesEntityAvailableEvents(id:String):LiveData<ArrayList<String>>{
+        allPrices.value = arrayListOf()
+        viewModelScope.launch(Dispatchers.IO){
+           allPrices.postValue(eventRepo.getAllPricesAvailableEventsByEntityId(id))
+        }
+        return allPrices
     }
 
     fun getImagesEntityAvailableEvents(id: String):LiveData<ArrayList<Uri>>{

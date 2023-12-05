@@ -128,6 +128,15 @@ class EventRepository {
         return event!!
     }
 
+    suspend fun getAllPricesAvailableEventsByEntityId(id: String): ArrayList<String>{
+        val events = getEventsAvailablesByEntityId(id)
+        val prices = ArrayList<String>()
+        events.forEach {event->
+            prices.add(getPricesEvent(event.id)[0].fee.toInt().toString())
+        }
+        return prices
+    }
+
     suspend fun getEventImg(id:String): Uri{
         val event = getEventById(id)[0]
         val storageRef = Firebase.storage.reference
