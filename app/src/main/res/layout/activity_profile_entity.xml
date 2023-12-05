@@ -47,13 +47,15 @@
 
         <LinearLayout
             android:id="@+id/linearLayout4"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="15dp"
             android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/entityName">
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
             <TextView
                 android:id="@+id/textView2"
@@ -65,7 +67,7 @@
 
             <TextView
                 android:id="@+id/descriptionEntityTV"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
                 android:text="Descripcion" />
@@ -76,12 +78,12 @@
             android:id="@+id/linearLayout3"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
             android:layout_weight="1"
+            android:gravity="center"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="@+id/linearLayout4"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/linearLayout4">
+            app:layout_constraintEnd_toEndOf="@+id/entityName"
+            app:layout_constraintStart_toStartOf="@+id/entityName"
+            app:layout_constraintTop_toBottomOf="@+id/entityName">
 
             <ImageView
                 android:id="@+id/facebook"
