@@ -35,6 +35,9 @@ class InactiveEventFragment: Fragment() {
         vm.uriEventsEntity.observe(viewLifecycleOwner){uris->
             adapter.setUris(uris)
         }
+        vm.allPrices.observe(viewLifecycleOwner){prices->
+            adapter.setPrices(prices)
+        }
         return binding.root
     }
     companion object{

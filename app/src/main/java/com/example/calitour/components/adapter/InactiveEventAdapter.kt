@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat
 class InactiveEventAdapter: Adapter<InactiveEventViewHolder>() {
     private var inactiveEvents : ArrayList<EventDocumentDTO> = arrayListOf()
     private var uris :ArrayList<Uri> = arrayListOf()
+    private var prices :ArrayList<String> = arrayListOf()
     private val vm: CreateEventProductViewModel = CreateEventProductViewModel()
     init {
 
@@ -35,14 +36,13 @@ class InactiveEventAdapter: Adapter<InactiveEventViewHolder>() {
         val date = sdf.format(inactiveEvents[position].date.toDate())
         holder.date.text = date
         holder.place.text = inactiveEvents[position].place
-        val price = vm.getPricesEvent(inactiveEvents[position].id).value?.get(0)?.fee?.toInt();
-        if(price != 0){
-            holder.price.text = price.toString()
-        }else{
-            holder.price.text = R.string.free.toString()
-        }
-        if(uris.size>0){
-            Glide.with(holder.itemView.context).load(uris[position]).into(holder.img)
+        holder.title.text = inactiveEvents[position].name
+        if(prices.size>0){
+            if(prices[position] == "0"){
+                holder.price.text = holder.itemView.context.getString(R.string.free)
+            }else{
+                holder.price.text = prices[position]
+            }
         }
         if(uris.size>0){
             Glide.with(holder.itemView.context).load(uris[position]).into(holder.img)
@@ -60,6 +60,11 @@ class InactiveEventAdapter: Adapter<InactiveEventViewHolder>() {
 
     fun setUris(uriArray:ArrayList<Uri>){
         uris = uriArray
+        notifyDataSetChanged()
+    }
+
+    fun setPrices(pricesArray:ArrayList<String>){
+        prices = pricesArray
         notifyDataSetChanged()
     }
 }

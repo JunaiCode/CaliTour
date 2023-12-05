@@ -49,7 +49,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="24dp"
                         android:layout_marginEnd="15dp"
                         android:text="Cali es cultura popular Live Sessions"
                         android:textColor="#FFFFFF"
@@ -59,50 +59,35 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/entityEventName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="15dp"
-                        android:text="Secretaría de Cultura de Cali"
-                        android:textColor="#FFFFFF"
-                        android:textSize="13dp"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/inactiveEventTitle" />
-
                     <ImageView
                         android:id="@+id/priceIconImg"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_marginStart="15dp"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="21dp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/entityEventName"
+                        app:layout_constraintTop_toBottomOf="@+id/inactiveEventTitle"
                         app:srcCompat="@drawable/price_icon" />
 
                     <TextView
                         android:id="@+id/inactivePriceEvent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="21dp"
                         android:text="Gratis"
                         android:textColor="#FFFFFF"
                         android:textSize="18dp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toEndOf="@+id/priceIconImg"
-                        app:layout_constraintTop_toBottomOf="@+id/entityEventName" />
+                        app:layout_constraintTop_toBottomOf="@+id/inactiveEventTitle" />
 
                     <ImageView
                         android:id="@+id/locationIconImg"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_marginStart="15dp"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="14dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/inactivePriceEvent"
                         app:srcCompat="@drawable/location_icon" />
@@ -125,7 +110,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_marginStart="15dp"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="14dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/locationInactiveEvent"
                         app:srcCompat="@drawable/calendar_icon" />
@@ -134,7 +119,7 @@
                         android:id="@+id/dateInactiveEvent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="15dp"
                         android:layout_marginTop="12dp"
                         android:text="04/09 - 3:00pm"
                         android:textColor="#FFFFFF"
