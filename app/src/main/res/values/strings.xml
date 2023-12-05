@@ -58,4 +58,20 @@
 
     <string name="titleEventTriviasTV">Trivias</string>
     <string name="subtitleEventTriviasTV">Mis eventos activos</string>
+
+
+    <string name="titleQuestionTV">Editando Tu Pregunta</string>
+    <string name="AnswersTV">Opciones</string>
+    <string name="saveBtn">Guardar</string>
+    <string name="questionTV">Pregunta</string>
+    <string name="warningTV">¡Ojo! Recuerda que la primera opción es la respuesta correcta.</string>
+    <string name="option1ET">Opcion 1</string>
+    <string name="option2ET">Opcion 2</string>
+    <string name="option3ET">Opcion 3</string>
+    <string name="option4ET">Opcion 4</string>
+
+    <string name="titleTriviasTV">¿Que hay pa preguntar?</string>
+    <string name="questionsTV">Preguntas</string>
+
+    <string name="editBtn">Editar</string>
 </resources>

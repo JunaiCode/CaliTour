@@ -39,7 +39,7 @@
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:inputType="text"
-                        android:text="Opcion 2" />
+                        android:text="@string/option2ET" />
                 </androidx.cardview.widget.CardView>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -75,7 +75,7 @@
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:inputType="text"
-                        android:text="Opcion 3" />
+                        android:text="@string/option3ET" />
                 </androidx.cardview.widget.CardView>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -86,7 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
-            android:text="Editando Tu Pregunta"
+            android:text="@string/titleQuestionTV"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -97,7 +97,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="72dp"
-            android:text="Opciones"
+            android:text="@string/AnswersTV"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.075"
@@ -108,7 +108,7 @@
             android:id="@+id/saveBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Guardar"
+            android:text="@string/saveBtn"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -144,7 +144,7 @@
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:inputType="text"
-                        android:text="Opcion 4" />
+                        android:text="@string/option4ET" />
                 </androidx.cardview.widget.CardView>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -180,7 +180,7 @@
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:inputType="text"
-                        android:text="Opcion 1" />
+                        android:text="@string/option1ET" />
                 </androidx.cardview.widget.CardView>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -192,17 +192,17 @@
             android:layout_height="43dp"
             android:ems="10"
             android:inputType="text"
-            android:text="Pregunta"
+            android:text="@string/questionTV"
             app:layout_constraintBottom_toTopOf="@+id/answersTV"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/titleQuestionTV" />
 
         <TextView
-            android:id="@+id/textView12"
+            android:id="@+id/warningTV"
             android:layout_width="159dp"
             android:layout_height="35dp"
-            android:text="¡Ojo! Recuerda que la primera opcion es la respuesta correcta."
+            android:text="@string/warningTV"
             android:textSize="11sp"
             app:layout_constraintBottom_toTopOf="@+id/cardView9"
             app:layout_constraintEnd_toEndOf="parent"
