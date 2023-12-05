@@ -16,6 +16,7 @@ import com.example.calitour.model.repository.EntityRepository
 import com.google.firebase.auth.ktx.auth
 import com.example.calitour.model.repository.EventRepository
 import com.example.calitour.model.repository.ItineraryRepository
+import com.example.calitour.model.repository.ProductRepository
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -33,9 +34,11 @@ class EntityViewModel:ViewModel() {
     var eventsQuery = MutableLiveData<ArrayList<EventDocumentDTO>>()
     var uriEventsEntity = MutableLiveData<ArrayList<Uri>>()
     var singleEvent = MutableLiveData<EventFullDTO>()
+    var eventsFull = MutableLiveData<ArrayList<EventFullDTO>>()
     var itineraryId = MutableLiveData<String>()
     var eventRepo = EventRepository()
     var entityRepo = EntityRepository()
+    var productRepo = ProductRepository()
     var itineraryRepo = ItineraryRepository()
     var profile =MutableLiveData<EntityFirestore>()
     var products = MutableLiveData<List<EntityProductFirestore>>()
@@ -103,6 +106,14 @@ class EntityViewModel:ViewModel() {
         return eventsQuery
     }
 
+    fun getProductsByEntityId(entityId: String){
+
+        viewModelScope.launch (Dispatchers.IO){
+            products.postValue(productRepo.getProductsByEntityId(entityId))
+        }
+
+    }
+
 
     fun getEventsById(id:String): LiveData<ArrayList<EventDocumentDTO>>{
         eventsQuery.value = arrayListOf()
@@ -126,6 +137,20 @@ class EntityViewModel:ViewModel() {
             eventsQuery.postValue(eventRepo.getEventsAvailablesByEntityId(id))
         }
         return eventsQuery
+    }
+
+    fun getAvailableEventsByEntityIdFull(entityId: String){
+        eventsFull.value = arrayListOf()
+        viewModelScope.launch (Dispatchers.IO) {
+            eventsFull.postValue(eventRepo.getAllEntityActiveEvents(entityId))
+        }
+    }
+
+    fun getUnavailableEventsByEntityIdFull(entityId: String){
+        eventsFull.value = arrayListOf()
+        viewModelScope.launch (Dispatchers.IO) {
+            eventsFull.postValue(eventRepo.getAllEntityPassedEvents(entityId))
+        }
     }
 
     fun loadProducts(){

@@ -3,14 +3,18 @@ package com.example.calitour.activities.fragments
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.calitour.R
+import com.example.calitour.components.adapter.ProductItemAdapter
+import com.example.calitour.components.adapter.UserEventAdapter
 import com.example.calitour.databinding.EntityProfileFragmentBinding
 import com.example.calitour.viewmodel.EntityViewModel
 
@@ -27,11 +31,58 @@ class EntityProfileForUser: Fragment() {
         binding = EntityProfileFragmentBinding.inflate(inflater, container, false)
 
         val extras = arguments?.getString("entity_id")
-        Log.e("<<<", extras.toString())
         if (extras != null) {
             vm.getEntityProfile(extras)
         }
 
+        binding.userShop.setOnClickListener {
+            binding.userShop.setImageResource(R.drawable.shop)
+            binding.userLiveEvents.setImageResource(R.drawable.live_gray)
+            binding.userEndedEvents.setImageResource(R.drawable.clock_gray)
+
+            binding.userEntityProfileList.layoutManager = GridLayoutManager(context, 3)
+            val adapter = ProductItemAdapter()
+            binding.userEntityProfileList.adapter = adapter
+            vm.getProductsByEntityId(extras.toString())
+
+            vm.products.observe(viewLifecycleOwner) {
+                adapter.addAll(it)
+            }
+        }
+
+        binding.userLiveEvents.setOnClickListener {
+            binding.userLiveEvents.setImageResource(R.drawable.live)
+            binding.userShop.setImageResource(R.drawable.shop_gray)
+            binding.userEndedEvents.setImageResource(R.drawable.clock_gray)
+
+            binding.userEntityProfileList.layoutManager = LinearLayoutManager(context)
+            val adapter = UserEventAdapter()
+            vm.getAvailableEventsByEntityIdFull(extras.toString())
+
+            vm.eventsFull.observe(viewLifecycleOwner){
+                adapter.setEvents(it)
+            }
+            binding.userEntityProfileList.adapter = adapter
+
+        }
+
+        binding.userEndedEvents.setOnClickListener {
+            binding.userEndedEvents.setImageResource(R.drawable.clock)
+            binding.userLiveEvents.setImageResource(R.drawable.live_gray)
+            binding.userShop.setImageResource(R.drawable.shop_gray)
+
+            binding.userEntityProfileList.layoutManager = LinearLayoutManager(context)
+            val adapter = UserEventAdapter()
+            vm.getUnavailableEventsByEntityIdFull(extras.toString())
+
+            vm.eventsFull.observe(viewLifecycleOwner) {
+                adapter.setEvents(it)
+            }
+
+            binding.userEntityProfileList.adapter = adapter
+        }
+
+        binding.userLiveEvents.performClick()
         vm.profile.observe(viewLifecycleOwner){profile ->
             binding.userEntityName.text = profile.name
             binding.userDescriptionEntityTV.text = profile.description
