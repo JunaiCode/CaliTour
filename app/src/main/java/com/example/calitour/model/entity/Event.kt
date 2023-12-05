@@ -17,5 +17,5 @@ data class Event(
     var img: Uri,
     var prices: ArrayList<Price>,
     var badges: ArrayList<Badge>,
-    var trivias: ArrayList<Trivia>
+    var trivias: ArrayList<Question>
 )

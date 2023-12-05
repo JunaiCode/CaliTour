@@ -1,34 +1,41 @@
 package com.example.calitour.activities.fragments
 
 import DatePickerFragment
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.provider.CalendarContract
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.calitour.R
 import com.example.calitour.components.adapter.ItineraryEventAdapter
+import com.example.calitour.components.adapter.UserEventAdapter
 import com.example.calitour.databinding.ItineraryFragmentBinding
-import com.example.calitour.model.DTO.EventDocumentDTO
-import com.example.calitour.model.entity.ItineraryDay
-import com.example.calitour.model.entity.ItineraryEvent
-import com.google.firebase.Timestamp
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import com.google.gson.Gson
+import com.example.calitour.model.DTO.EventItineraryDTO
+import com.example.calitour.viewmodel.ItineraryViewModel
+import com.example.calitour.viewmodel.UserViewModel
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
 class ItineraryFragment : Fragment() {
-    lateinit var adapter: ItineraryEventAdapter
-    private var itineraryFull = ItineraryFullFragment()
-    private val itineraryEmpty = ItineraryEmptyFragment()
+    private lateinit var adapter: ItineraryEventAdapter
     private var currentDate: Date = Calendar.getInstance().time
     private lateinit var binding: ItineraryFragmentBinding
+    private var eventsItinerary = ArrayList<EventItineraryDTO>()
+
+    val vm: ItineraryViewModel by activityViewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,14 +43,14 @@ class ItineraryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = ItineraryFragmentBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         updateDateTextView()
-        adapter= ItineraryEventAdapter()
 
         binding.calendarPrevBtn.setOnClickListener {
             currentDate = getPreviousDay(currentDate)
@@ -59,16 +66,109 @@ class ItineraryFragment : Fragment() {
             openDatePicker()
         }
 
+        binding.reminderBtn.setOnClickListener {
+            var numEvents = adapter.itemCount
+            var title =  "Eventos para este dia"
+            var description = "Tengo $numEvents eventos para asistir"
+            val startTime = currentDate.time
+            addReminderToCalendar(title, description, startTime, startTime)
+        }
+
     }
 
+
+
+    fun addReminderToCalendar(title: String, description: String, startTime: Long, endTime: Long) {
+        val intent = Intent(Intent.ACTION_INSERT)
+            .setData(CalendarContract.Events.CONTENT_URI)
+            .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startTime)
+            .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime)
+            .putExtra(CalendarContract.Events.TITLE, title)
+            .putExtra(CalendarContract.Events.DESCRIPTION, description)
+            .putExtra(CalendarContract.Events.ALL_DAY,true)
+            .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY)
+
+        startActivity(intent)
+    }
+
+    fun convertToFormattedDate(inputDate: String): String {
+        //Mon Dec 04 17:25:34 GMT 2023 en ingles
+        //Mon Dec 04 12:26:45 GMT-05:00 2023 en español
+        val inputFormatEn = SimpleDateFormat("EEE MMM dd HH:mm:ss 'GMT' yyyy", Locale.US)
+        val inputFormatEs = SimpleDateFormat("EEE MMM dd HH:mm:ss 'GMT'Z yyyy", Locale.ENGLISH)
+        Log.i("lo de la fechaaaa",inputDate)
+        val currentLocales = context?.resources?.configuration?.locales
+        Log.i("IDIOMA", currentLocales.toString())
+        //[en_US]
+        //[es_US]
+        if(currentLocales.toString()=="[en_US]"){
+            Log.i("IDIOMA","Esta en ingles")
+            val date = inputFormatEn.parse(inputDate) ?: return ""
+            val outputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            return outputFormat.format(date)
+        }else if(currentLocales.toString()=="[es_US]"){
+            Log.i("IDIOMA","Esta en Español")
+            val date = inputFormatEs.parse(inputDate) ?: return ""
+            val outputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            return outputFormat.format(date)
+        }
+        return ""
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun updateDateTextView() {
-        if (::binding.isInitialized) {
+        if (::binding.isInitialized && view != null) {
             val dateFormat = SimpleDateFormat("EEE, MMM dd / yyyy", Locale.getDefault())
             val formattedDate = dateFormat.format(currentDate)
             binding.pageDateTV.text = formattedDate
-            var userId = Firebase.auth.currentUser!!.uid
-            searchEventsItineraryDay(userId,currentDate.toString())
+            showEmptyPage()
+            adapter = ItineraryEventAdapter()
+            var day = convertToFormattedDate(currentDate.toString())
+            Log.i("lo de la fechaaaa 22222", day)
+            if (viewLifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.CREATED)) {
+                Log.i("---------", day)
+                vm.getEventsItineraryByDate(day).observe(viewLifecycleOwner) { events ->
+                    adapter.updateData(events)
+                    Log.i("itemcount", adapter.itemCount.toString())
+                    if (view != null) {
+                        if (events.isEmpty()) {
+                            showEmptyPage()
+                        } else {
+                            showFullPage()
+                        }
+                    }
+                }
+            }else{
+                vm.getEventsItineraryByDate(day).observe(viewLifecycleOwner) { events ->
+                    adapter.updateData(events)
+                    if(adapter.itemCount==0){
+                        showEmptyPage()
+                    }else{
+                        showFullPage()
+                    }
+                }
+            }
         }
+    }
+
+    private fun showEmptyPage(){
+        var recyclerView = binding.itineraryEventsRecyclerView
+        binding.reminderBtn.visibility = View.INVISIBLE
+        binding.itineraryFullTitleTV.visibility = View.INVISIBLE
+        recyclerView.visibility = View.INVISIBLE
+        binding.itineraryEmptyTV.visibility = View.VISIBLE
+
+    }
+
+    private fun showFullPage(){
+        var recyclerView = binding.itineraryEventsRecyclerView
+        binding.reminderBtn.visibility = View.VISIBLE
+        binding.itineraryFullTitleTV.visibility = View.VISIBLE
+        recyclerView.visibility = View.VISIBLE
+        binding.itineraryEmptyTV.visibility = View.INVISIBLE
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.adapter = adapter
     }
 
     private fun getPreviousDay(date: Date): Date {
@@ -85,24 +185,6 @@ class ItineraryFragment : Fragment() {
         return calendar.time
     }
 
-    fun showFragmentWithAdapter(fragment: Fragment, adapter: ItineraryEventAdapter) {
-        if (fragment is ItineraryFullFragment) {
-            fragment.setAdapter(adapter)
-            val args = Bundle()
-            args.putLong("date", currentDate.time)
-            fragment.arguments = args
-        }
-
-        val transaction = childFragmentManager.beginTransaction()
-        transaction.replace(R.id.fragmentEventsItineraryContainer, fragment)
-        transaction.addToBackStack(null)
-        transaction.commitAllowingStateLoss()
-    }
-
-    fun showFragment(fragment: Fragment) {
-        childFragmentManager.beginTransaction().replace(R.id.fragmentEventsItineraryContainer, fragment).commit()
-    }
-
     private fun openDatePicker() {
         val datePickerFragment = DatePickerFragment()
         datePickerFragment.itineraryFragment = this
@@ -114,103 +196,11 @@ class ItineraryFragment : Fragment() {
         datePickerFragment.show(parentFragmentManager, DatePickerFragment.TAG)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun updateDate(updatedDateMillis: Long) {
         currentDate = Date(updatedDateMillis)
         updateDateTextView()
     }
 
-    fun searchEventsItineraryDay(userId:String, day: String) {
 
-        adapter= ItineraryEventAdapter()
-        val userItineraryRef = Firebase.firestore.collection("users").document(userId).collection("itinerary")
-        var dayString = convertToFormattedDate(day)
-
-        userItineraryRef
-            .whereEqualTo("dayString", dayString) // Ajusta el nombre del campo según tu estructura
-            .get()
-            .addOnSuccessListener { querySnapshot ->
-                if (querySnapshot.isEmpty) {
-                    showFragment(itineraryEmpty)
-                } else {
-                    for (document in querySnapshot) {
-                        val documentId = document.id
-                        userItineraryRef
-                            .document(documentId)
-                            .get()
-                            .addOnSuccessListener { documentSnapshot ->
-                                documentSnapshot?.let {
-                                    val jsonData = Gson().toJson(it.data)
-                                    val itineraryDay = Gson().fromJson(jsonData, ItineraryDay::class.java)
-                                    loadEventDetails(itineraryDay.events)
-                                }
-                            }
-                    }
-                }
-            }
-            .addOnFailureListener { e ->
-                Log.d("Documento no encontrado con ID:", e.toString())
-            }
-    }
-
-    fun loadEventDetails(eventsIdList: ArrayList<String>) {
-        for (eventId in eventsIdList) {
-            Firebase.firestore.collection("events")
-                .document(eventId)
-                .get()
-                .addOnSuccessListener { documentSnapshot ->
-                    if (documentSnapshot.exists()) {
-                        val jsonDataEvent = Gson().toJson(documentSnapshot.data)
-                        val eventDocumentDTO = Gson().fromJson(jsonDataEvent, EventDocumentDTO::class.java)
-                        val pricesCollection = documentSnapshot.reference.collection("prices")
-                        pricesCollection.whereEqualTo("name", "General")
-                            .get()
-                            .addOnSuccessListener { pricesQuerySnapshot ->
-                                for (priceDocument in pricesQuerySnapshot.documents) {
-                                    val fee = priceDocument.getDouble("fee")
-                                    val event = eventDocumentDTO
-                                    val itineraryEvent = fee?.let {
-                                        ItineraryEvent(
-                                            name = event.name,
-                                            place = event.place,
-                                            eventTime = convertTimestampToFormattedTime(event.date),
-                                            img = event.img,
-                                            price = it
-                                        )
-                                    }
-
-                                    if (itineraryEvent != null) {
-                                        adapter.addEvent(itineraryEvent)
-                                    }
-                                    if (adapter.itemCount != 0) {
-                                        itineraryFull = ItineraryFullFragment()
-                                        showFragmentWithAdapter(itineraryFull, adapter)
-                                    }
-                                }
-                            }
-                            .addOnFailureListener { e ->
-                                Log.e("loadEventDetails", "Error al obtener datos de la subcolección prices", e)
-                            }
-
-                    } else {
-                        Log.e("loadEventDetails", "No existe un evento con ID: $eventId")
-                    }
-                }
-                .addOnFailureListener { e ->
-                    Log.e("loadEventDetails", "Error al obtener datos para el evento con ID: $eventId", e)
-                }
-        }
-    }
-
-    fun convertTimestampToFormattedTime(timestamp: Timestamp): String {
-        val date = Date(timestamp.seconds * 1000)
-        val sdf = SimpleDateFormat("hh:mm a", Locale.getDefault())
-        return sdf.format(date)
-    }
-
-    fun convertToFormattedDate(inputDate: String): String {
-        val inputFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss 'GMT'Z yyyy", Locale.ENGLISH)
-        val date = inputFormat.parse(inputDate) ?: return ""
-        val outputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        return outputFormat.format(date)
-    }
 }

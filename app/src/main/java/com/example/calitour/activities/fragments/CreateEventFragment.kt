@@ -1,5 +1,6 @@
 package com.example.calitour.activities.fragments
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -24,6 +25,7 @@ import com.example.calitour.model.DTO.EventDocumentDTO
 import com.example.calitour.model.entity.Badge
 import com.example.calitour.model.entity.Event
 import com.example.calitour.model.entity.Price
+import com.example.calitour.model.entity.Question
 import com.example.calitour.model.entity.Trivia
 import com.example.calitour.viewmodel.CreateEventProductViewModel
 import com.google.firebase.auth.ktx.auth
@@ -41,7 +43,7 @@ class CreateEventFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val appContext = requireContext()
         binding = CreateEventFragmentBinding.inflate(inflater,container,false)
         val categories = resources.getStringArray(R.array.categories)
@@ -51,9 +53,30 @@ class CreateEventFragment: Fragment() {
         vm.editEvent.observe(viewLifecycleOwner){event ->
            setValues(event)
         }
+        vm.uploadedEventImgComplete.observe(viewLifecycleOwner){img->
+            if(img == true && vm.uploadedBadgeImgComplete.value == true){
+                    startActivity(Intent(requireContext(), ProfileEntityActivity::class.java))
+            }
+        }
+        vm.uploadedBadgeImgComplete.observe(viewLifecycleOwner){img->
+            if(img == true && vm.uploadedEventImgComplete.value == true){
+                startActivity(Intent(requireContext(), ProfileEntityActivity::class.java))
+            }
+        }
+        vm.eventBadges.observe(viewLifecycleOwner){}
+        vm.eventImgUri.observe(viewLifecycleOwner){img ->
+            eventUri = img
+            Glide.with(this).load(eventUri).into(binding.eventImg)
+        }
+        vm.eventBadgesUri.observe(viewLifecycleOwner){badge ->
+            badgeUri = badge[0]
+            Glide.with(this).load(badgeUri).into(binding.badgeImg)
+        }
+        vm.eventPrices.observe(viewLifecycleOwner){prices->
+            binding.priceEvent.text = Editable.Factory.getInstance().newEditable(prices[0].fee.toString())
+        }
         if(arguments?.getString("eventId") != null){
             binding.btnCreateEvent.visibility = View.GONE
-            Log.e("arguments",arguments.toString())
             val eventId = arguments?.getString("eventId").toString()
             vm.getEventById(eventId)
         }else{
@@ -109,39 +132,63 @@ class CreateEventFragment: Fragment() {
                 eventUri,
                 ArrayList<Price>(),
                 ArrayList<Badge>(),
-                ArrayList<Trivia>()
+                ArrayList<Question>()
             )
             newEvent.prices.add(Price("Entrada General",binding.priceEvent.text.toString().toDouble(),UUID.randomUUID(),"General"))
             newEvent.badges.add(Badge(UUID.randomUUID(),badgeUri,"Badge"))
             vm.createEvent(newEvent)
-            vm.uploadImages(newEvent)
-            startActivity(Intent(requireContext(), ProfileEntityActivity::class.java))
         }
 
         binding.btnEditEvent.setOnClickListener() {
-
+            val newEvent = Event(
+                UUID.fromString(vm.editEvent.value?.id),
+                Firebase.auth.currentUser?.uid.toString(),
+                binding.categories.selectedItem.toString(),
+                vm.dateToMilliseconds(binding.dateEvent.text.toString(),vm.dateFormat),
+                binding.descriptionEvent.text.toString(),
+                binding.nameEvent.text.toString(),
+                binding.locationEvent.text.toString(),
+                vm.editEvent.value?.reaction.toString().toInt(),
+                vm.editEvent.value?.score.toString().toDouble(),
+                vm.editEvent.value?.state.toString(),
+                eventUri,
+                ArrayList<Price>(),
+                ArrayList<Badge>(),
+                ArrayList<Question>()
+            )
+            newEvent.prices.add(Price("Entrada General",binding.priceEvent.text.toString().toDouble(),UUID.fromString(
+                vm.eventPrices.value?.get(0)?.id),"General"))
+            newEvent.badges.add(Badge(UUID.fromString(vm.eventBadges.value?.get(0)?.id),badgeUri,"Badge"))
+            vm.editEvent(newEvent)
+            startActivity(Intent(requireContext(), ProfileEntityActivity::class.java))
         }
-
         return binding.root
     }
 
     fun onGalleryResultBadge(result: ActivityResult){
-        badgeUri = result.data?.data!!
-        Glide.with(this).load(badgeUri).into(binding.badgeImg)
+        if(result.resultCode != Activity.RESULT_CANCELED) {
+            badgeUri = result.data?.data!!
+            Glide.with(this).load(badgeUri).into(binding.badgeImg)
+        }
     }
-
     fun onGalleryResultImage(result: ActivityResult){
-        eventUri = result.data?.data!!
-        Glide.with(this).load(eventUri).into(binding.eventImg)
+        if(result.resultCode != Activity.RESULT_CANCELED) {
+            eventUri = result.data?.data!!
+            Glide.with(this).load(eventUri).into(binding.eventImg)
+        }
     }
 
     private fun setValues(event:EventDocumentDTO?){
         if(event !=null){
-            binding.nameEvent.text = Editable.Factory.getInstance().newEditable(event?.name)
-            binding.categories.setSelection(getIndexCategory(event?.category.toString()))
-            binding.dateEvent.text = Editable.Factory.getInstance().newEditable(vm.millisecondsToDate(event?.date?.toDate()?.time.toString(),vm.dateFormat))
-            binding.descriptionEvent.text = Editable.Factory.getInstance().newEditable(event?.description)
-            binding.locationEvent.text = Editable.Factory.getInstance().newEditable(event?.place)
+            vm.getImgEvent(event.id)
+            vm.getImgBadge(event.id)
+            vm.getPricesEvent(event.id)
+            vm.getEventBadges(event.id)
+            binding.nameEvent.text = Editable.Factory.getInstance().newEditable(event.name)
+            binding.categories.setSelection(getIndexCategory(event.category))
+            binding.dateEvent.text = Editable.Factory.getInstance().newEditable(vm.millisecondsToDate(event.date.toDate().time.toString(),vm.dateFormat))
+            binding.descriptionEvent.text = Editable.Factory.getInstance().newEditable(event.description)
+            binding.locationEvent.text = Editable.Factory.getInstance().newEditable(event.place)
         }else{
             binding.nameEvent.text.clear()
             binding.categories.setSelection(0)

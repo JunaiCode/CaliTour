@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import com.example.calitour.R
 import com.example.calitour.activities.fragments.EditProfileEntityFragment
 import com.example.calitour.databinding.ActivityEditProfileBinding
-import com.example.calitour.databinding.ActivityProfileEntityBinding
 import com.example.calitour.model.entity.EntityFirestore
 
 class EditProfileActivity : AppCompatActivity() {

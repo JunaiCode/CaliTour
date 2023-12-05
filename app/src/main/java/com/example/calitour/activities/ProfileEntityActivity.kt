@@ -20,6 +20,8 @@ import com.example.calitour.activities.fragments.ActiveEventFragment
 import com.example.calitour.activities.fragments.InactiveEventFragment
 import com.example.calitour.databinding.ActivityProfileEntityBinding
 import com.example.calitour.viewmodel.EntityViewModel
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 
 class ProfileEntityActivity : AppCompatActivity() {
@@ -31,8 +33,10 @@ class ProfileEntityActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        vm.getEventsAvailablesByEntityId(Firebase.auth.currentUser?.uid.toString())
+        vm.getImagesEntityAvailableEvents(Firebase.auth.currentUser?.uid.toString())
+        vm.getPricesEntityAvailableEvents(Firebase.auth.currentUser?.uid.toString())
         vm.loadProfile()
-
         vm.profile.observe(this){profile ->
             binding.entityName.text = profile.name
             binding.descriptionEntityTV.text = profile.description
@@ -53,7 +57,7 @@ class ProfileEntityActivity : AppCompatActivity() {
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
                 binding.bottomNavigationView.menu[0].itemId ->{
-                    startActivity(Intent(this, MainActivity::class.java))
+                    startActivity(Intent(this, EventsTriviaActivity::class.java))
                 }
 
                 binding.bottomNavigationView.menu[1].itemId ->{
@@ -158,7 +162,6 @@ class ProfileEntityActivity : AppCompatActivity() {
 
         binding.liveEvents.performClick()
     }
-
     fun showFragment(fragment: Fragment){
         supportFragmentManager.beginTransaction().replace(R.id.fragmentContainerEntity,fragment).commit()
     }
