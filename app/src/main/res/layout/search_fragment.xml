@@ -47,7 +47,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/categoriesTitle">
+            app:layout_constraintTop_toBottomOf="@+id/categoryTitle">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/musicaLayout"
@@ -293,7 +293,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:id="@+id/categoriesTitle"
+            android:id="@+id/categoryTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
